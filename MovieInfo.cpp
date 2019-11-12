@@ -1,4 +1,3 @@
-//
 //  Movie.cpp
 //  CinemaKiosk
 //
@@ -38,4 +37,3 @@ void MovieInfo::printInfo(){
     cout << pd;
     cout << runningTime;
 }
-

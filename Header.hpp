@@ -1,3 +1,4 @@
+
 //
 //  Header.hpp
 //  CinemaKiosk
@@ -5,6 +6,7 @@
 //  Created by minjyo on 12/11/2019.
 //  Copyright © 2019 minjyo. All rights reserved.
 //
+//﻿#pragma once
 #define SIZE_COLUMN 5
 #define SIZE_ROW 5
 #define MOVIE_INFO_ARR_SIZE 10
@@ -53,24 +55,31 @@ public:
     void changeSeat(short x, short y, bool status); //좌석 입력 받아서 예매
     bool checkSeat(short x, short y); //해당 좌석이 예매 가능한지
     ~MoviePlay();
+	void printSeat();
+	unsigned short restSeat();
 };
 
 
 class MovieRoom{
     
 private:
-    char roomNumber;
-    bool status;
-    MoviePlay* head;
+	class Node {
+		MoviePlay* movie;
+		Node* nextNode;
+	};
+	char roomNumber;
+	bool status;
+	MoviePlay* head;
+	unsigned short movieCount;
 public:
-    MovieRoom();
-    MovieRoom(char roomNumber);
-    ~MovieRoom();
-    void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
-    void setStatus(bool status);
-    bool canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
-    bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
-    void printTimeTable(); //영화관의 영화 타임 테이블 출력
+	MovieRoom();
+	MovieRoom(char roomNumber);
+	~MovieRoom();
+	void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
+	void setStatus(bool status);
+	bool canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
+	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
+	void printTimeTable(); //영화관의 영화 타임 테이블 출력
 };
 
 /* 예매 정보 객체 */
@@ -121,4 +130,3 @@ public:
     void deleteTicket(int tNumber);    //예매 번호로 티켓 삭제 (예매취소)
     void addTicket(MoviePlay* movie); //예매
 };
-
