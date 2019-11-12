@@ -39,7 +39,7 @@ int main()
     cout << mov.restSeat() << endl;
     
     MovieInfo movie("조커", "Jocker", 1350, 1000);
-    
+   
     Info info = movie.getInfo();
     cout << "제목: " << info.title << endl;
     cout << "감독: " << info.pd << endl;
