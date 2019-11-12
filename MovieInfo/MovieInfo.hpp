@@ -21,9 +21,9 @@ struct Info{
     int price;
 };
 
-class Movie{
+class MovieInfo{
     public:
-        Movie(string title, string pd, short runningTime, int price);
+        MovieInfo(string title, string pd, short runningTime, int price);
         Info getInfo();
     
     private:
