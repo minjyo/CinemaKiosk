@@ -7,7 +7,7 @@
 //  Copyright © 2019 minjyo. All rights reserved.
 //
 
-#inlcude "Header.hpp"
+#include "Header.hpp"
 #include <iostream>
 
 using namespace std;
