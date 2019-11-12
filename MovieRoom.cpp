@@ -1,27 +1,18 @@
-#include <iostream>
-#inlcude "Header.hpp"
+#include "Header.hpp"
 
-using namespace std;
 
-class Movie_room {
-private:
-	bool state = false;
-public:
-	Movie_room();
-	void setState();
-	unsigned short room_number;
-};
-
-void Movie_room::setState() {
-	char check;
-	cout << "¿µÈ­°üÀ» ¸·À¸½Ã°Ú½À´Ï±î? Y/N" << endl;
-	cin >> check;
-	if (check == 'Y') {
-		state = true;
-	}
-	else if (check == 'N') {
-		state = false;
-	}
-	else
-		cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù!" << endl;
+//ì˜í™”ê´€ì˜ ì˜í™” íƒ€ìž„ í…Œì´ë¸” ì¶œë ¥
+void MovieRoom::printTimeTable(){
+    MoviePlay* temp = head;
+    
+    cout << "------------------- " << roomNumber << "ê´€ -------------------" << endl;
+    cout << "       ì˜í™” ì œëª©       ì˜í™” ê°ë…       ëŸ¬ë‹íƒ€ìž„        " << endl;
+    cout.fill(' ');
+    cout.width(10);
+    
+    while(temp->nextPlay!=NULL){
+        temp->info->printInfo();
+        temp = temp->nextPlay;
+    }
 }
+

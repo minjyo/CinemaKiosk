@@ -14,7 +14,7 @@ using namespace std;
 
 int main()
 {
-    MoviePlay test;
+   // MoviePlay test;
 //    test.chooseSeat();
 //    test.add(10);
 //    test.add(20);

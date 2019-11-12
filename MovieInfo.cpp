@@ -6,7 +6,7 @@
 //  Copyright © 2019 minjyo. All rights reserved.
 //
 
-#inlcude "Header.hpp"
+#include "Header.hpp"
 
 MovieInfo::MovieInfo(string title, string pd, short runningTime, int price){
     this->title = title;
@@ -26,5 +26,16 @@ Info MovieInfo::getInfo(){
         cur.price = this->price;
         
         return cur;
+}
+
+void MovieInfo::printInfo(){
+    cout << "       영화 제목       영화 감독       러닝타임        " << endl;
+    
+    cout.fill(' ');
+    cout.width(10);
+    
+    cout << title;
+    cout << pd;
+    cout << runningTime;
 }
 
