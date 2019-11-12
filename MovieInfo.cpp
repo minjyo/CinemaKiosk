@@ -6,7 +6,7 @@
 //  Copyright © 2019 minjyo. All rights reserved.
 //
 
-#include "MovieInfo.hpp"
+#inlcude "Header.hpp"
 
 MovieInfo::MovieInfo(string title, string pd, short runningTime, int price){
     this->title = title;

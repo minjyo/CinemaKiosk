@@ -1,15 +1,74 @@
 //
-//  System.h
+//  Header.hpp
 //  CinemaKiosk
 //
 //  Created by minjyo on 12/11/2019.
 //  Copyright © 2019 minjyo. All rights reserved.
 //
 
+#pragma once
+#define SIZE_COLUMN 5
+#define SIZE_ROW 5
+
 #include <stdio.h>
 #include <iostream>
+#include <string>
+#inlcude "Header.hpp"
 
 using namespace std;
+
+/* 상영영화 객체 (Linked list) */
+class MoviePlay{
+    
+private:
+    bool seat[SIZE_COLUMN][SIZE_ROW];
+    unsigned short startTime;           //시작 시간
+    unsigned short endTime;             //종료 시간
+    MovieInfo* info;                   //영화 정보
+    MoviePlay* nextPlay;               //현재 관 다음 상영 영화
+    
+public:
+    Movie_Play(bool seat[SEAT_SIZE_ROW][SEAT_SIZE_COLUMN], short sTime, Movie_Info* mInfo, Movie_Play* nextP);          //생성자
+    ~Movie_Play();
+};
+
+struct Info{
+    string title;
+    string pd;
+    short runningTime;
+    int price;
+};
+
+class MovieInfo{
+public:
+    MovieInfo(string title, string pd, short runningTime, int price);
+    Info getInfo();
+    
+private:
+    string title;
+    string pd;
+    short runningTime;
+    int price;
+    
+};
+
+class MovieRoom{
+    
+private:
+    char room_number;
+    bool status;
+    bool seat[SEAT_SIZE_ROW][SEAT_SIZE_COLUMN];     // True : 사용 불가능한 좌석
+    Movie_Play* head;
+public:
+    Movie_Room();
+    ~Movie_Room();
+    void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
+    void setMovieRoomStatus(MovieRoom* room, bool status); //영화관 사용 가능, 불가능
+    void setMovieRoomSeatstatus(Movie_Room* room, short x, short y, bool status); //영화관 내 좌석 사용 가능, 불가능
+    void addMoviePlay(MovieInfo* info, MovieRoom* room, short sTime);//영화관 내 상영영화 Linked List에 시간 검사 후 생성하기
+    void printTimeTable(Movie_Room* room); //해당 영화관의 영화 타임 테이블
+    
+};
 
 /* 유저 객체 */
 class User
@@ -65,3 +124,4 @@ public:
     void delete_User_Ticket(int tNumber);                       //예매 번호로 티켓 삭제 (예매취소)
     
 };
+

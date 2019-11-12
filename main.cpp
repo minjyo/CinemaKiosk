@@ -7,8 +7,7 @@
 //  Copyright © 2019 minjyo. All rights reserved.
 //
 
-#include "MovieInfo.hpp"
-#include "Movieplay.hpp"
+#inlcude "Header.hpp"
 #include <iostream>
 
 using namespace std;
