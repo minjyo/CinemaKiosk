@@ -1,32 +1,31 @@
 #include "Header.hpp"
 
 MovieRoom::MovieRoom(char roomNumber) {
-    head = NULL;
-    this->roomNumber = roomNumber;
-    this->status = false;
-    this->movieCount = 0;
+	head = NULL;
+	this->roomNumber = roomNumber;
+	this->status = false;
+	this->movieCount = 0;
 }
 
 void MovieRoom::setStatus(bool status) {
-    this->status = status;
+	this->status = status;
 }
 
 MovieRoom::~MovieRoom() {
-    
+
 }
 
-//ì˜í™”ê´€ì˜ ì˜í™” íƒ€ì„ í…Œì´ë¸” ì¶œë ¥
-void MovieRoom::printTimeTable(){
-    MoviePlay* temp = head;
-    
-    cout << "------------------- " << roomNumber << "ê´€ -------------------" << endl;
-    cout << "       ì˜í™” ì œëª©       ì˜í™” ê°ë…       ëŸ¬ë‹íƒ€ì„        " << endl;
-    cout.fill(' ');
-    cout.width(10);
-    
-    while(temp->nextPlay!=NULL){
-        temp->info->printInfo();
-        temp = temp->nextPlay;
-    }
-}
+//¿µÈ­°üÀÇ ¿µÈ­ Å¸ÀÓ Å×ÀÌºí Ãâ·Â
+void MovieRoom::printTimeTable() {
+	MoviePlay* temp = head;
 
+	cout << "------------------- " << roomNumber << "°ü -------------------" << endl;
+	cout << "       ¿µÈ­ Á¦¸ñ       ¿µÈ­ °¨µ¶       ·¯´×Å¸ÀÓ        " << endl;
+	cout.fill(' ');
+	cout.width(10);
+
+	while (temp->nextPlay != NULL) {
+		temp->info->printInfo();
+		temp = temp->nextPlay;
+	}
+}
