@@ -1,4 +1,4 @@
-﻿
+
 //
 //  main.cpp
 //  CinemaKiosk
@@ -45,6 +45,8 @@ int main()
 	cout << "제목: " << info.title << endl;
 	cout << "감독: " << info.pd << endl;
 	cout << "러닝타임: " << info.runningTime / 100 << "시간 " << info.runningTime % 100 << "분" << endl;
+    
+    cout << "wjdrmsdudqkqh: " << info.runningTime / 100 << "정근영바보 " << info.runningTime % 100 << "분" << endl;
 
 
 	return 0;
