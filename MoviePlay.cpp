@@ -2,96 +2,95 @@
 
 
 MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
-    //this->seat[SIZE_ROW][SIZE_COLUMN] = { false, };
-    Info temp = minfo->getInfo();
-    unsigned short running_time = temp.runningTime;
-    
-    /* К╤└Л²≤ М∙╘Л²╢ 60К╤└Л²╢ К└≤Л°╪К╘╢ */
-    if (((sTime % 100) + (running_time % 100)) > 60) {
-        /* 60К╤└ К╧╪ЙЁ═ 1Л▀°Й╟└ К█■М∙≤К▀┬Й╧▄ 40Л²└ К█■М∙╗ */
-        this->endTime += 40;
-    }
-    else {
-        this->endTime = sTime + running_time;
-    }
-    this->info = minfo;
-    //this->nextPlay = nextP;
-    nextPlay = NULL;
-    this->startTime = sTime;
+	//this->seat[SIZE_ROW][SIZE_COLUMN] = { false, };
+	Info temp = minfo->getInfo();
+	unsigned short running_time = temp.runningTime;
+
+	/* ╨пюг гуюл 60╨пюл Ёяю╦╦И */
+	if (((sTime % 100) + (running_time % 100)) > 60) {
+		/* 60╨п ╩╘╟М 1╫ц╟ё ╢Уго╢о╠Н 40ю╩ ╢Угт */
+		this->endTime += 40;
+	}
+	else {
+		this->endTime = sTime + running_time;
+	}
+	this->info = minfo;
+	//this->nextPlay = nextP;
+	nextPlay = NULL;
+	this->startTime = sTime;
 }
 
 MoviePlay::~MoviePlay() {
 }
 
-//Л╒▄Л└² М≤└М≥╘ Л╤°К═╔. Л≤┬К╖╓ Й╟─К┼╔М∙≤К╘╢ Б√╘, Л∙┬К░≤К╘╢ Б√═
+//аб╪╝ гЖх╡ цБ╥б. ©╧╦е ╟║╢иго╦И ╒л, ╬х╣г╦И ║А
 void MoviePlay::printSeat() {
-    for (int i = 0; i < SIZE_ROW; i++) {
-        for (int j = 0; j < SIZE_COLUMN; j++) {
-            if (seat[i][j] == true)
-                cout << "Б√╘";
-            else
-                cout << "Б√║";
-        }
-        cout << endl;
-    }
+	for (int i = 0; i < SIZE_ROW; i++) {
+		for (int j = 0; j < SIZE_COLUMN; j++) {
+			if (seat[i][j] == true)
+				cout << "╒л";
+			else
+				cout << "║Ю";
+		}
+		cout << endl;
+	}
 }
 
-//М∙╢К▀╧ Л╒▄М▒°Л≈░ Л·┬К┼■ Л╒▄Л└²Л²╢ Л≤┬К╖╓ Й╟─К┼╔М∙°Л╖─ К╕╛М└╢. Л·░К╕╛Й╟─ Л²╢К╞╦ Л≤┬Л∙╫К░≤Л√╢ Л·┬Л°╪К╘╢ True, Й╥╦К═┤Л╖─ Л∙┼Л²└ Й╡╫Л ╟ False К╕╛М└╢.
+//гь╢Г абг╔©║ юж╢б аб╪╝юл ©╧╦е ╟║╢игяаЖ ╦╝ео. юз╦╝╟║ юл╧л ©╧╬Ю╣г╬Н южю╦╦И True, ╠в╥╦аЖ ╬йю╩ ╟Ф©Л False ╦╝ео.
 bool MoviePlay::checkSeat(short x, short y) {
-    if (x > 5 || y > 5 || x < 1 || y < 1) {
-        cout << "Л·≤К╙╩К░° Л·┘К═╔Л·┘К▀┬К▀╓" << endl;
-    }
-    else {
-        if (seat[x - 1][y - 1] == true) {
-            return true;
-        }
-        else if (seat[x - 1][y - 1] == false) {
-            return false;
-        }
-    }
-    return false;
+	if (x > 5 || y > 5 || x < 1 || y < 1) {
+		cout << "юъ╦Ь╣х ют╥бют╢о╢ы" << endl;
+	}
+	else {
+		if (seat[x - 1][y - 1] == true) {
+			return true;
+		}
+		else if (seat[x - 1][y - 1] == false) {
+			return false;
+		}
+	}
+	return false;
 }
 
-//Л≤┬К╖╓М∙═ К∙▄К┼■ status True, Л╥╗Л├▄М∙═К∙▄К┼■ Status False.
+//©╧╦егр ╤╖╢б status True, цК╪ргр╤╖╢б Status False.
 void MoviePlay::changeSeat(short x, short y, bool status) {
-    if (x > 5 || y > 5 || x < 1 || y < 1) {
-        cout << "Л·≤К╙╩К░° Л·┘К═╔Л·┘К▀┬К▀╓" << endl;
-    }
-    else {
-        
-        if (status == true) {
-            if (checkSeat(x,y) == true) {
-                cout << "Л╒▄Л└²Л²╢ Л╟╪Л┼╣К▀┬К▀╓." << endl;
-            }
-            else {
-                seat[x - 1][y - 1] = true;
-                cout << "Л╒▄Л└² Л≤┬К╖╓ Л≥└Кё▄" << endl;
-            }
-        }
-        else {
-            if (checkSeat(x, y) == false) {
-                cout << "Л╒▄Л└²Л²╢ Л≤┬Л∙╫К░° Л┐│М┐°Й╟─ Л∙└К▀≥К▀┬К▀╓." << endl;
-            }
-            else {
-                seat[x - 1][y - 1] = false;
-                cout << "Л╒▄Л└² Л╥╗Л├▄ Л≥└Кё▄" << endl;
-            }
-        }
-        printSeat();
-    }
-    
+	if (x > 5 || y > 5 || x < 1 || y < 1) {
+		cout << "юъ╦Ь╣х ют╥бют╢о╢ы" << endl;
+	}
+	else {
+
+		if (status == true) {
+			if (checkSeat(x, y) == true) {
+				cout << "аб╪╝юл ц║╫ю╢о╢ы." << endl;
+			}
+			else {
+				seat[x - 1][y - 1] = true;
+				cout << "аб╪╝ ©╧╦е ©о╥А" << endl;
+			}
+		}
+		else {
+			if (checkSeat(x, y) == false) {
+				cout << "аб╪╝юл ©╧╬Ю╣х ╩Себ╟║ ╬ф╢у╢о╢ы." << endl;
+			}
+			else {
+				seat[x - 1][y - 1] = false;
+				cout << "аб╪╝ цК╪р ©о╥А" << endl;
+			}
+		}
+		printSeat();
+	}
+
 }
 
-//Л≤┬К╖╓ Й╟─К┼╔М∙° К╧┬Л·░К╕╛ К╕╛М└╢.
+//©╧╦е ╟║╢игя ╨Сюз╦╝ ╦╝ео.
 unsigned short MoviePlay::restSeat() {
-    unsigned short count = 0;
-    for (int i = 0; i < SIZE_ROW; i++) {
-        for (int j = 0; j < SIZE_COLUMN; j++) {
-            if (seat[i][j] == false) {
-                count++;
-            }
-        }
-    }
-    return count;
+	unsigned short count = 0;
+	for (int i = 0; i < SIZE_ROW; i++) {
+		for (int j = 0; j < SIZE_COLUMN; j++) {
+			if (seat[i][j] == false) {
+				count++;
+			}
+		}
+	}
+	return count;
 }
-
