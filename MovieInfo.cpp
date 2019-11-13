@@ -12,7 +12,6 @@ MovieInfo::MovieInfo(string title, string pd, short runningTime, int price){
     this->pd = pd;
     this->runningTime = runningTime;
     this->price = price;
-    
     cout<<"movie 객체 생성"<<endl;
 }
 
