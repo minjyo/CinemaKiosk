@@ -44,10 +44,8 @@ class MoviePlay {
 
 private:
 	bool seat[SIZE_ROW][SIZE_COLUMN];
-	unsigned short startTime;           //시작 시간
-	unsigned short endTime;             //종료 시간
-
 public:
+
 	MovieInfo* info;                   //영화 정보
 	MoviePlay* nextPlay;               //현재 관 다음 상영 영화
 	MoviePlay(short sTime, MovieInfo* mInfo, MoviePlay* nextP);          //생성자
@@ -56,6 +54,8 @@ public:
 	~MoviePlay();
 	void printSeat();
 	unsigned short restSeat();
+	unsigned short startTime;           //시작 시간
+	unsigned short endTime;             //종료 시간
 };
 
 
@@ -76,9 +76,9 @@ public:
 	~MovieRoom();
 	void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	void setStatus(bool status);
-	bool canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
-	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
-	void printTimeTable(); //영화관의 영화 타임 테이블 출력
+	MoviePlay* canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
+	void addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
+	void printTimeTable(); //영화관의 영화 타임 테이블 출력s
 };
 
 /* 예매 정보 객체 */
