@@ -40,6 +40,7 @@ int main()
 	room1.addMovieToRoom(&Joc, 1030);
 	cout << room1.movieCount << endl;
 	room1.printTimeTable();
+	room1.printTimeTable();
 	/*mov.printSeat();
 	mov.changeSeat(1, 1, true);
 	mov.changeSeat(3, 1, true);
