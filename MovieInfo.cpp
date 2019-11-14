@@ -27,12 +27,12 @@ Info MovieInfo::getInfo() {
 }
 
 void MovieInfo::printInfo() {
-	cout << "       영화 제목       영화 감독       러닝타임        " << endl;
+	//cout << "       영화 제목       영화 감독       러닝타임        " << endl;
 
-	cout.fill(' ');
-	cout.width(10);
+	//cout.fill(' ');
+	//cout.width(10);
 
-	cout << title;
-	cout << pd;
-	cout << runningTime;
+	cout << title<<"\t";
+	cout << pd << "\t";
+	cout << runningTime << "\t";
 }

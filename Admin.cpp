@@ -89,15 +89,14 @@ Ticket* Admin::findTicket(int tNumber) {
 }
 
 //예매 번호로 티켓 정보 출력
-void Admin::printTicket(int tNumber) {
-	Ticket* temp = findTicket(tNumber);
-
-	if (temp != NULL) {
-		temp->printTicket();
-		return;
-	}
-	cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
-}
+//void Admin::printTicket(int tNumber) {
+//	Ticket* temp = findTicket(tNumber);
+//
+//	if (temp != NULL) {
+//		temp->printTicket();
+//	}
+//	cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
+//}
 
 //예매
 void Admin::addTicket(MoviePlay* movie) {

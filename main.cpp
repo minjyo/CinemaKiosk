@@ -8,6 +8,7 @@
 
 #include "Header.hpp"
 #include <iostream>
+#include <list>
 
 using namespace std;
 
@@ -33,7 +34,13 @@ int main()
 
 	MovieInfo Joc("조커", "조커2", 130, 1000);
 	MoviePlay mov(1330, &Joc, NULL);
-	mov.printSeat();
+	MovieRoom room1(1);
+	room1.addMovieToRoom(&Joc, 1500);
+	room1.addMovieToRoom(&Joc, 1000);
+	room1.addMovieToRoom(&Joc, 1030);
+	cout << room1.movieCount << endl;
+	room1.printTimeTable();
+	/*mov.printSeat();
 	mov.changeSeat(1, 1, true);
 	mov.changeSeat(3, 1, true);
 	cout << mov.restSeat() << endl;
@@ -46,7 +53,7 @@ int main()
 	cout << "러닝타임: " << info.runningTime / 100 << "시간 " << info.runningTime % 100 << "분" << endl;
 
 	cout << "wjdrmsdudqkqh: " << info.runningTime / 100 << "정근영바보 " << info.runningTime % 100 << "분" << endl;
-
+*/
 
 	return 0;
 }

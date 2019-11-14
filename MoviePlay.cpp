@@ -1,6 +1,8 @@
 #include "Header.hpp"
 
+MoviePlay::MoviePlay() {
 
+}
 MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
 	//this->seat[SIZE_ROW][SIZE_COLUMN] = { false, };
 	Info temp = minfo->getInfo();
