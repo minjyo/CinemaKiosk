@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <list>
 
 using namespace std;
 
@@ -43,9 +44,9 @@ private:
 class MoviePlay {
 
 private:
-	bool seat[SIZE_ROW][SIZE_COLUMN];
+	bool seat[SIZE_ROW][SIZE_COLUMN] = { false, };
 public:
-
+	MoviePlay();
 	MovieInfo* info;                   //영화 정보
 	MoviePlay* nextPlay;               //현재 관 다음 상영 영화
 	MoviePlay(short sTime, MovieInfo* mInfo, MoviePlay* nextP);          //생성자
@@ -60,17 +61,14 @@ public:
 
 
 class MovieRoom {
-
 private:
-	class Node {
-		MoviePlay* movie;
-		Node* nextNode;
-	};
 	char roomNumber;
 	bool status;
-	MoviePlay* head;
-	unsigned short movieCount;
+	MoviePlay* head = new MoviePlay;
+
 public:
+	list<MoviePlay> movielist;
+	unsigned short movieCount;
 	MovieRoom();
 	MovieRoom(char roomNumber);
 	~MovieRoom();
