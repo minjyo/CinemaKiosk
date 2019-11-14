@@ -1,98 +1,16 @@
-#include "Header.hpp"
+#include "header.hpp"
 
-MoviePlay::MoviePlay() {
-
-}
-MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
-	//this->seat[SIZE_ROW][SIZE_COLUMN] = { false, };
-	Info temp = minfo->getInfo();
-	unsigned short running_time = temp.runningTime;
-
-	/* ºÐÀÇ ÇÕÀÌ 60ºÐÀÌ ³ÑÀ¸¸é */
-	if (((sTime % 100) + (running_time % 100)) > 60) {
-		/* 60ºÐ »©°í 1½Ã°£ ´õÇÏ´Ï±î 40À» ´õÇÔ */
-		this->endTime += 40;
-	}
-	else {
-		this->endTime = sTime + running_time;
-	}
-	this->info = minfo;
-	//this->nextPlay = nextP;
-	nextPlay = NULL;
-	this->startTime = sTime;
-}
-
-MoviePlay::~MoviePlay() {
-}
-
-//ÁÂ¼® ÇöÈ² Ãâ·Â. ¿¹¸Å °¡´ÉÇÏ¸é ¢Ì, ¾ÈµÇ¸é ¡á
-void MoviePlay::printSeat() {
-	for (int i = 0; i < SIZE_ROW; i++) {
-		for (int j = 0; j < SIZE_COLUMN; j++) {
-			if (seat[i][j] == true)
-				cout << "¢Ì";
-			else
-				cout << "¡à";
-		}
-		cout << endl;
-	}
-}
-
-//ÇØ´ç ÁÂÇ¥¿¡ ÀÖ´Â ÁÂ¼®ÀÌ ¿¹¸Å °¡´ÉÇÑÁö ¸®ÅÏ. ÀÚ¸®°¡ ÀÌ¹Ì ¿¹¾àµÇ¾î ÀÖÀ¸¸é True, ±×·¸Áö ¾ÊÀ» °æ¿ì False ¸®ÅÏ.
-bool MoviePlay::checkSeat(short x, short y) {
-	if (x > 5 || y > 5 || x < 1 || y < 1) {
-		cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù" << endl;
-	}
-	else {
-		if (seat[x - 1][y - 1] == true) {
-			return true;
-		}
-		else if (seat[x - 1][y - 1] == false) {
-			return false;
-		}
-	}
-	return false;
-}
-
-//¿¹¸ÅÇÒ ¶§´Â status True, Ãë¼ÒÇÒ¶§´Â Status False.
-void MoviePlay::changeSeat(short x, short y, bool status) {
-	if (x > 5 || y > 5 || x < 1 || y < 1) {
-		cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù" << endl;
-	}
-	else {
-
-		if (status == true) {
-			if (checkSeat(x, y) == true) {
-				cout << "ÁÂ¼®ÀÌ Ã¡½À´Ï´Ù." << endl;
-			}
-			else {
-				seat[x - 1][y - 1] = true;
-				cout << "ÁÂ¼® ¿¹¸Å ¿Ï·á" << endl;
-			}
-		}
-		else {
-			if (checkSeat(x, y) == false) {
-				cout << "ÁÂ¼®ÀÌ ¿¹¾àµÈ »óÅÂ°¡ ¾Æ´Õ´Ï´Ù." << endl;
-			}
-			else {
-				seat[x - 1][y - 1] = false;
-				cout << "ÁÂ¼® Ãë¼Ò ¿Ï·á" << endl;
-			}
-		}
-		printSeat();
-	}
-
-}
-
-//¿¹¸Å °¡´ÉÇÑ ºóÀÚ¸® ¸®ÅÏ.
-unsigned short MoviePlay::restSeat() {
-	unsigned short count = 0;
-	for (int i = 0; i < SIZE_ROW; i++) {
-		for (int j = 0; j < SIZE_COLUMN; j++) {
-			if (seat[i][j] == false) {
-				count++;
-			}
-		}
-	}
-	return count;
+void MoviePlay::printSeat(){
+    short i, j;
+    for(i=0 ; i < SIZE_ROW ; i++){
+        for(j=0 ; j < SIZE_COLUMN ; j++){
+                if(seat[i][j] == false){
+                    cout << "â–¡" ;
+                }
+                else{
+                    cout << "â–©" ;
+                }
+        }
+        cout << endl;
+    }
 }
