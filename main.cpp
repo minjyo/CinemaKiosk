@@ -14,6 +14,7 @@ using namespace std;
 
 int main()
 {
+	// 정식 왔다감
 	// MoviePlay test;
 	//    test.chooseSeat();
 	//    test.add(10);
