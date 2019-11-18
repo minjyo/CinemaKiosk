@@ -5,7 +5,7 @@
 //  Created by minjyo on 12/11/2019.
 //  Copyright © 2019 minjyo. All rights reserved.
 //
-//﻿#pragma once
+#pragma once
 #define SIZE_COLUMN 5
 #define SIZE_ROW 5
 #define MOVIE_INFO_ARR_SIZE 10
@@ -117,7 +117,7 @@ public:
 
 	/* 영화 정보 관련 함수 (추가, 삭제) */
 	void createMovieInfo();   //영화 정보 만들기
-	void deleteMovieInfo(MovieInfo* info);   //영화 정보 삭제하면서 해당 상영영화 모두 삭제
+	void deleteMovieInfo(short index);   //영화 정보 삭제하면서 해당 상영영화 모두 삭제
     void deleteMovieInfo(short index);   //영화 정보 삭제하면서 해당 상영영화 모두 삭제
 
 	/* 영화관 관련 함수 (영화관&좌석 상태 관리, 상영 영화 추가, 삭제) */
