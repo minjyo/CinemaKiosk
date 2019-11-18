@@ -131,5 +131,5 @@ public:
 	void deleteTicket(int tNumber);    //예매 번호로 티켓 삭제 (예매취소)
 	void addTicket(MoviePlay* movie); //예매
 
-void gotoxy(short x, short y);
+    void gotoxy(short x, short y);
 };

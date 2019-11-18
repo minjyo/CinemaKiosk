@@ -23,8 +23,8 @@ void MovieRoom::printTimeTable() {
 
 	cout << "------------------- " << (int)roomNumber << "관 -------------------" << endl;
 	cout << "영화 제목       시작 시간       잔여좌석        " << endl;
-	//cout.fill(' ');
-	//cout.width(10);
+	cout.fill(' ');
+	cout.width(10);
 
 	while (temp->nextPlay != NULL) {
 		temp = temp->nextPlay;
