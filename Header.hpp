@@ -118,7 +118,6 @@ public:
 	/* 영화 정보 관련 함수 (추가, 삭제) */
 	void createMovieInfo();   //영화 정보 만들기
 	void deleteMovieInfo(short index);   //영화 정보 삭제하면서 해당 상영영화 모두 삭제
-    void deleteMovieInfo(short index);   //영화 정보 삭제하면서 해당 상영영화 모두 삭제
 
 	/* 영화관 관련 함수 (영화관&좌석 상태 관리, 상영 영화 추가, 삭제) */
 	void setMovieRoomStatus(MovieRoom& room, bool status);            //영화관 사용 가능, 불가능
@@ -131,5 +130,5 @@ public:
 	void deleteTicket(int tNumber);    //예매 번호로 티켓 삭제 (예매취소)
 	void addTicket(MoviePlay* movie); //예매
 
-    void gotoxy(short x, short y);
+	void gotoxy(short x, short y);
 };

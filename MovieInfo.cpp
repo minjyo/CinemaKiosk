@@ -32,7 +32,7 @@ void MovieInfo::printInfo() {
 	cout.fill(' ');
 	cout.width(10);
 
-	cout << title<<"\t";
+	cout << title << "\t";
 	cout << pd << "\t";
 	cout << runningTime << "\t";
 }
