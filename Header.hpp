@@ -1,4 +1,4 @@
-//
+﻿//
 //  Header.hpp
 //  CinemaKiosk
 //
@@ -32,8 +32,8 @@
 #include <iostream>
 #include <string>
 #include <list>
-//#include <windows.h>
-//#include <conio.h>
+#include <windows.h>
+#include <conio.h>
 
 using namespace std;
 

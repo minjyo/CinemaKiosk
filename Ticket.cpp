@@ -1,4 +1,4 @@
-#include "header.hpp"
+﻿#include "header.hpp"
 
 Ticket::Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* nTicket) {
 	number = n;
