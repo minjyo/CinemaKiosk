@@ -11,12 +11,29 @@
 #define MOVIE_INFO_ARR_SIZE 10
 #define MOVIE_ROOM_ARR_SIZE 10
 
+
+
+#define USER 'H'
+#define CHOOSEMOVIE 11
+#define TICKET 12
+
+#define ADMIN 'M'
+#define MANMOVIE 21
+#define MAKEMOVIE 22
+#define DELETEALL 23
+#define MANROOM 24
+#define ROOMSTATUS 25
+#define ADDMOVIE 26
+#define DELETEMOVIE 27
+
+
+
 #include <stdio.h>
 #include <iostream>
 #include <string>
 #include <list>
-#include <windows.h>
-#include <conio.h>
+//#include <windows.h>
+//#include <conio.h>
 
 using namespace std;
 
