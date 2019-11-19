@@ -1,4 +1,4 @@
-#include "Header.hpp"
+﻿#include "Header.hpp"
 
 MovieRoom::MovieRoom(char roomNumber) {
 	list<MoviePlay> movielist;
@@ -133,6 +133,27 @@ void MovieRoom::addMovieToRoom(MoviePlay& movie) {
 	}
 }
 
-void MovieRoom::deleteMovieInfo(class MovieInfo*) {
+//1119 근영수정 class MovieInfo * 에서 MovieInfo* mov로
+void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
+	
+	MoviePlay* start = head;
+	MoviePlay* temp = start->nextPlay;
 
+	int i = 0;
+	int deleteCount = 0;
+
+	while (temp != NULL) {
+		
+		while (i < movieCount) {
+
+			if (temp->info == mov) {
+
+				start->nextPlay = temp->nextPlay;
+				temp ->~MoviePlay();
+			}
+			i++;
+		}
+	}
+	cout << "삭제완료!" << endl;
+	this->movieCount -= deleteCount;
 }

@@ -1,4 +1,4 @@
-#include "header.hpp"
+﻿#include "header.hpp"
 
 Admin::Admin() {
 	ticketHead = NULL;

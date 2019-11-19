@@ -1,4 +1,4 @@
-//
+﻿//
 //  main.cpp
 //  CinemaKiosk
 //
@@ -45,6 +45,7 @@ int main()
 	room1.printTimeTable();
 	mov.changeSeat(1, 1, true);
 	mov.changeSeat(3, 3, true);
+	room1.deleteMovieInfo(&Joc);
 	//room1.printTimeTable();
 	/*mov.printSeat();
 	mov.changeSeat(1, 1, true);
