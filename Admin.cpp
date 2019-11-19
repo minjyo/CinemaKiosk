@@ -116,7 +116,7 @@ void Admin::addTicket(MoviePlay* movie)
 	short x, y;                         //좌표 변수
 	short restSeat = movie->restSeat(); //잔여 좌석
 	short i, temp;                      //반복문
-	short count=0;                    //몇명 예매했는지
+	short count;                    //몇명 예매했는지
 	bool check;
 	int key; //입력된 키보드 값
 
@@ -137,6 +137,8 @@ void Admin::addTicket(MoviePlay* movie)
 			cout << "잔여 좌석보다 많습니다." << endl;
 		}
 	} while (check);
+
+	count = numberOfHead;
 
 	//입력받은 인원수만큼 short 배열 만들기 & -1로 초기화
 	short* seatArr = new short[numberOfHead];
@@ -259,6 +261,11 @@ void Admin::addTicket(MoviePlay* movie)
 		Ticket newTicket(numberOfHead, ticketTail->ticketNumber + 1, seatArr, movie, 0x00);
 		ticketTail->nextTicket = &newTicket;
 		ticketTail = &newTicket;
+	}
+
+	/* MoviePlay에 좌석 정보 반영 */
+	for(i=0;i<numberOfHead;i++){
+		movie->changeSeat(seatArr[i]/10, seatArr[i]%10, true);
 	}
 }
 
