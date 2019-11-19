@@ -5,7 +5,7 @@ MovieRoom::MovieRoom(char roomNumber) {
 	head = new MoviePlay();
 	head->nextPlay = NULL;
 	this->roomNumber = roomNumber;
-	this->status = false;
+	this->status = true;
 	this->movieCount = 0;
 }
 

@@ -14,52 +14,71 @@ using namespace std;
 
 int main()
 {
-	// MoviePlay test;
-	//    test.chooseSeat();
-	//    test.add(10);
-	//    test.add(20);
-	//    test.add(30);
-	//    test.add(3, 40);
-	//    test.remove(0);
-	//    test.set(0, 100);
-
-	//    for (int i = 0; i < test.size(); i++)
-	//    {
-	//        cout << "data : " << test.get(i) << endl;
-	//    }
-	//    cout << "size : " << test.size() << endl;
-	//    cout << "isEmpty : " << test.isEmpty() << endl;
-	//
-	//    test.remove(10);
-
-	MovieInfo Joc("조커", "조커2", 130, 1000);
-	MoviePlay mov(1330, &Joc, NULL);
-	MoviePlay mov1(1000, &Joc, NULL);
-	MovieRoom room1(1);
-	room1.addMovieToRoom(&Joc, 1500);
-	room1.addMovieToRoom(&Joc, 1000);
-	room1.addMovieToRoom(&Joc, 1030);
-	//room1.addMovieToRoom(mov);
-	//room1.addMovieToRoom(mov1);
-	cout << room1.movieCount << endl;
-	room1.printTimeTable();
-	mov.changeSeat(1, 1, true);
-	mov.changeSeat(3, 3, true);
-	room1.printTimeTable();
-	/*mov.printSeat();
-	mov.changeSeat(1, 1, true);
-	mov.changeSeat(3, 1, true);
-	cout << mov.restSeat() << endl;
-
-	MovieInfo movie("조커", "Jocker", 1350, 1000);
-
-	Info info = movie.getInfo();
-	cout << "제목: " << info.title << endl;
-	cout << "감독: " << info.pd << endl;
-	cout << "러닝타임: " << info.runningTime / 100 << "시간 " << info.runningTime % 100 << "분" << endl;
-
-	cout << "wjdrmsdudqkqh: " << info.runningTime / 100 << "정근영바보 " << info.runningTime % 100 << "분" << endl;
-*/
-
+    char mode = USER;
+    char *input;
+    
+    while(input[0]!='Q'){
+        //관리자, 사용자 권한 변경
+        if(input[0]=='M'){
+            mode = ADMIN;
+            continue;
+        }
+        if(input[0]=='H'){
+            mode = USER;
+            continue;
+        }
+        
+        switch(mode){
+            case USER: //사용자 홈
+                break;
+            case CHOOSEMOVIE: //영화 선택
+                //전체 영화 리스트 출력
+                
+                //선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
+                
+                //선택한 영화의 좌석 상태 출력
+                
+                //좌석 선택
+                
+                //예매 결과 출력
+                
+                //티켓에 예매 정보 추가
+                break;
+            case TICKET: //티켓 정보 확인
+                //티켓 번호 입력
+                
+                //티켓 정보 출력
+                break;
+                
+                
+            case ADMIN: //관리자 홈
+                break;
+            case MANMOVIE: // 영화 관리
+                //전체 영화 리스트 출력
+                break;
+            case MAKEMOVIE: //새로운 영화 만들어서 추가
+                break;
+            case DELETEALL: //영화 삭제 (모든 영화관에서 삭제)
+                break;
+            case MANROOM: //영화관 관리
+                //영화관 선택
+                break;
+            case ROOMSTATUS: //영화관 상태 변경
+                break;
+            case ADDMOVIE: //영화관에 영화 추가
+                //영화관의 상영 영화 리스트 출력
+                //전체 영화 리스트 출력
+                //영화 선택 후, 영화관에 추가 가능한지 검사
+                //영화관
+                break;
+            case DELETEMOVIE: //영화관에 영화 삭제
+                //영화관의 상영 영화 리스트 출력
+                //영화 선택 후, 삭제
+                //영화관의 상영 영화 리스트 출력
+                break;
+            default:
+                break;
+        }
+    }
 	return 0;
 }
