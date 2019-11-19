@@ -117,7 +117,7 @@ void MovieRoom::addMovieToRoom(MovieInfo* info, short select) {
 }
 
 void MovieRoom::addMovieToRoom(MoviePlay& movie) {
-	
+
 	MoviePlay* prevmov = canAddMovie(movie.info, movie.startTime);
 	/*MoviePlay(short sTime, MovieInfo * minfjdo, MoviePlay * nextP)*/
 	//temp에 넣으려는 영화들의 정보를 넣어준다.
@@ -131,4 +131,8 @@ void MovieRoom::addMovieToRoom(MoviePlay& movie) {
 		prevmov->nextPlay = &movie;
 		movieCount++;
 	}
+}
+
+void MovieRoom::deleteMovieInfo(class MovieInfo*) {
+
 }
