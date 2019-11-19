@@ -264,8 +264,8 @@ void Admin::addTicket(MoviePlay* movie)
 	}
 
 	/* MoviePlay에 좌석 정보 반영 */
-	for(i=0;i<numberOfHead;i++){
-		movie->changeSeat(seatArr[i]/10, seatArr[i]%10, true);
+	for (i = 0; i < numberOfHead; i++) {
+		movie->changeSeat(seatArr[i] / 10, seatArr[i] % 10, true);
 	}
 }
 

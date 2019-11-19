@@ -12,8 +12,9 @@
 #define MOVIE_ROOM_ARR_SIZE 10
 
 
+#define HOME 'H'
 
-#define USER 'H'
+#define USER 'U'
 #define CHOOSEMOVIE 11
 #define TICKET 12
 
