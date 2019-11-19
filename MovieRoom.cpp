@@ -135,15 +135,15 @@ void MovieRoom::addMovieToRoom(MoviePlay& movie) {
 
 //1119 근영수정 class MovieInfo * 에서 MovieInfo* mov로
 void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
-	
+
 	MoviePlay* start = head;
 	MoviePlay* temp = start->nextPlay;
 
 	int i = 0;
 	int deleteCount = 0;
 
-	while (temp != NULL) {
-		
+	/*while (temp != NULL) {
+
 		while (i < movieCount) {
 
 			if (temp->info == mov) {
@@ -153,7 +153,7 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 			}
 			i++;
 		}
-	}
+	}*/
 	cout << "삭제완료!" << endl;
 	this->movieCount -= deleteCount;
 }
