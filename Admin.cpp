@@ -143,17 +143,17 @@ void Admin::addTicket(MoviePlay* movie)
 	system("cls");
 	movie->printSeat();
 
-	//인원수 입력받기, 예외처리 : 음수거나 잔여좌석보다 크게 입력받을 때
+	//인원수 입력받기, 예외처리 : 0또는 음수거나 잔여좌석보다 크게 입력받을 때
 	do
 	{
-		gotoxy(0, SIZE_ROW);
-		cout << "인원 수를 입력하세요 : ";
 		gotoxy(0, SIZE_ROW + 1);
+		cout << "인원 수를 입력하세요 : ";
+		gotoxy(0, SIZE_ROW + 2);
 		cin >> numberOfHead;
 		check = (numberOfHead <= 0) || (numberOfHead > restSeat);
 		if (check)
 		{
-			gotoxy(0, SIZE_ROW + 2);
+			gotoxy(0, SIZE_ROW + 3);
 			cout << "잔여 좌석보다 많습니다." << endl;
 		}
 	} while (check);
@@ -169,9 +169,10 @@ void Admin::addTicket(MoviePlay* movie)
 
 	system("cls");
 	movie->printSeat();
-	gotoxy(0, SIZE_ROW);
+	gotoxy(0, SIZE_ROW + 1);
 	cout << "원하는 좌석을 선택하세요." << endl;
 	cout << "  명 남았습니다." << endl;
+	x=1; y=1;
 
 	while (count != 0)
 	{
@@ -186,25 +187,25 @@ void Admin::addTicket(MoviePlay* movie)
 				switch (key)
 				{
 				case 72:
-					if (y > 0)
+					if (y > 1)
 					{
 						y--;
 					}
 					break;
 				case 75:
-					if (x > 0)
+					if (x > 1)
 					{
 						x--;
 					}
 					break;
 				case 77:
-					if (x < SIZE_COLUMN - 1)
+					if (x < SIZE_COLUMN)
 					{
 						x++;
 					}
 					break;
 				case 80:
-					if (y < SIZE_ROW - 1)
+					if (y < SIZE_ROW)
 					{
 						y++;
 					}
@@ -219,7 +220,7 @@ void Admin::addTicket(MoviePlay* movie)
 				if (key == 13)
 				{
 					check = false;
-					temp = x * 10 + y;
+					temp = (x-1) * 10 + (y-1);
 
 					for (i = 0; i < numberOfHead; i++)
 					{
