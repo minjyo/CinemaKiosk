@@ -89,6 +89,26 @@ void Admin::printTicket(int tNumber) {
 
 //예매 번호로 티켓 삭제 (예매취소)
 void Admin::deleteTicket(int tNumber) {
+	//예매 정보 없을 경우
+	if(ticketTail->ticketNumber < tNumber){
+		cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
+	}
+	else{
+		Ticket* temp = ticketHead;
+		while(temp->nextTicket->ticketNumber < tNumber){
+			temp = temp->nextTicket;
+		}
+		//삭제
+		if(temp->nextTicket->ticketNumber == tNumber){
+			Ticket* temp2 = temp->nextTicket;			//삭제될 티켓
+			temp->nextTicket = temp2->nextTicket;
+			temp2->~Ticket();
+		}
+		else{
+			cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
+		}
+	}
+
 
 }
 void Admin::deleteMovieInfo(short index)
