@@ -133,27 +133,63 @@ void MovieRoom::addMovieToRoom(MoviePlay& movie) {
 	}
 }
 
-//1119 근영수정 class MovieInfo * 에서 MovieInfo* mov로
+//1125 근영 수정/추가 삭제하는 영화 개수는 확인용, 지워도 무방
 void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 
 	MoviePlay* start = head;
 	MoviePlay* temp = start->nextPlay;
 
-	int i = 0;
 	int deleteCount = 0;
 
-	/*while (temp != NULL) {
-
-		while (i < movieCount) {
-
-			if (temp->info == mov) {
-
-				start->nextPlay = temp->nextPlay;
-				temp ->~MoviePlay();
-			}
-			i++;
+	while (temp != NULL) {
+		if (temp->info == mov) {
+			start->nextPlay = temp->nextPlay;
+			temp ->~MoviePlay();
+			temp = start->nextPlay;
+			deleteCount++;
 		}
-	}*/
-	cout << "삭제완료!" << endl;
+		else {
+			start = temp;
+			temp = start->nextPlay;
+		}
+	}
+	cout << "삭제완료! 삭제 개수 " << deleteCount << "개\n" << endl;
 	this->movieCount -= deleteCount;
+}
+
+//1125 근영 추가 일치하는 영화 개수는 확인용, 지워도 무방
+void MovieRoom::printMovieInfo(MovieInfo* mov) {
+
+	MoviePlay* start = head;
+	MoviePlay* temp = start->nextPlay;
+
+	int Count = 0;
+
+	char* moviename;
+	char* starttime;
+	char* endtime;
+	char* restseat;
+
+	cout << "------------------- " << (int)roomNumber << "관 -------------------" << endl;
+	cout.setf(ios::left);
+	cout << setw(20) << "시작 시간";
+	cout << setw(20) << "종료 시간";
+	cout << setw(20) << "잔여 좌석" << endl;
+
+	while (temp != NULL) {
+		if (temp->info == mov) {
+			Info movieinfo = temp->info->getInfo();
+			cout << setw(20) << temp->startTime;
+			cout << setw(20) << temp->endTime;
+			cout << temp->restSeat() << "/25" << endl;
+			start = temp;
+			temp = start->nextPlay;
+			Count++;
+		}
+		else {
+			start = temp;
+			temp = start->nextPlay;
+		}
+	}
+	cout << "영화 개수 " << Count << "개\n" << endl;
 }
