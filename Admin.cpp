@@ -1,11 +1,11 @@
-﻿#include "header.hpp"
+#include "header.hpp"
 
 Admin::Admin() {
 	ticketHead = NULL;
 	ticketTail = NULL;
 }
 
-//영화 리스트 출력
+//전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
 	for (int i = 0; i < MOVIE_INFO_ARR_SIZE; i++) {
 		infoTable[i]->printInfo();
@@ -43,6 +43,20 @@ void Admin::createMovieInfo() {
 		maxIndex++;
 		cout << "영화가 추가되었습니다.";
 	}
+}
+
+void Admin::printAllMovies(string name){
+    for(int i=0; i<MOVIE_ROOM_ARR_SIZE; i++){
+        cout<< i+1 << "관" << endl;
+        
+        MoviePlay* movie = roomTable[i]->head;
+        for(int j=0; j<roomTable[i]->movieCount; j++){
+            if(movie->info->title==name){
+                movie->info->printInfo();
+                cout << "잔여좌석: " << movie->restSeat() << endl;
+            }
+        }
+    }
 }
 
 //영화관 사용 가능, 불가능

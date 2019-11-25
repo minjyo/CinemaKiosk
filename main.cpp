@@ -1,4 +1,4 @@
-﻿//
+//
 //  main.cpp
 //  CinemaKiosk
 //
@@ -16,11 +16,17 @@ int main()
 {
 	char mode = HOME;
 	char input[10] = { '\0', };
+    
+    //기본 객체 생성(admin, movie, movieroom)
+    Admin admin;
+    
+    
+    
+    //영화관 기본 셋팅
 
+    
 	while (input[0] != 'Q')
 	{
-		
-
 		//관리자, 사용자 권한 변경
 		if (input[0] == 'M')
 		{
@@ -57,16 +63,50 @@ int main()
 		case CHOOSEMOVIE: //영화 선택
 			cout << "영화 선택" << endl;
 			//전체 영화 리스트 출력
-
+            admin.printInfoTable();
+        
+            int index;
+            cout << "예매하실 영화를 선택해주세요 : ";
+            cin >> index;
+            
 			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
-
-			//선택한 영화의 좌석 상태 출력
-
-			//좌석 선택
+            string title = admin.infoTable[index]->title;
+            admin.printAllMovies(title);
+            
+            cout << "원하시는 영화관을 선택해주세요 : ";
+            cin >> index;
+                
+			//선택한 영화가 상영되는 영화관의 좌석 상태 출력하고 좌석 선택
+            MoviePlay* temp = admin.roomTable[index+1]->head;
+            while(temp!=NULL){
+                if(temp->info->title==title){
+                    temp->printSeat();
+                    int x,y;
+                    
+                    while(1){
+                        cout << "원하시는 좌석을 입력해주세요(x) : ";
+                        cin >> x;
+                        cout << "원하시는 좌석을 입력해주세요(y) : ";
+                        cin >> y;
+                        if(temp->checkSeat(x, y)){
+                            temp->changeSeat(x, y, false); //false가 예매 완료
+                            break;
+                        }else{
+                            cout << "해당 좌석은 예매할 수 없습니다. 다시 선택해주세요." << endl;
+                        }
+                    }
+                    break;
+                }
+                temp = temp->nextPlay;
+            }
 
 			//예매 결과 출력
-
+            Ticket ticket(/*TODO*/);
+            ticket.printTicket();
 			//티켓에 예매 정보 추가
+            admin.ticketHead->nextTicket=ticket;
+            ticket->nextTicket=admin.ticketTail;
+                
 			mode = USER;
 			break;
 		case TICKET: //티켓 정보 확인

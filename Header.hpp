@@ -1,4 +1,4 @@
-﻿//
+//
 //  Header.hpp
 //  CinemaKiosk
 //
@@ -52,9 +52,9 @@ public:
 	Info getInfo();
 	void printInfo();
 	MovieInfo* nextInfo;
+    string title;
 
 private:
-	string title;
 	string pd;
 	short runningTime;
 	int price;
@@ -84,9 +84,10 @@ class MovieRoom {
 private:
 	char roomNumber;
 	bool status;
-	MoviePlay* head = new MoviePlay;
+	
 
 public:
+    MoviePlay* head = new MoviePlay;
 	list<MoviePlay> movielist;
 	unsigned short movieCount;
 	MovieRoom();
@@ -121,17 +122,21 @@ class Admin
 {
 private:
 	short maxIndex = 0;
-	MovieInfo* infoTable[MOVIE_INFO_ARR_SIZE];
-	MovieRoom* roomTable[MOVIE_ROOM_ARR_SIZE];
-	Ticket* ticketHead;
-	Ticket* ticketTail;
+
 public:
 	Admin();
 	~Admin();
 
+    MovieInfo* infoTable[MOVIE_INFO_ARR_SIZE];
+    MovieRoom* roomTable[MOVIE_ROOM_ARR_SIZE];
+    
+    Ticket* ticketHead;
+    Ticket* ticketTail;
 	/* 화면 출력 관련 함수 */
 	void printInfoTable(void);               //영화 리스트 출력 화면 (for문)
 	void printTimetable(short index);  //영화관 선택 시 시작시간 순으로 상영영화 출력(상영 영화 추가 제거 화면)
+    
+    void printAllMovies(string name); //해당 영화를 선택했을 때 그 영화의 모든 관에서의 상영 정보 출력
 
 	/* 영화 정보 관련 함수 (추가, 삭제) */
 	void createMovieInfo();   //영화 정보 만들기
