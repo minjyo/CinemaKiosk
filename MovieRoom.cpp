@@ -160,15 +160,11 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 //1125 근영 추가 일치하는 영화 개수는 확인용, 지워도 무방
 void MovieRoom::printMovieInfo(MovieInfo* mov) {
 
+	mov->printInfo();
 	MoviePlay* start = head;
 	MoviePlay* temp = start->nextPlay;
 
 	int Count = 0;
-
-	char* moviename;
-	char* starttime;
-	char* endtime;
-	char* restseat;
 
 	cout << "------------------- " << (int)roomNumber << "관 -------------------" << endl;
 	cout.setf(ios::left);
