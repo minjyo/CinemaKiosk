@@ -1,4 +1,4 @@
-//
+﻿//
 //  Header.hpp
 //  CinemaKiosk
 //
@@ -53,7 +53,7 @@ public:
 	Info getInfo();
 	void printInfo();
 	MovieInfo* nextInfo;
-    string title;
+	string title;
 
 private:
 	string pd;
@@ -85,10 +85,10 @@ class MovieRoom {
 private:
 	char roomNumber;
 	bool status;
-	
+
 
 public:
-    MoviePlay* head = new MoviePlay;
+	MoviePlay* head = new MoviePlay;
 	list<MoviePlay> movielist;
 	unsigned short movieCount;
 	MovieRoom();
@@ -123,22 +123,22 @@ public:
 class Admin
 {
 private:
-	short maxIndex = 0;
+	
 
 public:
 	Admin();
 	~Admin();
+	short allCount = 0;
+	MovieInfo* infoTable[MOVIE_INFO_ARR_SIZE];
+	MovieRoom* roomTable[MOVIE_ROOM_ARR_SIZE];
 
-    MovieInfo* infoTable[MOVIE_INFO_ARR_SIZE];
-    MovieRoom* roomTable[MOVIE_ROOM_ARR_SIZE];
-    
-    Ticket* ticketHead;
-    Ticket* ticketTail;
+	Ticket* ticketHead;
+	Ticket* ticketTail;
 	/* 화면 출력 관련 함수 */
 	void printInfoTable(void);               //영화 리스트 출력 화면 (for문)
 	void printTimetable(short index);  //영화관 선택 시 시작시간 순으로 상영영화 출력(상영 영화 추가 제거 화면)
-    
-    void printAllMovies(string name); //해당 영화를 선택했을 때 그 영화의 모든 관에서의 상영 정보 출력
+
+	void printAllMovies(string name); //해당 영화를 선택했을 때 그 영화의 모든 관에서의 상영 정보 출력
 
 	/* 영화 정보 관련 함수 (추가, 삭제) */
 	void createMovieInfo();   //영화 정보 만들기
@@ -153,7 +153,7 @@ public:
 	Ticket* findTicket(int tNumber);     //유저 테이블에서 티켓번호로 User* 찾기
 	void printTicket(int tNumber);                        //예매 번호로 티켓 정보 출력 (예매확인 창)
 	void deleteTicket(int tNumber);    //예매 번호로 티켓 삭제 (예매취소)
-	void addTicket(MoviePlay* movie); //예매
+	Ticket* addTicket(MoviePlay* movie); //예매
 
 	void gotoxy(short x, short y);
 };

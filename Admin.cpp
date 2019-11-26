@@ -1,4 +1,4 @@
-#include "header.hpp"
+﻿#include "header.hpp"
 
 Admin::Admin() {
 	ticketHead = NULL;
@@ -7,7 +7,10 @@ Admin::Admin() {
 
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
-	for (int i = 0; i < MOVIE_INFO_ARR_SIZE; i++) {
+	cout << "       영화 제목       영화 감독       러닝타임        " << endl;
+
+	for (int i = 0; i < allCount; i++) {
+		cout << "1. ";
 		infoTable[i]->printInfo();
 	}
 }
@@ -34,29 +37,29 @@ void Admin::createMovieInfo() {
 
 	MovieInfo movie(title, pd, runningTime, price);
 
-	if (maxIndex + 1 >= MOVIE_INFO_ARR_SIZE) {
+	if (allCount + 1 >= MOVIE_INFO_ARR_SIZE) {
 		cout << "최대 영화 개수를 넘었습니다." << endl;
 		return;
 	}
 	else {
-		infoTable[maxIndex + 1] = &movie;
-		maxIndex++;
+		infoTable[allCount + 1] = &movie;
+		allCount++;
 		cout << "영화가 추가되었습니다.";
 	}
 }
 
-void Admin::printAllMovies(string name){
-    for(int i=0; i<MOVIE_ROOM_ARR_SIZE; i++){
-        cout<< i+1 << "관" << endl;
-        
-        MoviePlay* movie = roomTable[i]->head;
-        for(int j=0; j<roomTable[i]->movieCount; j++){
-            if(movie->info->title==name){
-                movie->info->printInfo();
-                cout << "잔여좌석: " << movie->restSeat() << endl;
-            }
-        }
-    }
+void Admin::printAllMovies(string name) {
+	for (int i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+		cout << i + 1 << "관" << endl;
+
+		MoviePlay* movie = roomTable[i]->head;
+		for (int j = 0; j < roomTable[i]->movieCount; j++) {
+			if (movie->info->title == name) {
+				movie->info->printInfo();
+				cout << "잔여좌석: " << movie->restSeat() << endl;
+			}
+		}
+	}
 }
 
 //영화관 사용 가능, 불가능
@@ -104,21 +107,21 @@ void Admin::printTicket(int tNumber) {
 //예매 번호로 티켓 삭제 (예매취소)
 void Admin::deleteTicket(int tNumber) {
 	//예매 정보 없을 경우
-	if(ticketTail->ticketNumber < tNumber){
+	if (ticketTail->ticketNumber < tNumber) {
 		cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
 	}
-	else{
+	else {
 		Ticket* temp = ticketHead;
-		while(temp->nextTicket->ticketNumber < tNumber){
+		while (temp->nextTicket->ticketNumber < tNumber) {
 			temp = temp->nextTicket;
 		}
 		//삭제
-		if(temp->nextTicket->ticketNumber == tNumber){
+		if (temp->nextTicket->ticketNumber == tNumber) {
 			Ticket* temp2 = temp->nextTicket;			//삭제될 티켓
 			temp->nextTicket = temp2->nextTicket;
 			temp2->~Ticket();
 		}
-		else{
+		else {
 			cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
 		}
 	}
@@ -136,15 +139,15 @@ void Admin::deleteMovieInfo(short index)
 	}
 
 	//배열에서 줄여주기
-	for (i = index; i < maxIndex; i++)
+	for (i = index; i < allCount; i++)
 	{
 		infoTable[i] = infoTable[i + 1];
 	}
-	infoTable[maxIndex] = 0x00;
-	maxIndex--;
+	infoTable[allCount] = 0x00;
+	allCount--;
 }
 
-void Admin::addTicket(MoviePlay* movie)
+Ticket* Admin::addTicket(MoviePlay* movie)
 {
 	short numberOfHead;                 //인원 수
 	short x, y;                         //좌표 변수
@@ -186,7 +189,7 @@ void Admin::addTicket(MoviePlay* movie)
 	gotoxy(0, SIZE_ROW + 1);
 	cout << "원하는 좌석을 선택하세요." << endl;
 	cout << "  명 남았습니다." << endl;
-	x=1; y=1;
+	x = 1; y = 1;
 
 	while (count != 0)
 	{
@@ -234,7 +237,7 @@ void Admin::addTicket(MoviePlay* movie)
 				if (key == 13)
 				{
 					check = false;
-					temp = (x-1) * 10 + (y-1);
+					temp = (x - 1) * 10 + (y - 1);
 
 					for (i = 0; i < numberOfHead; i++)
 					{
@@ -284,28 +287,35 @@ void Admin::addTicket(MoviePlay* movie)
 		gotoxy(2 * x, y);
 	}
 
+	Ticket* newTicket;
 	/* 예매가 완료되면 tail다음에 티켓 추가해주기 */
 	if (ticketHead == 0x00)                 //첫 티켓일 경우 tail과 head에 추가
 	{
-		Ticket newTicket(numberOfHead, 100001, seatArr, movie, 0x00);
-		ticketHead = &newTicket;
-		ticketTail = &newTicket;
+		newTicket = new Ticket(numberOfHead, 100001, seatArr, movie, 0x00);
+		ticketHead = newTicket;
+		ticketTail = newTicket;
 	}
 	else
 	{
-		Ticket newTicket(numberOfHead, ticketTail->ticketNumber + 1, seatArr, movie, 0x00);
-		ticketTail->nextTicket = &newTicket;
-		ticketTail = &newTicket;
+		newTicket = new Ticket(numberOfHead, ticketTail->ticketNumber + 1, seatArr, movie, 0x00);
+		ticketTail->nextTicket = newTicket;
+		ticketTail = newTicket;
 	}
 
 	/* MoviePlay에 좌석 정보 반영 */
 	for (i = 0; i < numberOfHead; i++) {
 		movie->changeSeat(seatArr[i] / 10, seatArr[i] % 10, true);
 	}
+
+	return newTicket;
 }
 
 void Admin::gotoxy(short x, short y)
 {
 	COORD Pos = { x - 1, y - 1 };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+Admin::~Admin() {
+
 }
