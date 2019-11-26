@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int main()
+int man()
 {
 	char mode = HOME;
 	char input[10] = { '\0', };
@@ -171,5 +171,23 @@ int main()
 			break;
 		}
 	}
+
+
+	/*MovieRoom r1(1);
+	MovieInfo mov1("Frozen2", "director1", 146, 8000);
+	MovieInfo mov2("Jocker", "director2", 120, 9000);
+	r1.addMovieToRoom(&mov1, 900);
+	r1.addMovieToRoom(&mov2, 1000);
+	r1.addMovieToRoom(&mov2, 1100);
+	r1.addMovieToRoom(&mov1, 1500);
+	r1.addMovieToRoom(&mov1, 1700);
+	r1.addMovieToRoom(&mov2, 1900);
+	r1.printTimeTable();
+
+	r1.deleteMovieInfo(&mov2);
+	r1.printTimeTable();
+
+	r1.printMovieInfo(&mov1);*/
+
 	return 0;
 }
