@@ -17,10 +17,27 @@ int main()
 	char mode = HOME;
 	char input[10] = { '\0', };
 
+	//기본 객체 생성(admin, movie, movieroom)
+	Admin admin;
+
+	//영화관 기본 셋팅
+
+	MovieRoom r1(1);
+	MovieInfo mov1("Frozen2", "director1", 146, 8000);
+	MovieInfo mov2("Jocker", "director2", 120, 9000);
+	r1.addMovieToRoom(&mov1, 900);
+	r1.addMovieToRoom(&mov2, 1000);
+	r1.addMovieToRoom(&mov2, 1100);
+	r1.addMovieToRoom(&mov1, 1500);
+	r1.addMovieToRoom(&mov1, 1700);
+	r1.addMovieToRoom(&mov2, 1900);
+	admin.infoTable[0] = &mov1;
+	admin.allCount++;
+	admin.infoTable[1] = &mov2;
+	admin.allCount++;
+
 	while (input[0] != 'Q')
 	{
-		
-
 		//관리자, 사용자 권한 변경
 		if (input[0] == 'M')
 		{
@@ -54,26 +71,71 @@ int main()
 				mode = TICKET;
 			}
 			break;
-		case CHOOSEMOVIE: //영화 선택
+		case CHOOSEMOVIE: //영화 선택 
+		{
 			cout << "영화 선택" << endl;
 			//전체 영화 리스트 출력
+			admin.printInfoTable();
+
+			int index;
+			cout << "예매하실 영화를 선택해주세요 : ";
+			cin >> index;
 
 			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
+			MovieInfo* movie = admin.infoTable[index - 1];
 
-			//선택한 영화의 좌석 상태 출력
+			admin.roomTable[index - 1] = &r1;
+			admin.roomTable[index - 1]->printMovieInfo(movie);
 
-			//좌석 선택
+			int room, time;
+			cout << "원하시는 영화관을 선택해주세요 : ";
+			cin >> room;
+			cout << "원하시는 시간을 선택해주세요 : ";
+			cin >> time;
+
+			int time_index = 0;
+			Ticket* ticket = NULL;
+
+			//선택한 영화가 상영되는 영화관의 좌석 상태 출력하고 좌석 선택
+			MoviePlay* temp = admin.roomTable[room - 1]->head;
+			while (temp != NULL) {
+				if (temp->info == movie) {
+					time_index++;
+					if (time == time_index) {
+						//예매
+						ticket = admin.addTicket(temp);
+						//TODO: 인욱오빠가 고치기~~
+					}
+				}
+				temp = temp->nextPlay;
+
+			}
+
 
 			//예매 결과 출력
+			ticket->printTicket();
 
 			//티켓에 예매 정보 추가
+
+
 			mode = USER;
-			break;
+		}
+		break;
 		case TICKET: //티켓 정보 확인
+			int number;
+			Ticket* temp;
 			cout << "티켓 정보 확인" << endl;
 			//티켓 번호 입력
-
+			cout << "티켓 번호 입력: ";
+			cin >> number;
 			//티켓 정보 출력
+			temp = admin.findTicket(number);
+			if (temp == NULL) {
+				cout << "해당 예매 정보가 없습니다." << endl;
+			}
+			else {
+				temp->printTicket();
+			}
 			mode = USER;
 			break;
 
@@ -131,5 +193,9 @@ int main()
 			break;
 		}
 	}
+
+
+
+
 	return 0;
 }

@@ -18,13 +18,13 @@ void Ticket::printTicket() {
 	cout << "예매번호 : " << ticketNumber << endl;
 	/* 영화 시작, 종료 시간과 영화제목 출력 */
 	/* 문제점 : 영화관 출력 불가 */
-	cout << "예매영화 : " << playInfo->startTime/100 << ":" << playInfo->startTime%100;
-	cout << "~" << playInfo->endTime/100 << ":" << playInfo->endTime%100 << "  " << temp.title << endl;
+	cout << "예매영화 : " << playInfo->startTime / 100 << ":" << playInfo->startTime % 100;
+	cout << "~" << playInfo->endTime / 100 << ":" << playInfo->endTime % 100 << "  " << temp.title << endl;
 	cout << "예매인원 : " << number << endl;
 	cout << "예매좌석 : ";
 	int i;
-	for(i=0; i<number; i++){
-		cout << "(" << seatNumber[i]/10 << ", " << seatNumber[i]%10 << ") ";
+	for (i = 0; i < number; i++) {
+		printf("%c열 %d / ", seatNumber[i] / 10 + 64, seatNumber[i] % 10);
 	}
 	cout << endl;
 }

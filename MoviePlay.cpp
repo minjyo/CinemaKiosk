@@ -28,12 +28,13 @@ MoviePlay::~MoviePlay() {
 //좌석 현황 출력. 예매 가능하면 ▩, 안되면 ■
 void MoviePlay::printSeat() {
 	int i, j;
-	cout << "  ";
-	for(i=0 ; i<SIZE_COLUMN ; i++){
-		printf("%2d", i+1);
+	printf("   ");
+	for (i = 1; i < SIZE_COLUMN + 1; i++) {
+		printf("%2d", i);
 	}
+	printf("\n");
 	for (i = 0; i < SIZE_ROW; i++) {
-		printf("%2d", i+1);
+		printf(" %c ", 65 + i);
 		for (j = 0; j < SIZE_COLUMN; j++) {
 			if (seat[i][j] == true)
 				cout << "▩";
@@ -46,7 +47,7 @@ void MoviePlay::printSeat() {
 
 //해당 좌표에 있는 좌석이 예매 가능한지 리턴. 자리가 이미 예약되어 있으면 True, 그렇지 않을 경우 False 리턴.
 bool MoviePlay::checkSeat(short x, short y) {
-	if (x > SIZE_COLUMN || y > SIZE_ROW || x < 1 || y < 1) {
+	if (x > 5 || y > 5 || x < 1 || y < 1) {
 		cout << "잘못된 입력입니다" << endl;
 	}
 	else {
@@ -62,6 +63,7 @@ bool MoviePlay::checkSeat(short x, short y) {
 
 //예매할 때는 status True, 취소할때는 Status False.
 void MoviePlay::changeSeat(short x, short y, bool status) {
+	/*
 	if (x > 5 || y > 5 || x < 1 || y < 1) {
 		cout << "잘못된 입력입니다" << endl;
 	}
@@ -86,8 +88,9 @@ void MoviePlay::changeSeat(short x, short y, bool status) {
 			}
 		}
 		printSeat();
-	}
-
+		
+	} */
+	seat[x - 1][y - 1] = status;
 }
 
 //예매 가능한 빈자리 리턴.
