@@ -133,7 +133,13 @@ int main()
 				cout << "해당 예매 정보가 없습니다." << endl;
 			}
 			else {
+				char flag;
 				temp->printTicket();
+				cout << "\n예매를 취소하시겠습니까? (취소하려면 Y)" << endl;
+				cin >> flag;
+				if (flag == 'Y') {
+					admin.deleteTicket(temp);
+				}
 			}
 			mode = USER;
 			break;
