@@ -54,7 +54,7 @@ int main()
 
 		memset(input, 0, 10);
 
-		switch (mode)
+		switch(mode)
 		{
 		case HOME:
 			cout << "사용자는 U, 관리자는 M 입력" << endl;
@@ -73,6 +73,7 @@ int main()
 			break;
 		case CHOOSEMOVIE: //영화 선택 
 		{
+
 			cout << "영화 선택" << endl;
 			//전체 영화 리스트 출력
 			admin.printInfoTable();
@@ -123,11 +124,13 @@ int main()
 		case TICKET: //티켓 정보 확인
 			int number;
 			Ticket* temp;
+
 			cout << "티켓 정보 확인" << endl;
 			//티켓 번호 입력
 			cout << "티켓 번호 입력: ";
 			cin >> number;
 			//티켓 정보 출력
+
 			temp = admin.findTicket(number);
 			if (temp == NULL) {
 				cout << "해당 예매 정보가 없습니다." << endl;
@@ -135,6 +138,7 @@ int main()
 			else {
 				temp->printTicket();
 			}
+
 			mode = USER;
 			break;
 
