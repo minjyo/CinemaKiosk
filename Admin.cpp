@@ -372,6 +372,8 @@ bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
 		cout << "카드를 넣어주세요." << endl;
 		Sleep(3000);
 		cout << "결제가 완료되었습니다." << endl;
+
+		return true;
 	}
 
 	else {
