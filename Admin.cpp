@@ -127,7 +127,7 @@ void Admin::printTicket(int tNumber) {
 
 void Admin::deleteTicket(Ticket* select) {
 	/* 좌석 상태 반영 */
-	for (short i = 0 ; i < select->number; i++) {
+	for (short i = 0; i < select->number; i++) {
 		select->playInfo->changeSeat(select->seatNumber[i] / 10, select->seatNumber[i] % 10, false);
 	}
 
@@ -157,7 +157,7 @@ void Admin::deleteTicket(Ticket* select) {
 	/* 그 외 (중간에 있을 때) */
 	else {
 		Ticket* temp = ticketHead;
-		
+
 		while (temp->nextTicket != select) {
 			temp = temp->nextTicket;
 		}
@@ -331,17 +331,15 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 					}
 				}
 				//	}
-					/* 후에 뒤로가기 키 구현 */
 			}
 		}
 	}
 
-	
-
-
-
-
-
+	gotoxy(1, SIZE_ROW + 5);
+	if (getMoney(movie->info, numberOfHead) == false) {
+		cout << "예매가 취소되었습니다." << endl;
+		return NULL;
+	}
 
 	Ticket* newTicket;
 	/* 예매가 완료되면 tail다음에 티켓 추가해주기 */
@@ -365,7 +363,7 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 		movie->changeSeat(seatArr[i] / 10, seatArr[i] % 10, true);
 	}
 
-	gotoxy(1, SIZE_COLUMN + 6);
+	gotoxy(1, 1);
 
 
 	return newTicket;
@@ -376,17 +374,17 @@ bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
 	//금액
 
 	int i;
-	int insertMoney; //입력 금액
+	int insertMoney = 0; //입력 금액
 	int total; //총 금액
-	int money = 0 ;	//입력 된 금액
-	
-	total = minfo->getInfo.price * numberOfHead;
+	int money = 0;	//입력 된 금액
+
+	total = minfo->getInfo().price * numberOfHead;
 
 	cout << "무엇으로 결제하시겠습니까 ? 1. 현금  2. 카드" << endl;
 	cin >> i;
 
 	if (i == 1) {
-	
+
 		while (money < total) {
 			if (insertMoney == -1) {
 				return false;
@@ -405,18 +403,21 @@ bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
 		Sleep(3000);
 
 		cout << "거스름돈 : " << money - total << endl;
-		
+
 		cout << "결제가 완료되었습니다." << endl;
 
+		Sleep(2000);
+		system("cls");
 		return true;
 	}
-		
+
 
 	else if (i == 2) {
 		cout << "카드를 넣어주세요." << endl;
 		Sleep(3000);
 		cout << "결제가 완료되었습니다." << endl;
-
+		Sleep(2000);
+		system("cls");
 		return true;
 	}
 
@@ -426,7 +427,7 @@ bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
 
 
 
-	}
+}
 
 void Admin::gotoxy(short x, short y)
 {
