@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <list>
+//#include <list>
 #include <windows.h>
 #include <conio.h>
 #include <iomanip>
@@ -52,7 +52,7 @@ public:
 	MovieInfo(string title, string pd, short runningTime, int price);
 	Info getInfo();
 	void printInfo();
-	MovieInfo* nextInfo;
+	//MovieInfo* nextInfo;
 	string title;
 
 private:
@@ -86,10 +86,9 @@ private:
 	char roomNumber;
 	bool status;
 
-
 public:
 	MoviePlay* head = new MoviePlay;
-	list<MoviePlay> movielist;
+	//list<MoviePlay> movielist;
 	unsigned short movieCount;
 	MovieRoom();
 	MovieRoom(char roomNumber);
@@ -98,9 +97,9 @@ public:
 	void printMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	void setStatus(bool status);
 	MoviePlay* canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
-	void addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
-	void addMovieToRoom(MoviePlay& movie); // 영화관에 영화 추가
-	void printTimeTable(); //영화관의 영화 타임 테이블 출력s
+	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
+	void printTimeTable(); //영화관의 영화 타임 테이블 출력
+	void deleteMoviePlay(short starttime);
 };
 
 /* 예매 정보 객체 */
@@ -128,7 +127,9 @@ private:
 public:
 	Admin();
 	~Admin();
-	short allCount = 0;
+	short infoCount = 0;
+	short roomCount = 0;
+
 	MovieInfo* infoTable[MOVIE_INFO_ARR_SIZE];
 	MovieRoom* roomTable[MOVIE_ROOM_ARR_SIZE];
 
@@ -147,7 +148,7 @@ public:
 	/* 영화관 관련 함수 (영화관&좌석 상태 관리, 상영 영화 추가, 삭제) */
 	void setMovieRoomStatus(MovieRoom& room, bool status);            //영화관 사용 가능, 불가능
 	void addMovie(MovieInfo* info, MovieRoom& room, short selectTime);       //영화관 내 상영영화 Linked List에 시간 검사 후 생성하기 (movie room의 canaddmovie + addmovie 호출)
-	void deleteMoviePlay(short index, short selectTime);  //시작시간 정보로 해당 영화관 내 상영영화 삭제하기
+	void deleteMoviePlay(short roomNumber, short startTime);  //시작시간 정보로 해당 영화관 내 상영영화 삭제하기
 
 	/* 유저 관련 함수 */
 	Ticket* findTicket(int tNumber);     //유저 테이블에서 티켓번호로 User* 찾기

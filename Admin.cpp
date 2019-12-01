@@ -8,11 +8,11 @@ Admin::Admin() {
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
 	cout << "       영화 제목       영화 감독       러닝타임        " << endl;
-
-	for (int i = 0; i < allCount; i++) {
-		cout << "1. ";
+	for (int i = 0; i < infoCount; i++) {
+		cout << i+1 << ". ";
 		infoTable[i]->printInfo();
 	}
+	
 }
 
 //영화관 선택 시 시작시간 순으로 상영영화 출력
@@ -22,8 +22,10 @@ void Admin::printTimetable(short index) {
 
 //영화 정보 만들기
 void Admin::createMovieInfo() {
-	string title, pd;
-	short runningTime, price;
+	string title;
+	string pd;
+	short runningTime;
+	int price;
 
 	cout << "영화 정보를 입력해주세요." << endl;
 	cout << "영화 제목: ";
@@ -35,16 +37,15 @@ void Admin::createMovieInfo() {
 	cout << "영화 가격: ";
 	cin >> price;
 
-	MovieInfo movie(title, pd, runningTime, price);
-
-	if (allCount + 1 >= MOVIE_INFO_ARR_SIZE) {
+	//MovieInfo movie(title, pd, runningTime, price);
+	MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
+	if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
 		cout << "최대 영화 개수를 넘었습니다." << endl;
 		return;
 	}
 	else {
-		infoTable[allCount + 1] = &movie;
-		allCount++;
-		cout << "영화가 추가되었습니다.";
+		infoTable[this->infoCount] = movie;
+		infoCount++;
 	}
 }
 
@@ -133,18 +134,23 @@ void Admin::deleteMovieInfo(short index)
 	short i;
 
 	//모든 영화관에서 영화정보로 영화 삭제
-	for (i = 0; i < MOVIE_ROOM_ARR_SIZE; i++)
+	for (i = 0; i < roomCount; i++)
 	{
 		roomTable[i]->deleteMovieInfo(infoTable[index]);
 	}
 
 	//배열에서 줄여주기
-	for (i = index; i < allCount; i++)
+	for (i = index; i < infoCount; i++)
 	{
 		infoTable[i] = infoTable[i + 1];
 	}
-	infoTable[allCount] = 0x00;
-	allCount--;
+	infoTable[infoCount] = 0x00;
+	infoCount--;
+}
+
+void Admin::deleteMoviePlay(short roomNumber, short startTime) {
+
+
 }
 
 Ticket* Admin::addTicket(MoviePlay* movie)
