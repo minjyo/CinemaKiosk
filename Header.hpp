@@ -156,4 +156,6 @@ public:
 	Ticket* addTicket(MoviePlay* movie); //예매
 
 	void gotoxy(short x, short y);
+
+	bool getMoney(MovieInfo* minfo, short numberOfHead);
 };
