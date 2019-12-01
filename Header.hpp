@@ -9,7 +9,7 @@
 #define SIZE_COLUMN 5
 #define SIZE_ROW 5
 #define MOVIE_INFO_ARR_SIZE 10
-#define MOVIE_ROOM_ARR_SIZE 10
+#define MOVIE_ROOM_ARR_SIZE 5
 #define FIRST_TICKET 100001
 
 #define HOME 'H'

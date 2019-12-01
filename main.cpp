@@ -49,7 +49,8 @@ int main()
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1730);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 2100);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 2330);
-
+	cout << "2관 테스트" << endl;
+	admin.roomTable[1]->printTimeTable();
 	while (input[0] != 'Q')
 	{
 		//관리자, 사용자 권한 변경
@@ -98,7 +99,9 @@ int main()
 			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
 			MovieInfo* movie = admin.infoTable[index - 1];
 
-			admin.roomTable[index - 1]->printMovieInfo(movie);
+			for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+				admin.roomTable[i]->printMovieInfo(movie);
+			}
 
 			int room, time;
 			cout << "원하시는 영화관을 선택해주세요 : ";
