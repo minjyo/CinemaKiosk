@@ -7,10 +7,12 @@ Admin::Admin() {
 
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
-	cout << "       영화 제목       영화 감독       러닝타임        " << endl;
+	system("cls");
+	cout << "   영화 제목\t\t\t영화 감독\t\t러닝타임" << endl;
+	cout << "----------------------------------------------------------------" << endl;
 
 	for (int i = 0; i < allCount; i++) {
-		cout << "1. ";
+		cout << i+1 << ". ";
 		infoTable[i]->printInfo();
 	}
 }
