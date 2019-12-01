@@ -106,12 +106,11 @@ public:
 /* 예매 정보 객체 */
 class Ticket
 {
-private:
-	short number;
-	short* seatNumber; //좌석 번호
-	MoviePlay* playInfo;               //상영 영화 정보
 public:
-	int ticketNumber;
+	short number;						//인원 수
+	short* seatNumber;					//좌석 번호
+	MoviePlay* playInfo;               //상영 영화 정보
+	int ticketNumber;					//예매번호
 	Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* nTicket);
 	~Ticket();
 	Ticket* nextTicket;
