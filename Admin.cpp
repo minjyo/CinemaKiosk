@@ -336,12 +336,10 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 		}
 	}
 
-	
-
-
-
-
-
+	if(getMoney(movie->info, numberOfHead) == false){
+		cout << "예매가 취소되었습니다." << endl;
+		return NULL;
+	}
 
 	Ticket* newTicket;
 	/* 예매가 완료되면 tail다음에 티켓 추가해주기 */
