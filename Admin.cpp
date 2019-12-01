@@ -79,16 +79,35 @@ void Admin::addMovie(MovieInfo* info, MovieRoom& room, short selectTime) {
 	cout << "해당 시간에 영화를 추가할 수 없습니다. 다시 선택해주세요." << endl;
 }
 
+void Admin::deleteMoviePlay(short index, short selectTime) {
+
+}
+
 //티켓 테이블에서 티켓번호로 티켓 정보 찾기
 Ticket* Admin::findTicket(int tNumber) {
 	Ticket* temp = ticketHead;
 
-	while (ticketHead->nextTicket != ticketTail) {
+	if (ticketTail->ticketNumber < tNumber || tNumber < FIRST_TICKET) {
+		return NULL;
+	}
+
+	if (ticketTail->ticketNumber == tNumber) {
+		return ticketTail;
+	}
+
+	while (temp != ticketTail) {
 		if (temp->ticketNumber == tNumber) {
 			return temp;
 		}
 		temp = temp->nextTicket;
 	}
+	/*
+	while (ticketHead->nextTicket != ticketTail) {
+		if (temp->ticketNumber == tNumber) {
+			return temp;
+		}
+		temp = temp->nextTicket;
+	} */
 
 	return NULL;
 }
@@ -105,27 +124,8 @@ void Admin::printTicket(int tNumber) {
 }
 
 //예매 번호로 티켓 삭제 (예매취소)
-void Admin::deleteTicket(int tNumber) {
-	//예매 정보 없을 경우
-	if (ticketTail->ticketNumber < tNumber) {
-		cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
-	}
-	else {
-		Ticket* temp = ticketHead;
-		while (temp->nextTicket->ticketNumber < tNumber) {
-			temp = temp->nextTicket;
-		}
-		//삭제
-		if (temp->nextTicket->ticketNumber == tNumber) {
-			Ticket* temp2 = temp->nextTicket;			//삭제될 티켓
-			temp->nextTicket = temp2->nextTicket;
-			temp2->~Ticket();
-		}
-		else {
-			cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
-		}
-	}
 
+void Admin::deleteTicket(Ticket* select) {
 
 }
 void Admin::deleteMovieInfo(short index)
@@ -187,15 +187,19 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 	system("cls");
 	movie->printSeat();
 	gotoxy(0, SIZE_ROW + 1);
-	cout << "원하는 좌석을 선택하세요." << endl;
-	cout << "  명 남았습니다." << endl;
-	x = 1; y = 1;
+
+	cout << "원하는 좌석을 선택하세요." << endl << endl;
+	printf("%2d",count);
+	cout << "명 남았습니다." << endl;
+	x = 2; y = 2;
+	gotoxy(2 * x, y);
+
 
 	while (count != 0)
 	{
 
-		while (_kbhit())
-		{
+		//while (_kbhit())
+		//{
 			key = _getch();
 			/* 방향키 눌렸을 때 */
 			if (key == 224 || key == 0)
@@ -204,27 +208,31 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 				switch (key)
 				{
 				case 72:
-					if (y > 1)
+					if (y > 2)
 					{
 						y--;
+						gotoxy(2 * x, y);
 					}
 					break;
 				case 75:
-					if (x > 1)
+					if (x > 2)
 					{
 						x--;
+						gotoxy(2 * x, y);
 					}
 					break;
 				case 77:
-					if (x < SIZE_COLUMN)
+					if (x < SIZE_COLUMN + 1)
 					{
 						x++;
+						gotoxy(2 * x, y);
 					}
 					break;
 				case 80:
-					if (y < SIZE_ROW)
+					if (y < SIZE_ROW + 1)
 					{
 						y++;
+						gotoxy(2 * x, y);
 					}
 					break;
 				default:
@@ -237,7 +245,8 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 				if (key == 13)
 				{
 					check = false;
-					temp = (x - 1) * 10 + (y - 1);
+
+					temp = (y - 1) * 10 + (x - 1);
 
 					for (i = 0; i < numberOfHead; i++)
 					{
@@ -252,17 +261,20 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 					{
 						cout << "□";
 						count++;
-						gotoxy(0, SIZE_ROW + 1);
+						gotoxy(1, SIZE_COLUMN + 3);
+						printf("%c열 %d 취소 성공!       \n", 63 + y, x - 1);
 						printf("%2d", count);
+						gotoxy(2 * x, y);
 					}
 					/* 배열 내에 temp와 같은 값이 저장되어 있지 않으면(신규 좌석 예매)  */
 					else
 					{
 						/* 이미 예매된 좌석이면 (checkSeat가 true면 이미 예매된 좌석으로 일단 구현) */
-						if (movie->checkSeat(x, y))
+						if (movie->checkSeat(y - 1, x - 1))
 						{
-							gotoxy(0, SIZE_ROW + 2);
+							gotoxy(1, SIZE_ROW + 3);
 							cout << "이미 예매된 좌석입니다.";
+							gotoxy(2 * x, y);
 						}
 						/* 예매된 좌석이 아니면 신규 예매 */
 						else
@@ -275,23 +287,25 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 							seatArr[i] = temp;
 							cout << "■";
 							count--;
-							gotoxy(0, SIZE_ROW + 1);
+							gotoxy(1, SIZE_ROW + 3);
+							printf("%c열 %d 예매 성공!       \n", 63 + y, x-1);
 							printf("%2d", count);
+							gotoxy(2 * x, y);
 						}
 					}
-				}
+			//	}
 				/* 후에 뒤로가기 키 구현 */
 			}
 		}
-
-		gotoxy(2 * x, y);
 	}
 
 	Ticket* newTicket;
 	/* 예매가 완료되면 tail다음에 티켓 추가해주기 */
 	if (ticketHead == 0x00)                 //첫 티켓일 경우 tail과 head에 추가
 	{
-		newTicket = new Ticket(numberOfHead, 100001, seatArr, movie, 0x00);
+
+		newTicket = new Ticket(numberOfHead, FIRST_TICKET , seatArr, movie, 0x00);
+
 		ticketHead = newTicket;
 		ticketTail = newTicket;
 	}
@@ -306,6 +320,9 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 	for (i = 0; i < numberOfHead; i++) {
 		movie->changeSeat(seatArr[i] / 10, seatArr[i] % 10, true);
 	}
+
+	gotoxy(1, SIZE_COLUMN + 6);
+
 
 	return newTicket;
 }
