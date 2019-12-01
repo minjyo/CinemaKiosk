@@ -22,19 +22,33 @@ int main()
 
 	//영화관 기본 셋팅
 
-	MovieRoom r1(1);
-	MovieInfo mov1("Frozen2", "director1", 146, 8000);
-	MovieInfo mov2("Jocker", "director2", 120, 9000);
-	r1.addMovieToRoom(&mov1, 900);
-	r1.addMovieToRoom(&mov2, 1000);
-	r1.addMovieToRoom(&mov2, 1100);
-	r1.addMovieToRoom(&mov1, 1500);
-	r1.addMovieToRoom(&mov1, 1700);
-	r1.addMovieToRoom(&mov2, 1900);
-	admin.infoTable[0] = &mov1;
-	admin.allCount++;
-	admin.infoTable[1] = &mov2;
-	admin.allCount++;
+	for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+		admin.roomTable[i] = new MovieRoom(i);
+	}
+
+	admin.infoTable[0] = new MovieInfo("Frozen2          ", "Jenniffer.L", 143, 8000);
+	admin.infoTable[1] = new MovieInfo("Jocker           ", "토트 필립스", 203, 9000);
+	admin.infoTable[2] = new MovieInfo("나를 찾아줘      ", "김승호     ", 148, 10000);
+	admin.infoTable[3] = new MovieInfo("어벤저스 엔드게임", "안소니 루소", 301, 15000);
+	admin.allCount = 4;
+
+	/* 1관 */
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 900);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1100);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 1300);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1500);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 1700);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1900);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 2100);
+
+	admin.roomTable[0]->printTimeTable();
+	/* 2관 */
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 900);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1130);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 1500);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1730);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 2100);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 2330);
 
 	while (input[0] != 'Q')
 	{
@@ -84,7 +98,6 @@ int main()
 			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
 			MovieInfo* movie = admin.infoTable[index - 1];
 
-			admin.roomTable[index - 1] = &r1;
 			admin.roomTable[index - 1]->printMovieInfo(movie);
 
 			int room, time;
