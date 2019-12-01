@@ -123,7 +123,6 @@ class Admin
 {
 private:
 
-
 public:
 	Admin();
 	~Admin();
@@ -150,8 +149,10 @@ public:
 
 	/* 유저 관련 함수 */
 	Ticket* findTicket(int tNumber);     //유저 테이블에서 티켓번호로 User* 찾기
+
 	void printTicket(int tNumber);        //예매 번호로 티켓 정보 출력 (예매확인 창)
 	void deleteTicket(Ticket* select);    //예매 번호로 티켓 삭제 (예매취소)
+
 	Ticket* addTicket(MoviePlay* movie); //예매
 
 	void gotoxy(short x, short y);

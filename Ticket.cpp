@@ -25,7 +25,9 @@ void Ticket::printTicket() {
 	cout << "예매좌석 : ";
 	int i;
 	for (i = 0; i < number; i++) {
+
 		printf("%c열 %d / ", seatNumber[i] / 10 + 64, seatNumber[i] % 10);
+
 	}
 	cout << endl;
 }

@@ -27,6 +27,7 @@ MoviePlay::~MoviePlay() {
 
 //좌석 현황 출력. 예매 가능하면 ▩, 안되면 ■
 void MoviePlay::printSeat() {
+
 	int i, j;
 	printf("   ");
 	for (i = 1; i < SIZE_COLUMN + 1; i++) {
@@ -36,6 +37,7 @@ void MoviePlay::printSeat() {
 	for (i = 0; i < SIZE_ROW; i++) {
 		printf(" %c ", 65 + i);
 		for (j = 0; j < SIZE_COLUMN; j++) {
+
 			if (seat[i][j] == true)
 				cout << "▩";
 			else
