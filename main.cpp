@@ -62,7 +62,7 @@ int main()
 			break;
 		case USER: //사용자 홈
 			cout << "사용자 홈" << endl;
-			cout << "1. 영화선택 2. 티켓 정보 확인" << endl;
+			cout << "1. 영화선택\t2. 티켓 정보 확인" << endl;
 			cin >> input;
 			if (input[0] == '1') {
 				mode = CHOOSEMOVIE;
@@ -104,7 +104,6 @@ int main()
 					if (time == time_index) {
 						//예매
 						ticket = admin.addTicket(temp);
-						//TODO: 인욱오빠가 고치기~~
 					}
 				}
 				temp = temp->nextPlay;
@@ -138,6 +137,8 @@ int main()
 			}
 			mode = USER;
 			break;
+
+
 
 		case ADMIN: //관리자 홈
 			cout << "관리자 홈" << endl;

@@ -100,7 +100,7 @@ public:
 	MoviePlay* canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
 	void addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
 	void addMovieToRoom(MoviePlay& movie); // 영화관에 영화 추가
-	void printTimeTable(); //영화관의 영화 타임 테이블 출력s
+	void printTimeTable(); //영화관의 영화 타임 테이블 출력
 };
 
 /* 예매 정보 객체 */
@@ -151,8 +151,8 @@ public:
 
 	/* 유저 관련 함수 */
 	Ticket* findTicket(int tNumber);     //유저 테이블에서 티켓번호로 User* 찾기
-	void printTicket(int tNumber);                        //예매 번호로 티켓 정보 출력 (예매확인 창)
-	void deleteTicket(int tNumber);    //예매 번호로 티켓 삭제 (예매취소)
+	void printTicket(int tNumber);        //예매 번호로 티켓 정보 출력 (예매확인 창)
+	void deleteTicket(Ticket* select);    //예매 번호로 티켓 삭제 (예매취소)
 	Ticket* addTicket(MoviePlay* movie); //예매
 
 	void gotoxy(short x, short y);

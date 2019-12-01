@@ -79,6 +79,10 @@ void Admin::addMovie(MovieInfo* info, MovieRoom& room, short selectTime) {
 	cout << "해당 시간에 영화를 추가할 수 없습니다. 다시 선택해주세요." << endl;
 }
 
+void Admin::deleteMoviePlay(short index, short selectTime) {
+
+}
+
 //티켓 테이블에서 티켓번호로 티켓 정보 찾기
 Ticket* Admin::findTicket(int tNumber) {
 	Ticket* temp = ticketHead;
@@ -120,27 +124,7 @@ void Admin::printTicket(int tNumber) {
 }
 
 //예매 번호로 티켓 삭제 (예매취소)
-void Admin::deleteTicket(int tNumber) {
-	//예매 정보 없을 경우
-	if (ticketTail->ticketNumber < tNumber || tNumber < FIRST_TICKET) {
-		cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
-	}
-	else {
-		Ticket* temp = ticketHead;
-		while (temp->nextTicket->ticketNumber < tNumber) {
-			temp = temp->nextTicket;
-		}
-		//삭제
-		if (temp->nextTicket->ticketNumber == tNumber) {
-			Ticket* temp2 = temp->nextTicket;			//삭제될 티켓
-			temp->nextTicket = temp2->nextTicket;
-			temp2->~Ticket();
-		}
-		else {
-			cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
-		}
-	}
-
+void Admin::deleteTicket(Ticket* select) {
 
 }
 void Admin::deleteMovieInfo(short index)
