@@ -189,7 +189,7 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 	gotoxy(0, SIZE_ROW + 1);
 
 	cout << "원하는 좌석을 선택하세요." << endl << endl;
-	printf("%2d",count);
+	printf("%2d", count);
 	cout << "명 남았습니다." << endl;
 	x = 2; y = 2;
 	gotoxy(2 * x, y);
@@ -200,101 +200,101 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 
 		//while (_kbhit())
 		//{
+		key = _getch();
+		/* 방향키 눌렸을 때 */
+		if (key == 224 || key == 0)
+		{
 			key = _getch();
-			/* 방향키 눌렸을 때 */
-			if (key == 224 || key == 0)
+			switch (key)
 			{
-				key = _getch();
-				switch (key)
+			case 72:
+				if (y > 2)
 				{
-				case 72:
-					if (y > 2)
-					{
-						y--;
-						gotoxy(2 * x, y);
-					}
-					break;
-				case 75:
-					if (x > 2)
-					{
-						x--;
-						gotoxy(2 * x, y);
-					}
-					break;
-				case 77:
-					if (x < SIZE_COLUMN + 1)
-					{
-						x++;
-						gotoxy(2 * x, y);
-					}
-					break;
-				case 80:
-					if (y < SIZE_ROW + 1)
-					{
-						y++;
-						gotoxy(2 * x, y);
-					}
-					break;
-				default:
-					break;
+					y--;
+					gotoxy(2 * x, y);
 				}
-			}
-			else
-			{
-				/* 엔터가 눌렸을 때 */
-				if (key == 13)
+				break;
+			case 75:
+				if (x > 2)
 				{
-					check = false;
+					x--;
+					gotoxy(2 * x, y);
+				}
+				break;
+			case 77:
+				if (x < SIZE_COLUMN + 1)
+				{
+					x++;
+					gotoxy(2 * x, y);
+				}
+				break;
+			case 80:
+				if (y < SIZE_ROW + 1)
+				{
+					y++;
+					gotoxy(2 * x, y);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			/* 엔터가 눌렸을 때 */
+			if (key == 13)
+			{
+				check = false;
 
-					temp = (y - 1) * 10 + (x - 1);
+				temp = (y - 1) * 10 + (x - 1);
 
-					for (i = 0; i < numberOfHead; i++)
+				for (i = 0; i < numberOfHead; i++)
+				{
+					if (seatArr[i] == temp)
 					{
-						if (seatArr[i] == temp)
-						{
-							seatArr[i] = -1;
-							check = true;
-						}
+						seatArr[i] = -1;
+						check = true;
 					}
-					/* 이미 배열 내에 temp와 같은 값이 저장되어 있으면(기존 좌석 취소)  */
-					if (check)
+				}
+				/* 이미 배열 내에 temp와 같은 값이 저장되어 있으면(기존 좌석 취소)  */
+				if (check)
+				{
+					cout << "□";
+					count++;
+					gotoxy(1, SIZE_COLUMN + 3);
+					printf("%c열 %d 취소 성공!       \n", 63 + y, x - 1);
+					printf("%2d", count);
+					gotoxy(2 * x, y);
+				}
+				/* 배열 내에 temp와 같은 값이 저장되어 있지 않으면(신규 좌석 예매)  */
+				else
+				{
+					/* 이미 예매된 좌석이면 (checkSeat가 true면 이미 예매된 좌석으로 일단 구현) */
+					if (movie->checkSeat(y - 1, x - 1))
 					{
-						cout << "□";
-						count++;
-						gotoxy(1, SIZE_COLUMN + 3);
-						printf("%c열 %d 취소 성공!       \n", 63 + y, x - 1);
+						gotoxy(1, SIZE_ROW + 3);
+						cout << "이미 예매된 좌석입니다.";
+						gotoxy(2 * x, y);
+					}
+					/* 예매된 좌석이 아니면 신규 예매 */
+					else
+					{
+						i = 0;
+						while (seatArr[i] != -1)
+						{
+							i++;
+						}
+						seatArr[i] = temp;
+						cout << "■";
+						count--;
+						gotoxy(1, SIZE_ROW + 3);
+						printf("%c열 %d 예매 성공!       \n", 63 + y, x - 1);
 						printf("%2d", count);
 						gotoxy(2 * x, y);
 					}
-					/* 배열 내에 temp와 같은 값이 저장되어 있지 않으면(신규 좌석 예매)  */
-					else
-					{
-						/* 이미 예매된 좌석이면 (checkSeat가 true면 이미 예매된 좌석으로 일단 구현) */
-						if (movie->checkSeat(y - 1, x - 1))
-						{
-							gotoxy(1, SIZE_ROW + 3);
-							cout << "이미 예매된 좌석입니다.";
-							gotoxy(2 * x, y);
-						}
-						/* 예매된 좌석이 아니면 신규 예매 */
-						else
-						{
-							i = 0;
-							while (seatArr[i] != -1)
-							{
-								i++;
-							}
-							seatArr[i] = temp;
-							cout << "■";
-							count--;
-							gotoxy(1, SIZE_ROW + 3);
-							printf("%c열 %d 예매 성공!       \n", 63 + y, x-1);
-							printf("%2d", count);
-							gotoxy(2 * x, y);
-						}
-					}
-			//	}
-				/* 후에 뒤로가기 키 구현 */
+				}
+				//	}
+					/* 후에 뒤로가기 키 구현 */
 			}
 		}
 	}
@@ -304,7 +304,7 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 	if (ticketHead == 0x00)                 //첫 티켓일 경우 tail과 head에 추가
 	{
 
-		newTicket = new Ticket(numberOfHead, FIRST_TICKET , seatArr, movie, 0x00);
+		newTicket = new Ticket(numberOfHead, FIRST_TICKET, seatArr, movie, 0x00);
 
 		ticketHead = newTicket;
 		ticketTail = newTicket;
@@ -326,6 +326,61 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 
 	return newTicket;
 }
+
+bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
+{
+	//금액
+
+	int i;
+	int insertMoney; //입력 금액
+	int total; //총 금액
+	int money = 0 ;	//입력 된 금액
+	
+	total = minfo->getInfo.price * numberOfHead;
+
+	cout << "무엇으로 결제하시겠습니까 ? 1. 현금  2. 카드" << endl;
+	cin >> i;
+
+	if (i == 1) {
+	
+		while (money < total) {
+			if (insertMoney == -1) {
+				return false;
+			}
+			else {
+				cout << "총 금액 : " << total << endl;
+				cout << "남은 금액 : " << total - money << endl;
+				cout << "금액을 넣어주세요. (-1 : 취소)" << endl;
+				cin >> insertMoney;
+				money += insertMoney;
+			}
+		}
+
+
+		cout << "결제 진행중..." << endl;
+		Sleep(3000);
+
+		cout << "거스름돈 : " << money - total << endl;
+		
+		cout << "결제가 완료되었습니다." << endl;
+
+		return true;
+	}
+		
+
+	else if (i == 2) {
+		cout << "카드를 넣어주세요." << endl;
+		Sleep(3000);
+		cout << "결제가 완료되었습니다." << endl;
+	}
+
+	else {
+		cout << "잘못 입력하셨습니다. " << endl;
+	}
+
+
+
+	}
 
 void Admin::gotoxy(short x, short y)
 {
