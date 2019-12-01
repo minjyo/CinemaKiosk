@@ -22,26 +22,35 @@ int main()
 	Admin admin;
 
 	//영화관 기본 셋팅
+	for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+		admin.roomTable[i] = new MovieRoom(i);
+	}
 
-	MovieRoom r1(1);
-	admin.roomCount++;
+	admin.infoTable[0] = new MovieInfo("Frozen2          ", "Jenniffer.L", 143, 8000);
+	admin.infoTable[1] = new MovieInfo("Jocker           ", "토트 필립스", 203, 9000);
+	admin.infoTable[2] = new MovieInfo("나를 찾아줘      ", "김승호     ", 148, 10000);
+	admin.infoTable[3] = new MovieInfo("어벤저스 엔드게임", "안소니 루소", 301, 15000);
+	admin.infoCount = 4;
 
-	MovieInfo mov1("Frozen2", "director1", 146, 8000);
-	MovieInfo mov2("Jocker", "director2", 120, 9000);
-	r1.addMovieToRoom(&mov1, 900);
-	r1.addMovieToRoom(&mov2, 1000);
-	r1.addMovieToRoom(&mov2, 1100);
-	r1.addMovieToRoom(&mov1, 1500);
-	r1.addMovieToRoom(&mov1, 1700);
-	r1.addMovieToRoom(&mov2, 1900);
+	/* 1관 */
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 900);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1100);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 1300);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1500);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 1700);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1900);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 2100);
 
-	admin.infoTable[0] = &mov1;
-	admin.infoCount++;
-	admin.infoTable[1] = &mov2;
-	admin.infoCount++;
-
-	admin.roomTable[0] = &r1;
-
+	admin.roomTable[0]->printTimeTable();
+	/* 2관 */
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 900);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1130);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 1500);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1730);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 2100);
+	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 2330);
+	cout << "2관 테스트" << endl;
+	admin.roomTable[1]->printTimeTable();
 	while (input[0] != 'Q')
 	{
 
@@ -69,7 +78,7 @@ int main()
 			break;
 		case USER: //사용자 홈
 			cout << "사용자 홈" << endl;
-			cout << "1. 영화선택 2. 티켓 정보 확인" << endl;
+			cout << "1. 영화선택\t2. 티켓 정보 확인" << endl;
 			cin >> input;
 			if (input[0] == '1') {
 				mode = CHOOSEMOVIE;
@@ -92,8 +101,9 @@ int main()
 			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
 			MovieInfo* movie = admin.infoTable[index - 1];
 
-			admin.roomTable[index - 1] = &r1;
-			admin.roomTable[index - 1]->printMovieInfo(movie);
+			for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+				admin.roomTable[i]->printMovieInfo(movie);
+			}
 
 			int room, time;
 			cout << "원하시는 영화관을 선택해주세요 : ";
@@ -103,7 +113,7 @@ int main()
 
 			int time_index = 0;
 			Ticket* ticket = NULL;
-			system("cls");
+
 			//선택한 영화가 상영되는 영화관의 좌석 상태 출력하고 좌석 선택
 			MoviePlay* temp = admin.roomTable[room - 1]->head;
 			while (temp != NULL) {
@@ -112,34 +122,46 @@ int main()
 					if (time == time_index) {
 						//예매
 						ticket = admin.addTicket(temp);
-						//TODO: 인욱오빠가 고치기~~
 					}
 				}
 				temp = temp->nextPlay;
 
 			}
 
-
 			//예매 결과 출력
-			cout << "dsaf";
-			ticket->printTicket();
+			if (ticket != NULL) {
+				ticket->printTicket();
+			}
 
 			//티켓에 예매 정보 추가
-
-
 			mode = USER;
 		}
 		break;
 		case TICKET: //티켓 정보 확인
 			int number;
+			Ticket* temp;
 			cout << "티켓 정보 확인" << endl;
 			//티켓 번호 입력
 			cout << "티켓 번호 입력: ";
 			cin >> number;
 			//티켓 정보 출력
-			admin.findTicket(number)->printTicket();
+			temp = admin.findTicket(number);
+			if (temp == NULL) {
+				cout << "해당 예매 정보가 없습니다." << endl;
+			}
+			else {
+				char flag;
+				temp->printTicket();
+				cout << "\n예매를 취소하시겠습니까? (취소하려면 Y)" << endl;
+				cin >> flag;
+				if (flag == 'Y') {
+					admin.deleteTicket(temp);
+				}
+			}
 			mode = USER;
 			break;
+
+
 
 		case ADMIN: //관리자 홈
 			cout << "관리자 홈" << endl;

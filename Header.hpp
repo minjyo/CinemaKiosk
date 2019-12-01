@@ -9,8 +9,8 @@
 #define SIZE_COLUMN 5
 #define SIZE_ROW 5
 #define MOVIE_INFO_ARR_SIZE 10
-#define MOVIE_ROOM_ARR_SIZE 10
-
+#define MOVIE_ROOM_ARR_SIZE 5
+#define FIRST_TICKET 100001
 
 #define HOME 'H'
 
@@ -105,12 +105,11 @@ public:
 /* 예매 정보 객체 */
 class Ticket
 {
-private:
-	short number;
-	short* seatNumber; //좌석 번호
-	MoviePlay* playInfo;               //상영 영화 정보
 public:
-	int ticketNumber;
+	short number;						//인원 수
+	short* seatNumber;					//좌석 번호
+	MoviePlay* playInfo;               //상영 영화 정보
+	int ticketNumber;					//예매번호
 	Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* nTicket);
 	~Ticket();
 	Ticket* nextTicket;
@@ -122,7 +121,6 @@ public:
 class Admin
 {
 private:
-	
 
 public:
 	Admin();
@@ -152,9 +150,13 @@ public:
 
 	/* 유저 관련 함수 */
 	Ticket* findTicket(int tNumber);     //유저 테이블에서 티켓번호로 User* 찾기
-	void printTicket(int tNumber);                        //예매 번호로 티켓 정보 출력 (예매확인 창)
-	void deleteTicket(int tNumber);    //예매 번호로 티켓 삭제 (예매취소)
+
+	void printTicket(int tNumber);        //예매 번호로 티켓 정보 출력 (예매확인 창)
+	void deleteTicket(Ticket* select);    //예매 번호로 티켓 삭제 (예매취소)
+
 	Ticket* addTicket(MoviePlay* movie); //예매
 
 	void gotoxy(short x, short y);
+
+	bool getMoney(MovieInfo* minfo, short numberOfHead);
 };

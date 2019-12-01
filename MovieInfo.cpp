@@ -31,8 +31,7 @@ void MovieInfo::printInfo() {
 	cout.fill(' ');
 	cout.width(10);
 
-	cout << title << "\t";
-	cout << pd << "\t";
-	cout << runningTime << "\t";
-	cout << " " << endl;
+	cout << title << "\t\t";
+	cout << pd << "\t\t";
+	cout << runningTime/100 << "시간 " <<runningTime%100 << "분\t\t" <<endl;
 }

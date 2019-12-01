@@ -7,7 +7,10 @@ Admin::Admin() {
 
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
-	cout << "       영화 제목       영화 감독       러닝타임        " << endl;
+	system("cls");
+	cout << "   영화 제목\t\t\t영화 감독\t\t러닝타임" << endl;
+	cout << "----------------------------------------------------------------" << endl;
+
 	for (int i = 0; i < infoCount; i++) {
 		cout << i+1 << ". ";
 		infoTable[i]->printInfo();
@@ -80,16 +83,35 @@ void Admin::addMovie(MovieInfo* info, MovieRoom& room, short selectTime) {
 	cout << "해당 시간에 영화를 추가할 수 없습니다. 다시 선택해주세요." << endl;
 }
 
+void Admin::deleteMoviePlay(short index, short selectTime) {
+
+}
+
 //티켓 테이블에서 티켓번호로 티켓 정보 찾기
 Ticket* Admin::findTicket(int tNumber) {
 	Ticket* temp = ticketHead;
 
-	while (ticketHead->nextTicket != ticketTail) {
+	if (ticketTail->ticketNumber < tNumber || tNumber < FIRST_TICKET) {
+		return NULL;
+	}
+
+	if (ticketTail->ticketNumber == tNumber) {
+		return ticketTail;
+	}
+
+	while (temp != ticketTail) {
 		if (temp->ticketNumber == tNumber) {
 			return temp;
 		}
 		temp = temp->nextTicket;
 	}
+	/*
+	while (ticketHead->nextTicket != ticketTail) {
+		if (temp->ticketNumber == tNumber) {
+			return temp;
+		}
+		temp = temp->nextTicket;
+	} */
 
 	return NULL;
 }
@@ -106,28 +128,46 @@ void Admin::printTicket(int tNumber) {
 }
 
 //예매 번호로 티켓 삭제 (예매취소)
-void Admin::deleteTicket(int tNumber) {
-	//예매 정보 없을 경우
-	if (ticketTail->ticketNumber < tNumber) {
-		cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
+
+void Admin::deleteTicket(Ticket* select) {
+	/* 좌석 상태 반영 */
+	for (short i = 0; i < select->number; i++) {
+		select->playInfo->changeSeat(select->seatNumber[i] / 10, select->seatNumber[i] % 10, false);
 	}
-	else {
+
+	/* 삭제하려는 티켓이 Head일때 && Tail일때 */
+	if (select == ticketHead && select == ticketTail) {
+		select->~Ticket();
+		ticketHead = NULL;
+		ticketTail = NULL;
+	}
+	/* 삭제하려는 티켓이 Head일때 */
+	else if (select == ticketHead) {
+		ticketHead = select->nextTicket;
+		select->~Ticket();
+	}
+	/* 삭제하려는 티켓이 Tail일때 */
+	else if (select == ticketTail) {
 		Ticket* temp = ticketHead;
-		while (temp->nextTicket->ticketNumber < tNumber) {
+
+		while (temp->nextTicket != ticketTail) {
 			temp = temp->nextTicket;
 		}
-		//삭제
-		if (temp->nextTicket->ticketNumber == tNumber) {
-			Ticket* temp2 = temp->nextTicket;			//삭제될 티켓
-			temp->nextTicket = temp2->nextTicket;
-			temp2->~Ticket();
-		}
-		else {
-			cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
-		}
+
+		ticketTail = temp;
+		temp->nextTicket = NULL;
+		select->~Ticket();
 	}
+	/* 그 외 (중간에 있을 때) */
+	else {
+		Ticket* temp = ticketHead;
 
-
+		while (temp->nextTicket != select) {
+			temp = temp->nextTicket;
+		}
+		temp->nextTicket = select->nextTicket;
+		select->~Ticket();
+	}
 }
 void Admin::deleteMovieInfo(short index)
 {
@@ -193,111 +233,130 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 	system("cls");
 	movie->printSeat();
 	gotoxy(0, SIZE_ROW + 1);
-	cout << "원하는 좌석을 선택하세요." << endl;
-	cout << "  명 남았습니다." << endl;
-	x = 1; y = 1;
+
+	cout << "원하는 좌석을 선택하세요." << endl << endl;
+	printf("%2d", count);
+	cout << "명 남았습니다." << endl;
+	x = 2; y = 2;
+	gotoxy(2 * x, y);
+
 
 	while (count != 0)
 	{
 
-		while (_kbhit())
+		//while (_kbhit())
+		//{
+		key = _getch();
+		/* 방향키 눌렸을 때 */
+		if (key == 224 || key == 0)
 		{
 			key = _getch();
-			/* 방향키 눌렸을 때 */
-			if (key == 224 || key == 0)
+			switch (key)
 			{
-				key = _getch();
-				switch (key)
+			case 72:
+				if (y > 2)
 				{
-				case 72:
-					if (y > 1)
-					{
-						y--;
-					}
-					break;
-				case 75:
-					if (x > 1)
-					{
-						x--;
-					}
-					break;
-				case 77:
-					if (x < SIZE_COLUMN)
-					{
-						x++;
-					}
-					break;
-				case 80:
-					if (y < SIZE_ROW)
-					{
-						y++;
-					}
-					break;
-				default:
-					break;
+					y--;
+					gotoxy(2 * x, y);
 				}
-			}
-			else
-			{
-				/* 엔터가 눌렸을 때 */
-				if (key == 13)
+				break;
+			case 75:
+				if (x > 2)
 				{
-					check = false;
-					temp = (x - 1) * 10 + (y - 1);
-
-					for (i = 0; i < numberOfHead; i++)
-					{
-						if (seatArr[i] == temp)
-						{
-							seatArr[i] = -1;
-							check = true;
-						}
-					}
-					/* 이미 배열 내에 temp와 같은 값이 저장되어 있으면(기존 좌석 취소)  */
-					if (check)
-					{
-						cout << "□";
-						count++;
-						gotoxy(0, SIZE_ROW + 1);
-						printf("%2d", count);
-					}
-					/* 배열 내에 temp와 같은 값이 저장되어 있지 않으면(신규 좌석 예매)  */
-					else
-					{
-						/* 이미 예매된 좌석이면 (checkSeat가 true면 이미 예매된 좌석으로 일단 구현) */
-						if (movie->checkSeat(x, y))
-						{
-							gotoxy(0, SIZE_ROW + 2);
-							cout << "이미 예매된 좌석입니다.";
-						}
-						/* 예매된 좌석이 아니면 신규 예매 */
-						else
-						{
-							i = 0;
-							while (seatArr[i] != -1)
-							{
-								i++;
-							}
-							seatArr[i] = temp;
-							cout << "■";
-							count--;
-							gotoxy(0, SIZE_ROW + 1);
-							printf("%2d", count);
-						}
-					}
+					x--;
+					gotoxy(2 * x, y);
 				}
-				/* 후에 뒤로가기 키 구현 */
+				break;
+			case 77:
+				if (x < SIZE_COLUMN + 1)
+				{
+					x++;
+					gotoxy(2 * x, y);
+				}
+				break;
+			case 80:
+				if (y < SIZE_ROW + 1)
+				{
+					y++;
+					gotoxy(2 * x, y);
+				}
+				break;
+			default:
+				break;
 			}
 		}
+		else
+		{
+			/* 엔터가 눌렸을 때 */
+			if (key == 13)
+			{
+				check = false;
 
-		gotoxy(2 * x, y);
+				temp = (y - 1) * 10 + (x - 1);
+
+				for (i = 0; i < numberOfHead; i++)
+				{
+					if (seatArr[i] == temp)
+					{
+						seatArr[i] = -1;
+						check = true;
+					}
+				}
+				/* 이미 배열 내에 temp와 같은 값이 저장되어 있으면(기존 좌석 취소)  */
+				if (check)
+				{
+					cout << "□";
+					count++;
+					gotoxy(1, SIZE_COLUMN + 3);
+					printf("%c열 %d 취소 성공!       \n", 63 + y, x - 1);
+					printf("%2d", count);
+					gotoxy(2 * x, y);
+				}
+				/* 배열 내에 temp와 같은 값이 저장되어 있지 않으면(신규 좌석 예매)  */
+				else
+				{
+					/* 이미 예매된 좌석이면 (checkSeat가 true면 이미 예매된 좌석으로 일단 구현) */
+					if (movie->checkSeat(y - 1, x - 1))
+					{
+						gotoxy(1, SIZE_ROW + 3);
+						cout << "이미 예매된 좌석입니다.";
+						gotoxy(2 * x, y);
+					}
+					/* 예매된 좌석이 아니면 신규 예매 */
+					else
+					{
+						i = 0;
+						while (seatArr[i] != -1)
+						{
+							i++;
+						}
+						seatArr[i] = temp;
+						cout << "■";
+						count--;
+						gotoxy(1, SIZE_ROW + 3);
+						printf("%c열 %d 예매 성공!       \n", 63 + y, x - 1);
+						printf("%2d", count);
+						gotoxy(2 * x, y);
+					}
+				}
+				//	}
+			}
+		}
+	}
+
+	gotoxy(1, SIZE_ROW + 5);
+	if (getMoney(movie->info, numberOfHead) == false) {
+		cout << "예매가 취소되었습니다." << endl;
+		return NULL;
 	}
 
 	Ticket* newTicket;
 	/* 예매가 완료되면 tail다음에 티켓 추가해주기 */
 	if (ticketHead == 0x00)                 //첫 티켓일 경우 tail과 head에 추가
 	{
-		newTicket = new Ticket(numberOfHead, 100001, seatArr, movie, 0x00);
+
+		newTicket = new Ticket(numberOfHead, FIRST_TICKET, seatArr, movie, 0x00);
+
 		ticketHead = newTicket;
 		ticketTail = newTicket;
 	}
@@ -313,7 +372,70 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 		movie->changeSeat(seatArr[i] / 10, seatArr[i] % 10, true);
 	}
 
+	gotoxy(1, 1);
+
+
 	return newTicket;
+}
+
+bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
+{
+	//금액
+
+	int i;
+	int insertMoney = 0; //입력 금액
+	int total; //총 금액
+	int money = 0;	//입력 된 금액
+
+	total = minfo->getInfo().price * numberOfHead;
+
+	cout << "무엇으로 결제하시겠습니까 ? 1. 현금  2. 카드" << endl;
+	cin >> i;
+
+	if (i == 1) {
+
+		while (money < total) {
+			if (insertMoney == -1) {
+				return false;
+			}
+			else {
+				cout << "총 금액 : " << total << endl;
+				cout << "남은 금액 : " << total - money << endl;
+				cout << "금액을 넣어주세요. (-1 : 취소)" << endl;
+				cin >> insertMoney;
+				money += insertMoney;
+			}
+		}
+
+
+		cout << "결제 진행중..." << endl;
+		Sleep(3000);
+
+		cout << "거스름돈 : " << money - total << endl;
+
+		cout << "결제가 완료되었습니다." << endl;
+
+		Sleep(2000);
+		system("cls");
+		return true;
+	}
+
+
+	else if (i == 2) {
+		cout << "카드를 넣어주세요." << endl;
+		Sleep(3000);
+		cout << "결제가 완료되었습니다." << endl;
+		Sleep(2000);
+		system("cls");
+		return true;
+	}
+
+	else {
+		cout << "잘못 입력하셨습니다. " << endl;
+	}
+
+
+
 }
 
 void Admin::gotoxy(short x, short y)

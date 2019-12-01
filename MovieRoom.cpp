@@ -128,7 +128,7 @@ void MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	int Count = 0;
 
-	cout << "------------------- " << (int)roomNumber << "관 -------------------" << endl;
+	cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
 	cout.setf(ios::left);
 	cout << setw(20) << "시작 시간";
 	cout << setw(20) << "종료 시간";
