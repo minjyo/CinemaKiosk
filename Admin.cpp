@@ -126,7 +126,44 @@ void Admin::printTicket(int tNumber) {
 //예매 번호로 티켓 삭제 (예매취소)
 
 void Admin::deleteTicket(Ticket* select) {
+	/* 좌석 상태 반영 */
+	for (short i = 0 ; i < select->number; i++) {
+		select->playInfo->changeSeat(select->seatNumber[i] / 10, select->seatNumber[i] % 10, false);
+	}
 
+	/* 삭제하려는 티켓이 Head일때 && Tail일때 */
+	if (select == ticketHead && select == ticketTail) {
+		select->~Ticket();
+		ticketHead = NULL;
+		ticketTail = NULL;
+	}
+	/* 삭제하려는 티켓이 Head일때 */
+	else if (select == ticketHead) {
+		ticketHead = select->nextTicket;
+		select->~Ticket();
+	}
+	/* 삭제하려는 티켓이 Tail일때 */
+	else if (select == ticketTail) {
+		Ticket* temp = ticketHead;
+
+		while (temp->nextTicket != ticketTail) {
+			temp = temp->nextTicket;
+		}
+
+		ticketTail = temp;
+		temp->nextTicket = NULL;
+		select->~Ticket();
+	}
+	/* 그 외 (중간에 있을 때) */
+	else {
+		Ticket* temp = ticketHead;
+		
+		while (temp->nextTicket != select) {
+			temp = temp->nextTicket;
+		}
+		temp->nextTicket = select->nextTicket;
+		select->~Ticket();
+	}
 }
 void Admin::deleteMovieInfo(short index)
 {
@@ -298,6 +335,13 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 			}
 		}
 	}
+
+	
+
+
+
+
+
 
 	Ticket* newTicket;
 	/* 예매가 완료되면 tail다음에 티켓 추가해주기 */
