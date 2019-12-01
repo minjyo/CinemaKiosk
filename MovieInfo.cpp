@@ -12,7 +12,7 @@ MovieInfo::MovieInfo(string title, string pd, short runningTime, int price) {
 	this->pd = pd;
 	this->runningTime = runningTime;
 	this->price = price;
-	cout << "movie 객체 생성" << endl;
+	//cout << "movie 객체 생성" << endl;
 }
 
 Info MovieInfo::getInfo() {
@@ -31,8 +31,7 @@ void MovieInfo::printInfo() {
 	cout.fill(' ');
 	cout.width(10);
 
-	cout << title << "\t";
-	cout << pd << "\t";
-	cout << runningTime << "\t";
-	cout << " " << endl;
+	cout << title << "\t\t";
+	cout << pd << "\t\t";
+	cout << runningTime/100 << "시간 " <<runningTime%100 << "분\t\t" <<endl;
 }

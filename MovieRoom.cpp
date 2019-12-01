@@ -1,7 +1,7 @@
 ﻿#include "Header.hpp"
 
 MovieRoom::MovieRoom(char roomNumber) {
-	list<MoviePlay> movielist;
+	//list<MoviePlay> movielist;
 	head = new MoviePlay();
 	head->nextPlay = NULL;
 	this->roomNumber = roomNumber;
@@ -35,14 +35,12 @@ void MovieRoom::printTimeTable() {
 	}
 }
 
-
 //영화 삽입 가능 여부 확인 (이때, 마지막에 넣으려는 곳의 전 노드를 return 해준다.)
 MoviePlay* MovieRoom::canAddMovie(MovieInfo* info, short select) {
-	list <MoviePlay>::iterator index = movielist.begin();
-	MoviePlay* temp = head;
+	//list <MoviePlay>::iterator index = movielist.begin();
+	MoviePlay* temp = head->nextPlay;
 	Info info_temp = info->getInfo();
 	unsigned short runningTime = info_temp.runningTime;
-
 	unsigned short endTime = 0;
 	//시간을 입력시 주의사항은 분 단위가 아닌 시와 분을 둘다 써줄것.
 	//Ex) 90분 영화면 1시간 30분이므로 130 이라고 써줄것.
@@ -53,83 +51,47 @@ MoviePlay* MovieRoom::canAddMovie(MovieInfo* info, short select) {
 	else {
 		endTime = select + runningTime;
 	}
-
-	//MoviePlay* temp = head->nextPlay;
-
-	//if (head->nextPlay->select > endTime) {
-	//	return head;
-	//}
 	int i = 0;
-	if (movieCount == 0) {
+	if (this->movieCount == 0) {
 		return head;
 	}
 	else {
-		//temp = temp->nextPlay;
 		//count는 현재 들어가있는 영화의 개수
-		while (i < movieCount) {
+		while (temp!=NULL) {
+			if (temp->nextPlay == NULL) {
+				if (temp->endTime < select) {
+					return temp;
+				}
+				return NULL;
+			}
 			//새로 추가해줄 영화가 들어갈 수 있을 때
 			if (temp->endTime < select && endTime < temp->nextPlay->startTime) {
 				return temp;
 			}
-			//없으면 그냥 pass, temp를 다음 영화로 넘겨버림.
-			/*else if (temp->endTime > select || temp->nextPlay->startTime < endTime) {
-				temp = temp->nextPlay;
-
-				return NULL;
-			}*/
+			//없으면 그냥 pass, temp를 다음 영화로 넘겨버림
 			else {
 				temp = temp->nextPlay;
 				i++;
 			}
 		}
-		if (i == movieCount) {
-			if (temp->endTime < select) {
-				return temp;
-			}
-		}
-		return NULL;
 	}
 }
 
-//int MovieRoom::canAddMovie(MovieInfo* info, short select) {
-//	int i = 0;
-//	list <MoviePlay>::iterator index = movielist.begin();
-//	for (; index != movielist.end(); index++) {
-//
-//	}
-//
-//}
-
-void MovieRoom::addMovieToRoom(MovieInfo* info, short select) {
+bool MovieRoom::addMovieToRoom(MovieInfo* info, short select) {
 	MoviePlay* prevmov = canAddMovie(info, select);
-	/*MoviePlay(short sTime, MovieInfo * minfo, MoviePlay * nextP)*/
 	//temp에 넣으려는 영화들의 정보를 넣어준다.
 
 	if (prevmov == NULL) {
-		cout << "영화를 넣을 수 있는 시간이 없습니다." << endl;
+		//cout << "영화를 넣을 수 있는 시간이 없습니다." << endl;
+		return FALSE;
 	}
 	else {
 		MoviePlay* temp = new MoviePlay(select, info, prevmov->nextPlay);
 		temp->nextPlay = prevmov->nextPlay;
 		prevmov->nextPlay = temp;
-		movieCount++;
-	}
-}
-
-void MovieRoom::addMovieToRoom(MoviePlay& movie) {
-
-	MoviePlay* prevmov = canAddMovie(movie.info, movie.startTime);
-	/*MoviePlay(short sTime, MovieInfo * minfjdo, MoviePlay * nextP)*/
-	//temp에 넣으려는 영화들의 정보를 넣어준다.
-
-	if (prevmov == NULL) {
-		cout << "영화를 넣을 수 있는 시간이 없습니다." << endl;
-	}
-	else {
-		//MoviePlay* temp = new MoviePlay(select, info, prevmov->nextPlay);
-		movie.nextPlay = prevmov->nextPlay;
-		prevmov->nextPlay = &movie;
-		movieCount++;
+		this->movieCount++;
+		//cout << "영화 추가가 완료되었습니다." << endl;
+		return TRUE;
 	}
 }
 
@@ -153,7 +115,7 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 			temp = start->nextPlay;
 		}
 	}
-	cout << "삭제완료! 삭제 개수 " << deleteCount << "개\n" << endl;
+	cout << "삭제가 완료되었습니다!" << endl;
 	this->movieCount -= deleteCount;
 }
 
@@ -166,7 +128,7 @@ void MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	int Count = 0;
 
-	cout << "------------------- " << (int)roomNumber << "관 -------------------" << endl;
+	cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
 	cout.setf(ios::left);
 	cout << setw(20) << "시작 시간";
 	cout << setw(20) << "종료 시간";
@@ -188,4 +150,25 @@ void MovieRoom::printMovieInfo(MovieInfo* mov) {
 		}
 	}
 	cout << "영화 개수 " << Count << "개\n" << endl;
+}
+
+void MovieRoom::deleteMoviePlay(short starttime) {
+
+	MoviePlay* start = head;
+	MoviePlay* temp = start->nextPlay;
+
+	while (temp != NULL) {
+		if (temp->startTime == starttime) {
+			start->nextPlay = temp->nextPlay;
+			temp ->~MoviePlay();
+			temp = start->nextPlay;
+		}
+		else {
+			start = temp;
+			temp = start->nextPlay;
+		}
+	}
+	this->movieCount--;
+	cout << "삭제가 완료되었습니다!" << endl;
+
 }
