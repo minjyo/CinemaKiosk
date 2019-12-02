@@ -8,14 +8,21 @@ Admin::Admin() {
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
 	system("cls");
-	cout << "   영화 제목\t\t\t영화 감독\t\t러닝타임" << endl;
-	cout << "----------------------------------------------------------------" << endl;
+	cout << "   ";
+	cout.setf(ios::left);
+	cout << setw(20) << "영화 이름";
+	cout << setw(20) << "영화 가격";
+	cout << setw(20) << "영화 감독";
+	cout << setw(20) << "런닝 타임";
+	cout << "------------------------------------------------------------------------" << endl;
+
+	//cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
+
 
 	for (int i = 0; i < infoCount; i++) {
 		cout << i + 1 << ". ";
 		infoTable[i]->printInfo();
 	}
-}
 
 //영화관 선택 시 시작시간 순으로 상영영화 출력
 void Admin::printTimetable(short index) {
@@ -223,7 +230,6 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 	{
 		seatArr[i] = -1;
 	}
-
 	system("cls");
 	movie->printSeat();
 	gotoxy(0, SIZE_ROW + 1);
@@ -234,10 +240,8 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 	x = 2; y = 2;
 	gotoxy(2 * x, y);
 
-
 	while (count != 0)
 	{
-
 		//while (_kbhit())
 		//{
 		key = _getch();
@@ -368,14 +372,12 @@ Ticket* Admin::addTicket(MoviePlay* movie)
 
 	gotoxy(1, 1);
 
-
 	return newTicket;
 }
 
 bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
 {
 	//금액
-
 	int i;
 	int insertMoney = 0; //입력 금액
 	int total; //총 금액
@@ -400,8 +402,6 @@ bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
 				money += insertMoney;
 			}
 		}
-
-
 		cout << "결제 진행중..." << endl;
 		Sleep(3000);
 
@@ -423,13 +423,9 @@ bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
 		system("cls");
 		return true;
 	}
-
 	else {
 		cout << "잘못 입력하셨습니다. " << endl;
 	}
-
-
-
 }
 
 void Admin::gotoxy(short x, short y)
