@@ -21,7 +21,7 @@ MovieRoom::~MovieRoom() {
 void MovieRoom::printTimeTable() {
 	MoviePlay* temp = head;
 
-	cout << "------------------- " << (int)roomNumber << "관 -------------------" << endl;
+	cout << "------------------- " << (int)roomNumber+1 << "관 -------------------" << endl;
 	cout << "영화 제목       시작 시간       잔여좌석        " << endl;
 	cout.fill(' ');
 	cout.width(10);
@@ -57,7 +57,7 @@ MoviePlay* MovieRoom::canAddMovie(MovieInfo* info, short select) {
 	}
 	else {
 		//count는 현재 들어가있는 영화의 개수
-		while (temp!=NULL) {
+		while (temp != NULL) {
 			if (temp->nextPlay == NULL) {
 				if (temp->endTime < select) {
 					return temp;
@@ -122,24 +122,14 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 //1125 근영 추가 일치하는 영화 개수는 확인용, 지워도 무방
 void MovieRoom::printMovieInfo(MovieInfo* mov) {
 
-	mov->printInfo();
 	MoviePlay* start = head;
 	MoviePlay* temp = start->nextPlay;
 
 	int Count = 0;
 
-	cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
-	cout.setf(ios::left);
-	cout << setw(20) << "시작 시간";
-	cout << setw(20) << "종료 시간";
-	cout << setw(20) << "잔여 좌석" << endl;
-
 	while (temp != NULL) {
 		if (temp->info == mov) {
 			Info movieinfo = temp->info->getInfo();
-			cout << setw(20) << temp->startTime;
-			cout << setw(20) << temp->endTime;
-			cout << temp->restSeat() << "/25" << endl;
 			start = temp;
 			temp = start->nextPlay;
 			Count++;
@@ -149,7 +139,32 @@ void MovieRoom::printMovieInfo(MovieInfo* mov) {
 			temp = start->nextPlay;
 		}
 	}
-	cout << "영화 개수 " << Count << "개\n" << endl;
+	if (Count != 0) {
+		temp = head->nextPlay;
+		cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
+		cout.setf(ios::left);
+		cout << setw(20) << "시작 시간";
+		cout << setw(20) << "종료 시간";
+		cout << setw(20) << "잔여 좌석" << endl;
+
+
+		while (temp != NULL) {
+			if (temp->info == mov) {
+				Info movieinfo = temp->info->getInfo();
+				cout << setw(20) << temp->startTime;
+				cout << setw(20) << temp->endTime;
+				cout << temp->restSeat() << "/25" << endl;
+				start = temp;
+				temp = start->nextPlay;
+				Count++;
+			}
+			else {
+				start = temp;
+				temp = start->nextPlay;
+			}
+		}
+	}
+	
 }
 
 void MovieRoom::deleteMoviePlay(short starttime) {

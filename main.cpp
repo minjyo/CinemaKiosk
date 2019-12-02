@@ -27,7 +27,7 @@ int main()
 	}
 
 	admin.infoTable[0] = new MovieInfo("Frozen2          ", "Jenniffer.L", 143, 8000);
-	admin.infoTable[1] = new MovieInfo("Jocker           ", "토트 필립스", 203, 9000);
+	admin.infoTable[1] = new MovieInfo("Jocker           ", "토트 필립스", 140, 9000);
 	admin.infoTable[2] = new MovieInfo("나를 찾아줘      ", "김승호     ", 148, 10000);
 	admin.infoTable[3] = new MovieInfo("어벤저스 엔드게임", "안소니 루소", 301, 15000);
 	admin.infoCount = 4;
@@ -41,7 +41,6 @@ int main()
 	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1900);
 	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 2100);
 
-	admin.roomTable[0]->printTimeTable();
 	/* 2관 */
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 900);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1130);
@@ -49,8 +48,7 @@ int main()
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1730);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 2100);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 2330);
-	cout << "2관 테스트" << endl;
-	admin.roomTable[1]->printTimeTable();
+
 	while (input[0] != 'Q')
 	{
 

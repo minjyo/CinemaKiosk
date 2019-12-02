@@ -89,7 +89,7 @@ void MoviePlay::changeSeat(short x, short y, bool status) {
 			}
 		}
 		printSeat();
-		
+
 	} */
 	seat[x - 1][y - 1] = status;
 }
