@@ -12,10 +12,9 @@ void Admin::printInfoTable(void) {
 	cout << "----------------------------------------------------------------" << endl;
 
 	for (int i = 0; i < infoCount; i++) {
-		cout << i+1 << ". ";
+		cout << i + 1 << ". ";
 		infoTable[i]->printInfo();
 	}
-	
 }
 
 //영화관 선택 시 시작시간 순으로 상영영화 출력
@@ -81,10 +80,6 @@ void Admin::addMovie(MovieInfo* info, MovieRoom& room, short selectTime) {
 		return;
 	}
 	cout << "해당 시간에 영화를 추가할 수 없습니다. 다시 선택해주세요." << endl;
-}
-
-void Admin::deleteMoviePlay(short index, short selectTime) {
-
 }
 
 //티켓 테이블에서 티켓번호로 티켓 정보 찾기
@@ -189,8 +184,7 @@ void Admin::deleteMovieInfo(short index)
 }
 
 void Admin::deleteMoviePlay(short roomNumber, short startTime) {
-
-
+	roomTable[roomNumber]->deleteMoviePlay(startTime);
 }
 
 Ticket* Admin::addTicket(MoviePlay* movie)
