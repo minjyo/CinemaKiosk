@@ -1,11 +1,20 @@
-﻿//
+﻿
+//
 //  Header.hpp
 //  CinemaKiosk
 //
 //  Created by minjyo on 12/11/2019.
 //  Copyright © 2019 minjyo. All rights reserved.
 //
-#pragma once
+
+
+#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <windows.h>
+#include <conio.h>
+#include <iomanip>
+
 #define SIZE_COLUMN 5
 #define SIZE_ROW 5
 #define MOVIE_INFO_ARR_SIZE 10
@@ -29,13 +38,6 @@
 
 
 
-#include <stdio.h>
-#include <iostream>
-#include <string>
-//#include <list>
-#include <windows.h>
-#include <conio.h>
-#include <iomanip>
 
 using namespace std;
 
