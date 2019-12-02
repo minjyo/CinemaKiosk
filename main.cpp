@@ -41,7 +41,6 @@ int main()
 	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1900);
 	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 2100);
 
-	admin.roomTable[0]->printTimeTable();
 	/* 2관 */
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 900);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1130);
@@ -49,8 +48,7 @@ int main()
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 1730);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 2100);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 2330);
-	cout << "2관 테스트" << endl;
-	admin.roomTable[1]->printTimeTable();
+
 	while (input[0] != 'Q')
 	{
 

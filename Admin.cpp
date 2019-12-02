@@ -24,8 +24,6 @@ void Admin::printInfoTable(void) {
 		infoTable[i]->printInfo();
 	}
 
-}
-
 //영화관 선택 시 시작시간 순으로 상영영화 출력
 void Admin::printTimetable(short index) {
 	roomTable[index]->printTimeTable();
@@ -193,8 +191,7 @@ void Admin::deleteMovieInfo(short index)
 }
 
 void Admin::deleteMoviePlay(short roomNumber, short startTime) {
-
-
+	roomTable[roomNumber]->deleteMoviePlay(startTime);
 }
 
 Ticket* Admin::addTicket(MoviePlay* movie)
