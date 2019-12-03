@@ -36,9 +36,6 @@
 #define ADDMOVIE 26
 #define DELETEMOVIE 27
 
-
-
-
 using namespace std;
 
 struct Info {

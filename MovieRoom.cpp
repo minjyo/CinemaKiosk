@@ -21,18 +21,31 @@ MovieRoom::~MovieRoom() {
 void MovieRoom::printTimeTable() {
 	MoviePlay* temp = head;
 
-	cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
-	cout << "영화 제목       시작 시간       잔여좌석        " << endl;
-	cout.fill(' ');
-	cout.width(10);
+	int Count = 1;
+	cout << "   ";
+	cout << "--------------------------------- " << (int)roomNumber + 1 << "관 ---------------------------------" << endl;
+	cout << "   ";
+	cout.setf(ios::left);
+	cout << setw(20) << "영화 제목";
+	cout << setw(20) << "시작 시간";
+	cout << setw(20) << "종료 시간";
+	cout << setw(20) << "잔여 좌석";
 
 	while (temp->nextPlay != NULL) {
 		temp = temp->nextPlay;
-		temp->info->printInfo();
+		/*temp->info->printInfo();
 		cout << temp->startTime;
-		cout << temp->restSeat();
-		cout << endl;
+		cout << temp->restSeat();*/
+		cout << Count << ". ";
+		cout << setw(20) << temp->info->getInfo().title;
+		string start_string = to_string(temp->startTime / 100) + "시 " + to_string(temp->startTime % 100) + "분";
+		string end_string = to_string(temp->endTime / 100) + "시 " + to_string(temp->endTime % 100) + "분";
+		cout << setw(20) << start_string;
+		cout << setw(20) << end_string;
+		cout << temp->restSeat() << "/25" << endl;
+		Count++;
 	}
+	cout << endl;
 }
 
 //영화 삽입 가능 여부 확인 (이때, 마지막에 넣으려는 곳의 전 노드를 return 해준다.)
@@ -139,20 +152,24 @@ void MovieRoom::printMovieInfo(MovieInfo* mov) {
 			temp = start->nextPlay;
 		}
 	}
+	
 	if (Count != 0) {
 		temp = head->nextPlay;
-		cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
-		cout.setf(ios::left);
+		cout << "   ";
+		cout << "--------------------------------- " << (int)roomNumber + 1 << "관 ---------------------------------" << endl;
+		cout << "   ";
 		cout << setw(20) << "시작 시간";
 		cout << setw(20) << "종료 시간";
 		cout << setw(20) << "잔여 좌석" << endl;
-
-
+		Count = 1;
 		while (temp != NULL) {
 			if (temp->info == mov) {
-				Info movieinfo = temp->info->getInfo();
-				cout << setw(20) << temp->startTime;
-				cout << setw(20) << temp->endTime;
+				//Info movieinfo = temp->info->getInfo();
+				cout << Count << ". ";
+				string start_string = to_string(temp->startTime / 100) + "시 " + to_string(temp->startTime % 100) + "분";
+				string end_string = to_string(temp->endTime / 100) + "시 " + to_string(temp->endTime % 100) + "분";
+				cout << setw(20) << start_string;
+				cout << setw(20) << end_string;
 				cout << temp->restSeat() << "/25" << endl;
 				start = temp;
 				temp = start->nextPlay;

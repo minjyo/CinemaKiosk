@@ -26,9 +26,9 @@ int main()
 		admin.roomTable[i] = new MovieRoom(i);
 	}
 
-	admin.infoTable[0] = new MovieInfo("Frozen2          ", "Jenniffer.L", 143, 8000);
-	admin.infoTable[1] = new MovieInfo("Jocker           ", "토트 필립스", 140, 9000);
-	admin.infoTable[2] = new MovieInfo("나를 찾아줘      ", "김승호     ", 148, 10000);
+	admin.infoTable[0] = new MovieInfo("Frozen2", "Jenniffer.L", 143, 8000);
+	admin.infoTable[1] = new MovieInfo("Jocker", "토트 필립스", 140, 9000);
+	admin.infoTable[2] = new MovieInfo("나를 찾아줘", "김승호", 148, 10000);
 	admin.infoTable[3] = new MovieInfo("어벤저스 엔드게임", "안소니 루소", 301, 15000);
 	admin.infoCount = 4;
 
@@ -49,6 +49,13 @@ int main()
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[2], 2100);
 	admin.roomTable[1]->addMovieToRoom(admin.infoTable[3], 2330);
 
+	/* 4관 */
+	admin.roomTable[3]->addMovieToRoom(admin.infoTable[2], 900);
+	admin.roomTable[3]->addMovieToRoom(admin.infoTable[3], 1130);
+	admin.roomTable[3]->addMovieToRoom(admin.infoTable[2], 1500);
+	admin.roomTable[3]->addMovieToRoom(admin.infoTable[3], 1730);
+	admin.roomTable[3]->addMovieToRoom(admin.infoTable[2], 2100);
+	admin.roomTable[3]->addMovieToRoom(admin.infoTable[3], 2330);
 	while (input[0] != 'Q')
 	{
 
@@ -95,6 +102,17 @@ int main()
 			int index;
 			cout << "예매하실 영화를 선택해주세요 : ";
 			cin >> index;
+			system("cls");
+			cout << "\n   ";
+			cout.setf(ios::left);
+			cout << setw(20) << "영화 이름";
+			cout << setw(20) << "영화 가격";
+			cout << setw(20) << "영화 감독";
+			cout << setw(20) << "런닝 타임";
+			cout << "-----------------------------------------------------------------------" << endl;
+
+			cout << "   ";
+			admin.infoTable[index - 1]->printInfo();
 
 			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
 			MovieInfo* movie = admin.infoTable[index - 1];
@@ -102,11 +120,11 @@ int main()
 			for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
 				admin.roomTable[i]->printMovieInfo(movie);
 			}
-
+			cout << endl;
 			int room, time;
 			cout << "원하시는 영화관을 선택해주세요 : ";
 			cin >> room;
-			cout << "원하시는 시간을 선택해주세요 : ";
+			cout << "원하시는 번호를 선택해주세요 : ";
 			cin >> time;
 
 			int time_index = 0;
@@ -159,8 +177,6 @@ int main()
 			mode = USER;
 			break;
 
-
-
 		case ADMIN: //관리자 홈
 			cout << "관리자 홈" << endl;
 			cout << "1. 영화관리 2. 영화관 관리" << endl;
@@ -207,7 +223,7 @@ int main()
 			cout << "관리할 영화관 번호를 입력해주세요: ";
 			cin >> room_index;
 			cout << room_index << "관 관리" << endl;
-			cout << "1. 영화관의 상태변경          2.영화관에 영화 추가               3.영화관에서 영화 삭제" << endl;
+			cout << "1. 영화관의 상태변경\t2.영화관에 영화 추가\t3.영화관에서 영화 삭제" << endl;
 			int num;
 			cin >> num;
 

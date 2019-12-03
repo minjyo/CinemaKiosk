@@ -7,17 +7,14 @@ Admin::Admin() {
 
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
-	system("cls");
+	//system("cls");
 	cout << "   ";
 	cout.setf(ios::left);
 	cout << setw(20) << "영화 이름";
 	cout << setw(20) << "영화 가격";
 	cout << setw(20) << "영화 감독";
 	cout << setw(20) << "런닝 타임";
-	cout << "------------------------------------------------------------------------" << endl;
-
-	//cout << "------------------- " << (int)roomNumber + 1 << "관 -------------------" << endl;
-
+	cout << "-----------------------------------------------------------------------" << endl;
 
 	for (int i = 0; i < infoCount; i++) {
 		cout << i + 1 << ". ";
@@ -235,7 +232,7 @@ void Admin::printInfoTable(void) {
 		gotoxy(0, SIZE_ROW + 1);
 
 		cout << "원하는 좌석을 선택하세요." << endl << endl;
-		printf("%2d", count);
+		printf("%d", count);
 		cout << "명 남았습니다." << endl;
 		x = 2; y = 2;
 		gotoxy(2 * x, y);
