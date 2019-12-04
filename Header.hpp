@@ -159,3 +159,19 @@ public:
 
 	bool getMoney(MovieInfo* minfo, short numberOfHead);
 };
+
+class UI {
+public:
+	int key;
+	int x, y;
+	int userHome(void);					//사용자 홈 화면
+	int movieList(Admin);				//영화 예매 선택 시 영화 리스트 출력하는 화면
+	int moviePlayList(Admin, int);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
+	int checkTicket(bool check);		//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
+
+	int adminHome(void);				//관리자 홈 화면
+	int movieSetting(void);				//영화 관리 화면
+	int roomSetting(void);				//영화관 관리 화면
+
+	void gotoxy(short x, short y);
+};
