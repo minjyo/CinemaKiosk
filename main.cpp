@@ -207,18 +207,15 @@ int main()
 			cout << "관리할 영화관 번호를 입력해주세요: ";
 			cin >> room_index;
 			cout << room_index << "관 관리" << endl;
-			cout << "1. 영화관의 상태변경          2.영화관에 영화 추가               3.영화관에서 영화 삭제" << endl;
+			cout << "1.영화관에 영화 추가               2.영화관에서 영화 삭제" << endl;
 			int num;
 			cin >> num;
 
 			switch (num) {
 			case 1:
-				mode = ROOMSTATUS;
-				break;
-			case 2:
 				mode = ADDMOVIE;
 				break;
-			case 3:
+			case 2:
 				mode = DELETEMOVIE;
 				break;
 			default:
