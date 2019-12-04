@@ -18,8 +18,10 @@ int main()
 	char* input = (char *)malloc(1);
 	*input = '\0';
 	int room_index;
+	int movie_index;
 
 	Admin admin;
+	UI ui;
 
 	while (*input != 'Q')
 	{
@@ -28,94 +30,17 @@ int main()
 		switch (mode)
 		{
 		case USER: //사용자 홈
-			system("cls");
-			cout << "1. 영화선택\t2. 티켓 정보 확인" << endl;
-			*input = _getch();
-		
-			if (*input == '1') {
-				mode = CHOOSEMOVIE;
-			}
-			else if (*input == '2') {
-				mode = TICKET;
-			}
-			else if (*input == 'M')
-			{
-				mode = ADMIN;
-				cout << "관리자 모드 전환" << endl;
-			}
+			mode = ui.userHome();
 			break;
 
 		case CHOOSEMOVIE: //영화 선택
-		{
-			system("cls");
-
-			cout << "영화 선택" << endl;
-			//전체 영화 리스트 출력
-			admin.printInfoTable();
-
-			cout << "예매하실 영화를 선택해주세요 : ";
-			*input = _getch();
-			int index = 0;
-			index = atoi(input);
-
-			if (*input == '\b') {
-				mode = USER;
-			}
-			else {
-				cout << "\n   ";
-				cout.setf(ios::left);
-				cout << setw(20) << "영화 이름";
-				cout << setw(20) << "영화 가격";
-				cout << setw(20) << "영화 감독";
-				cout << setw(20) << "런닝 타임";
-				cout << "-----------------------------------------------------------------------" << endl;
-
-				cout << "   ";
-				admin.infoTable[index - 1]->printInfo();
-
-				//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
-				MovieInfo* movie = admin.infoTable[index - 1];
-
-				int array[5] = {0, };
-				for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
-					array[i] = admin.roomTable[i]->printMovieInfo(movie);
-				}
-				cout << endl;
-
-				int room, time;
-				cout << "원하시는 영화관을 선택해주세요 : ";
-				cin >> room;
-				cout << "원하시는 번호를 선택해주세요 : ";
-				cin >> time;
-
-				int time_index = 0;
-				Ticket* ticket = NULL;
-
-				//선택한 영화가 상영되는 영화관의 좌석 상태 출력하고 좌석 선택
-				MoviePlay* temp = admin.roomTable[room - 1]->head;
-				while (temp != NULL) {
-					if (temp->info == movie) {
-						time_index++;
-						if (time == time_index) {
-							//예매
-							ticket = admin.addTicket(temp);
-						}
-					}
-					temp = temp->nextPlay;
-
-				}
-
-				//예매 결과 출력
-				if (ticket != NULL) {
-					ticket->printTicket();
-				}
-
-				mode = USER;
-			}
+			mode = ui.chooseMovie(admin, &movie_index);
 			break;
-		}
-
-
+		case CHOOSEROOM:
+			mode = ui.chooseRoom(admin, &room_index);
+			break;
+		case CHOOSETIME:
+			mode = ui.chooseTime(admin, room_index, &movie_index);
 		case TICKET: //티켓 정보 확인
 			int number;
 			Ticket* temp;

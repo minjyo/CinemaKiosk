@@ -132,7 +132,6 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 	this->movieCount -= deleteCount;
 }
 
-//1125 근영 추가 일치하는 영화 개수는 확인용, 지워도 무방
 int MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	MoviePlay* start = head;
@@ -180,9 +179,8 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 				temp = start->nextPlay;
 			}
 		}
-		return roomNumber+1;
 	}
-	return 0;
+	return Count;
 
 }
 
