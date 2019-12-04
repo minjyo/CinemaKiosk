@@ -6,8 +6,7 @@ MoviePlay::MoviePlay() {
 
 MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
 	//this->seat[SIZE_ROW][SIZE_COLUMN] = { false, };
-	Info temp = minfo->getInfo();
-	unsigned short running_time = temp.runningTime;
+	unsigned short running_time = minfo->runningTime;
 
 	/* 분의 합이 60분이 넘으면 */
 	if (((sTime % 100) + (running_time % 100)) > 60) {
@@ -29,11 +28,16 @@ MoviePlay::~MoviePlay() {
 //좌석 현황 출력. 예매 가능하면 ▩, 안되면 ■
 void MoviePlay::printSeat() {
 	int i, j;
-	printf("   ");
+	printf(" #########################################\n");
+	printf("  #                                       #\n");
+	printf("  #          ┌────────────────┐           #\n");
+	printf("  #          │      screen    │           #\n");
+	printf("  #          └────────────────┘           #\n");
+	cout << "  #           ";
 	for (i = 1; i < SIZE_COLUMN + 1; i++) {
 		printf("%2d", i);
 	}
-	printf("\n");
+	cout << "            #\n  #         ";
 	for (i = 0; i < SIZE_ROW; i++) {
 		printf(" %c ", 65 + i);
 		for (j = 0; j < SIZE_COLUMN; j++) {
@@ -42,13 +46,20 @@ void MoviePlay::printSeat() {
 			else
 				cout << "□";
 		}
-		cout << endl;
+		cout << "           #\n  #         ";
 	}
+	printf("                              #\n");
+	printf("  #                                       #\n");
+	printf("  #                                       #\n");
+	printf("  #                                       #\n");
+	printf("  #                                       #\n");
+	printf("  #                                       #\n");
+	printf("  #########################################\n");
 }
 
 //해당 좌표에 있는 좌석이 예매 가능한지 리턴. 자리가 이미 예약되어 있으면 True, 그렇지 않을 경우 False 리턴.
 bool MoviePlay::checkSeat(short x, short y) {
-	if (x > 5 || y > 5 || x < 1 || y < 1) {
+	if (x > SIZE_COLUMN || y > SIZE_ROW || x < 1 || y < 1) {
 		cout << "잘못된 입력입니다" << endl;
 	}
 	else {

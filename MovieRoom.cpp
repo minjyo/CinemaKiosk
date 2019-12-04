@@ -37,7 +37,7 @@ void MovieRoom::printTimeTable() {
 		cout << temp->startTime;
 		cout << temp->restSeat();*/
 		cout << Count << ". ";
-		cout << setw(20) << temp->info->getInfo().title;
+		cout << setw(20) << temp->info->title;
 		string start_string = to_string(temp->startTime / 100) + "시 " + to_string(temp->startTime % 100) + "분";
 		string end_string = to_string(temp->endTime / 100) + "시 " + to_string(temp->endTime % 100) + "분";
 		cout << setw(20) << start_string;
@@ -52,8 +52,7 @@ void MovieRoom::printTimeTable() {
 MoviePlay* MovieRoom::canAddMovie(MovieInfo* info, short select) {
 	//list <MoviePlay>::iterator index = movielist.begin();
 	MoviePlay* temp = head->nextPlay;
-	Info info_temp = info->getInfo();
-	unsigned short runningTime = info_temp.runningTime;
+	unsigned short runningTime = info->runningTime;
 	unsigned short endTime = 0;
 	//시간을 입력시 주의사항은 분 단위가 아닌 시와 분을 둘다 써줄것.
 	//Ex) 90분 영화면 1시간 30분이므로 130 이라고 써줄것.
@@ -100,7 +99,7 @@ bool MovieRoom::addMovieToRoom(MovieInfo* info, short select) {
 	}
 	else {
 		MoviePlay* temp = new MoviePlay(select, info, prevmov->nextPlay);
-		temp->nextPlay = prevmov->nextPlay;
+		//temp->nextPlay = prevmov->nextPlay;
 		prevmov->nextPlay = temp;
 		this->movieCount++;
 		//cout << "영화 추가가 완료되었습니다." << endl;
@@ -141,7 +140,6 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	while (temp != NULL) {
 		if (temp->info == mov) {
-			Info movieinfo = temp->info->getInfo();
 			start = temp;
 			temp = start->nextPlay;
 			Count++;
@@ -169,7 +167,7 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 				string end_string = to_string(temp->endTime / 100) + "시 " + to_string(temp->endTime % 100) + "분";
 				cout << setw(20) << start_string;
 				cout << setw(20) << end_string;
-				cout << temp->restSeat() << "/25" << endl;
+				cout << temp->restSeat() << " / "<< SIZE_COLUMN*SIZE_ROW << endl;
 				start = temp;
 				temp = start->nextPlay;
 				Count++;
@@ -179,6 +177,7 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 				temp = start->nextPlay;
 			}
 		}
+
 	}
 	return Count;
 

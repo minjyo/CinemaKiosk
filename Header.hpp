@@ -15,8 +15,8 @@
 #include <conio.h>
 #include <iomanip>
 
-#define SIZE_COLUMN 5
-#define SIZE_ROW 5
+#define SIZE_COLUMN 8
+#define SIZE_ROW 8
 #define MOVIE_INFO_ARR_SIZE 10
 #define MOVIE_ROOM_ARR_SIZE 5
 #define FIRST_TICKET 100001
@@ -25,8 +25,10 @@
 #define CHOOSEMOVIE 11
 #define CHOOSEROOM 12
 #define CHOOSETIME 13
-#define RESERVE 14
-#define TICKET 15
+#define CHECKTICKET 14
+#define CHOOSESEAT 15
+#define CHECKINFO 16
+#define CHECKMONEY 17
 
 #define ADMIN 20
 #define MANMOVIE 21
@@ -38,26 +40,15 @@
 
 using namespace std;
 
-struct Info {
-	string title;
-	string pd;
-	short runningTime;
-	int price;
-};
-
 class MovieInfo {
 public:
-	MovieInfo();
-	MovieInfo(string title, string pd, short runningTime, int price);
-	Info getInfo();
-	void printInfo();
-	//MovieInfo* nextInfo;
 	string title;
-
-private:
 	string pd;
 	short runningTime;
 	int price;
+
+	MovieInfo(string title, string pd, short runningTime, int price);
+	void printInfo();
 };
 
 /* 상영영화 객체 (Linked list) */
@@ -89,7 +80,6 @@ public:
 	MoviePlay* head = new MoviePlay;
 	//list<MoviePlay> movielist;
 	unsigned short movieCount;
-	MovieRoom();
 	MovieRoom(char roomNumber);
 	~MovieRoom();
 	void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
@@ -153,11 +143,7 @@ public:
 	void printTicket(int tNumber);        //예매 번호로 티켓 정보 출력 (예매확인 창)
 	void deleteTicket(Ticket* select);    //예매 번호로 티켓 삭제 (예매취소)
 
-	Ticket* addTicket(MoviePlay* movie); //예매
-
 	void gotoxy(short x, short y);
-
-	bool getMoney(MovieInfo* minfo, short numberOfHead);
 };
 
 class UI {
@@ -166,17 +152,23 @@ public:
 	int x, y;
 	int userHome(void);					//사용자 홈 화면
 	int chooseMovie(Admin admin, int* index);				//영화 예매 선택 시 영화 리스트 출력하는 화면
-	int chooseRoom(Admin admin, int* room_index);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
-	int chooseTime(Admin admin, int room, int* movie);
-	int checkTicket(bool check);		//영화 예매 후 티켓 정보 확인
 
-	int chooseSeat();
-	int checkInfo();
-	int checkMoney();
+	int chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** movie);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
+	int chooseTime(Admin admin, int room_index, int* movie_index, MovieInfo* movie, MoviePlay** play);
+	int checkTicket(Admin* admin);		//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 
-	int adminHome(void);				//관리자 홈 화면
-	int movieSetting(void);				//영화 관리 화면
-	int roomSetting(void);				//영화관 관리 화면
+	int chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket);
+	int checkInfo(Ticket* newTicket);
+	int checkMoney(Admin* admin, Ticket* newTicket);
+
+	int adminHome(void);					//관리자 홈 화면
+	int manMovie(void);						//영화 관리 화면
+	int makeMovie(Admin* admin);			//영화관리 - 영화 추가
+	int deleteAll(Admin* admin);			//영화관리 - 영화 삭제
+
+	int manRoom(int* room_index);						//영화관 관리 화면
+	int addMovie(Admin* admin, int room_index);					//영화관 관리 - 상영 영화 추가
+	int deleteMovie(Admin* admin, int room_index);						//영화관 관리 - 상영 영화 삭제
 
 	void gotoxy(short x, short y);
 };

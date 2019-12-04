@@ -15,17 +15,6 @@ MovieInfo::MovieInfo(string title, string pd, short runningTime, int price) {
 	//cout << "movie 객체 생성" << endl;
 }
 
-Info MovieInfo::getInfo() {
-	Info cur;
-
-	cur.title = this->title;
-	cur.pd = this->pd;
-	cur.runningTime = this->runningTime;
-	cur.price = this->price;
-
-	return cur;
-}
-
 void MovieInfo::printInfo() {
 	cout.setf(ios::left);
 	cout << setw(20) << title;
