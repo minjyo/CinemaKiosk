@@ -28,5 +28,5 @@ void Ticket::printTicket() {
 	}
 	cout << endl;
 
-	
+
 }

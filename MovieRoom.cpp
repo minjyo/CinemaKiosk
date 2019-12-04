@@ -149,7 +149,7 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 			temp = start->nextPlay;
 		}
 	}
-	
+
 	if (Count != 0) {
 		temp = head->nextPlay;
 		cout << "   ";
@@ -167,7 +167,7 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 				string end_string = to_string(temp->endTime / 100) + "½Ã " + to_string(temp->endTime % 100) + "ºÐ";
 				cout << setw(20) << start_string;
 				cout << setw(20) << end_string;
-				cout << temp->restSeat() << " / "<< SIZE_COLUMN*SIZE_ROW << endl;
+				cout << temp->restSeat() << " / " << SIZE_COLUMN * SIZE_ROW << endl;
 				start = temp;
 				temp = start->nextPlay;
 				Count++;

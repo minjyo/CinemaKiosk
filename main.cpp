@@ -16,8 +16,8 @@ int main()
 	char* input = (char*)malloc(1);
 	*input = '\0';
 
-	int room_index=0;
-	int movie_index=0;
+	int room_index = 0;
+	int movie_index = 0;
 	MovieInfo* movie = NULL;
 	MoviePlay* play = NULL;
 	Ticket* ticket = NULL;

@@ -182,7 +182,7 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 	x = 1; y_min = 3; y = y_min;
 
 	system("cls");
-	admin.roomTable[room-1]->printMovieInfo(movie);
+	admin.roomTable[room - 1]->printMovieInfo(movie);
 	//*play = admin.roomTable[room-1]->
 
 	gotoxy(x, y);
@@ -240,9 +240,9 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 	bool check;
 	int x_min, y_min;
 	x_min = 7; y_min = 7;
-	
+
 	system("cls");
-	gotoxy(2, y_min-5);
+	gotoxy(2, y_min - 5);
 	play->printSeat();
 
 	//인원수 입력받기, 예외처리 : 0또는 음수거나 잔여좌석보다 크게 입력받을 때
@@ -269,13 +269,13 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 	}
 
 	system("cls");
-	gotoxy(2, y_min-5);
+	gotoxy(2, y_min - 5);
 	play->printSeat();
 	gotoxy(x_min + 6, y_min + SIZE_ROW + 3);
 	cout << "원하는 좌석을 선택하세요.";
 	gotoxy(x_min + 6, y_min + SIZE_ROW + 4);
 	printf("%2d명 남았습니다.", count);
-	
+
 	x = 1; y = 1;
 	gotoxy(2 * (x_min + x), y_min + y);
 
@@ -421,7 +421,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 
 	total = newTicket->playInfo->info->price * newTicket->number;
 	system("cls");
-	cout << "결제 금액 : "<< total << endl;
+	cout << "결제 금액 : " << total << endl;
 	cout << "무엇으로 결제하시겠습니까 ? 1. 현금  2. 카드" << endl;
 	while (check) {
 		cin >> i;
@@ -516,7 +516,7 @@ int UI::adminHome(void) {
 	cout << "관리자 홈" << endl << endl;
 	cout << "◎ 영화 관리" << endl;
 	cout << "◎ 영화관 관리" << endl;
-	
+
 	int y_min = 3;
 	x = 1;  y = 0;
 	gotoxy(x, y_min);
@@ -529,7 +529,7 @@ int UI::adminHome(void) {
 			switch (key)
 			{
 			case 72:
-				if (y > 0){
+				if (y > 0) {
 					y--;
 					gotoxy(x, y + y_min);
 				}
@@ -732,7 +732,7 @@ int UI::manRoom(int* room_index) {
 				break;
 			}
 			if (x == 1) {
-				gotoxy(x_min + 11*x, y_min + y);
+				gotoxy(x_min + 11 * x, y_min + y);
 			}
 			else {
 				gotoxy(x_min, y_min + y);
@@ -783,11 +783,11 @@ int UI::addMovie(Admin* admin, int room_index) {
 			{
 			case 72:
 				if (y > 0) {
-					y--;					
+					y--;
 				}
 				break;
 			case 80:
-				if (y < (*admin).infoCount - 1)	{
+				if (y < (*admin).infoCount - 1) {
 					y++;
 				}
 				break;
