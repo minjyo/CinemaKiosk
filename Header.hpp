@@ -1,12 +1,10 @@
-﻿
-//
+﻿//
 //  Header.hpp
 //  CinemaKiosk
 //
 //  Created by minjyo on 12/11/2019.
 //  Copyright © 2019 minjyo. All rights reserved.
 //
-
 
 #include <stdio.h>
 #include <iostream>
@@ -62,7 +60,6 @@ private:
 
 /* 상영영화 객체 (Linked list) */
 class MoviePlay {
-
 private:
 	bool seat[SIZE_ROW][SIZE_COLUMN] = { false, };
 public:
@@ -79,12 +76,10 @@ public:
 	unsigned short endTime;             //종료 시간
 };
 
-
 class MovieRoom {
 private:
 	char roomNumber;
 	bool status;
-
 public:
 	MoviePlay* head = new MoviePlay;
 	//list<MoviePlay> movielist;
@@ -95,10 +90,11 @@ public:
 	void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	void printMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	void setStatus(bool status);
-	MoviePlay* canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
+	int canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
 	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
 	void printTimeTable(); //영화관의 영화 타임 테이블 출력
 	void deleteMoviePlay(short starttime);
+	MoviePlay* findMoviePlay(MovieInfo * minfo, int index);
 };
 
 /* 예매 정보 객체 */
@@ -114,7 +110,6 @@ public:
 	Ticket* nextTicket;
 	void printTicket();            //예매 관련 정보 출력
 };
-
 
 /* 관리자 객체 */
 class Admin
@@ -158,4 +153,53 @@ public:
 	void gotoxy(short x, short y);
 
 	bool getMoney(MovieInfo* minfo, short numberOfHead);
+
+	void printmain(void) {
+		cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■                 ##   ##  ##   ##       ###    ##  ######## ##    ## ####                   ■" << endl;
+		cout << "■                ##  ##   ##   ##       ## ##  ##  ##       ###   ### ## ##                  ■" << endl;
+		cout << "■               ## ##    ##   ## ##### ##  ## ##  ######## ## #  ## # ##  ##                 ■" << endl;
+		cout << "■              ##   ##  ### ###       ##   ####  ##       ##  # ##  # #######                ■" << endl;
+		cout << "■             ##     ##  ####        ##    ###  ######## ##   ##    # ##    ##               ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■           +─────────────────────────────────+             ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■               ┌──────────────────────────────────────────────────────────┐                 ■" << endl;
+		cout << "■               │                                                          │                 ■" << endl;
+		cout << "■               │  1. 영화 선택                                            │                 ■" << endl;
+		cout << "■               │                                                          │                 ■" << endl;
+		cout << "■               │  2. 티켓 정보 확인                                       │                 ■" << endl;
+		cout << "■               │                                                          │                 ■" << endl;
+		cout << "■               └──────────────────────────────────────────────────────────┘                 ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl;
+	}
+	void printaaaa(void) {
+		cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl;
+		cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
+		cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
+		cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
+		cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
+		cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
+		cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+		cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
+		cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl;
+		cout << "■                                                                                            ■" << endl;
+		cout << "                                                                                              ■" << endl;
+		cout << "      영화 선택                                                                               ■" << endl;
+		cout << "     +──────────────────────────+" << endl;
+		/*cout << "\n\n\n\n\n\n"s;
+
+		cout << "■                                                                                              " << endl;
+		cout << "■    예매하실 영화를 선택해주세요                                                            ■" << endl;
+		cout << "     +──────────────────────────────────+" << endl;*/
+	}
 };
+

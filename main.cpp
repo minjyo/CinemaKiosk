@@ -14,13 +14,16 @@ using namespace std;
 
 int main()
 {
+	system("mode con cols=97");
 	char mode = HOME;
 	char input[10] = { '\0', };
 	int room_index;
 
 	//기본 객체 생성(admin, movie, movieroom)
 	Admin admin;
-
+	admin.printmain();
+	system("cls");
+	admin.printaaaa();
 	//영화관 기본 셋팅
 	for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
 		admin.roomTable[i] = new MovieRoom(i);
@@ -33,8 +36,8 @@ int main()
 	admin.infoCount = 4;
 
 	/* 1관 */
-	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 900);
-	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1100);
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 900); 
+	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1100); 
 	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 1300);
 	admin.roomTable[0]->addMovieToRoom(admin.infoTable[1], 1500);
 	admin.roomTable[0]->addMovieToRoom(admin.infoTable[0], 1700);
@@ -56,6 +59,8 @@ int main()
 	admin.roomTable[3]->addMovieToRoom(admin.infoTable[3], 1730);
 	admin.roomTable[3]->addMovieToRoom(admin.infoTable[2], 2100);
 	admin.roomTable[3]->addMovieToRoom(admin.infoTable[3], 2330);
+	admin.printInfoTable();
+	//cout << admin.roomTable[3]->findMoviePlay(admin.infoTable[3], 3)->startTime << endl;
 	while (input[0] != 'Q')
 	{
 
@@ -102,16 +107,16 @@ int main()
 			int index;
 			cout << "예매하실 영화를 선택해주세요 : ";
 			cin >> index;
-			system("cls");
-			cout << "\n   ";
 			cout.setf(ios::left);
+			cout << setw(6) << " ";
 			cout << setw(20) << "영화 이름";
 			cout << setw(20) << "영화 가격";
 			cout << setw(20) << "영화 감독";
-			cout << setw(20) << "런닝 타임";
+			cout << setw(20) << "런닝 타임" << endl;
+			cout << setw(6) << " ";
 			cout << "-----------------------------------------------------------------------" << endl;
 
-			cout << "   ";
+			cout << setw(6) << " ";
 			admin.infoTable[index - 1]->printInfo();
 
 			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
@@ -132,6 +137,7 @@ int main()
 
 			//선택한 영화가 상영되는 영화관의 좌석 상태 출력하고 좌석 선택
 			MoviePlay* temp = admin.roomTable[room - 1]->head;
+			
 			while (temp != NULL) {
 				if (temp->info == movie) {
 					time_index++;
@@ -141,7 +147,6 @@ int main()
 					}
 				}
 				temp = temp->nextPlay;
-
 			}
 
 			//예매 결과 출력
@@ -259,6 +264,10 @@ int main()
 			cout << "추가할 영화 시간을 입력하세요: ";
 			short time;
 			cin >> time;
+			while (time > 2359) {
+				cout << "입력값 오류입니다. 다시 입력해주세요 : ";
+				cin >> time;
+			}
 
 			if (admin.roomTable[room_index - 1]->addMovieToRoom(admin.infoTable[index - 1], time)) {
 				admin.roomTable[room_index - 1]->printTimeTable();
