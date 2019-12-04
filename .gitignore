@@ -1,4 +1,12 @@
+<<<<<<< HEAD
+Cinema.vcxproj
+Cinema.vcxproj.filters
+Cinema.vcxproj.user
+Debug
+.vs
+=======
 CinemaKiosk.vcxproj
 CinemaKiosk.vcxproj.filters
 CinemaKiosk.vcxproj.user
 /Debug
+>>>>>>> 833301888354ff1a0648f9e0c7c5b23d8d83ef35
