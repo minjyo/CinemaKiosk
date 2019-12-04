@@ -1,4 +1,4 @@
-#include "Header.hpp"
+ï»¿#include "Header.hpp"
 
 MoviePlay::MoviePlay() {
 
@@ -9,9 +9,9 @@ MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
 	Info temp = minfo->getInfo();
 	unsigned short running_time = temp.runningTime;
 
-	/* ºĞÀÇ ÇÕÀÌ 60ºĞÀÌ ³ÑÀ¸¸é */
+	/* ë¶„ì˜ í•©ì´ 60ë¶„ì´ ë„˜ìœ¼ë©´ */
 	if (((sTime % 100) + (running_time % 100)) > 60) {
-		/* 60ºĞ »©°í 1½Ã°£ ´õÇÏ´Ï±î 40À» ´õÇÔ */
+		/* 60ë¶„ ë¹¼ê³  1ì‹œê°„ ë”í•˜ë‹ˆê¹Œ 40ì„ ë”í•¨ */
 		this->endTime += 40;
 	}
 	else {
@@ -26,7 +26,7 @@ MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
 MoviePlay::~MoviePlay() {
 }
 
-//ÁÂ¼® ÇöÈ² Ãâ·Â. ¿¹¸Å °¡´ÉÇÏ¸é ¢Ì, ¾ÈµÇ¸é ¡á
+//ì¢Œì„ í˜„í™© ì¶œë ¥. ì˜ˆë§¤ ê°€ëŠ¥í•˜ë©´ â–©, ì•ˆë˜ë©´ â– 
 void MoviePlay::printSeat() {
 	int i, j;
 	printf("   ");
@@ -38,18 +38,18 @@ void MoviePlay::printSeat() {
 		printf(" %c ", 65 + i);
 		for (j = 0; j < SIZE_COLUMN; j++) {
 			if (seat[i][j] == true)
-				cout << "¢Ì";
+				cout << "â–©";
 			else
-				cout << "¡à";
+				cout << "â–¡";
 		}
 		cout << endl;
 	}
 }
 
-//ÇØ´ç ÁÂÇ¥¿¡ ÀÖ´Â ÁÂ¼®ÀÌ ¿¹¸Å °¡´ÉÇÑÁö ¸®ÅÏ. ÀÚ¸®°¡ ÀÌ¹Ì ¿¹¾àµÇ¾î ÀÖÀ¸¸é True, ±×·¸Áö ¾ÊÀ» °æ¿ì False ¸®ÅÏ.
+//í•´ë‹¹ ì¢Œí‘œì— ìˆëŠ” ì¢Œì„ì´ ì˜ˆë§¤ ê°€ëŠ¥í•œì§€ ë¦¬í„´. ìë¦¬ê°€ ì´ë¯¸ ì˜ˆì•½ë˜ì–´ ìˆìœ¼ë©´ True, ê·¸ë ‡ì§€ ì•Šì„ ê²½ìš° False ë¦¬í„´.
 bool MoviePlay::checkSeat(short x, short y) {
 	if (x > 5 || y > 5 || x < 1 || y < 1) {
-		cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù" << endl;
+		cout << "ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤" << endl;
 	}
 	else {
 		if (seat[x - 1][y - 1] == true) {
@@ -62,30 +62,30 @@ bool MoviePlay::checkSeat(short x, short y) {
 	return false;
 }
 
-//¿¹¸ÅÇÒ ¶§´Â status True, Ãë¼ÒÇÒ¶§´Â Status False.
+//ì˜ˆë§¤í•  ë•ŒëŠ” status True, ì·¨ì†Œí• ë•ŒëŠ” Status False.
 void MoviePlay::changeSeat(short x, short y, bool status) {
 	/*
 	if (x > 5 || y > 5 || x < 1 || y < 1) {
-		cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù" << endl;
+		cout << "ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤" << endl;
 	}
 	else {
 
 		if (status == true) {
 			if (checkSeat(x, y) == true) {
-				cout << "ÁÂ¼®ÀÌ Ã¡½À´Ï´Ù." << endl;
+				cout << "ì¢Œì„ì´ ì°¼ìŠµë‹ˆë‹¤." << endl;
 			}
 			else {
 				seat[x - 1][y - 1] = true;
-				cout << "ÁÂ¼® ¿¹¸Å ¿Ï·á" << endl;
+				cout << "ì¢Œì„ ì˜ˆë§¤ ì™„ë£Œ" << endl;
 			}
 		}
 		else {
 			if (checkSeat(x, y) == false) {
-				cout << "ÁÂ¼®ÀÌ ¿¹¾àµÈ »óÅÂ°¡ ¾Æ´Õ´Ï´Ù." << endl;
+				cout << "ì¢Œì„ì´ ì˜ˆì•½ëœ ìƒíƒœê°€ ì•„ë‹™ë‹ˆë‹¤." << endl;
 			}
 			else {
 				seat[x - 1][y - 1] = false;
-				cout << "ÁÂ¼® Ãë¼Ò ¿Ï·á" << endl;
+				cout << "ì¢Œì„ ì·¨ì†Œ ì™„ë£Œ" << endl;
 			}
 		}
 		printSeat();
@@ -94,7 +94,7 @@ void MoviePlay::changeSeat(short x, short y, bool status) {
 	seat[x - 1][y - 1] = status;
 }
 
-//¿¹¸Å °¡´ÉÇÑ ºóÀÚ¸® ¸®ÅÏ.
+//ì˜ˆë§¤ ê°€ëŠ¥í•œ ë¹ˆìë¦¬ ë¦¬í„´.
 unsigned short MoviePlay::restSeat() {
 	unsigned short count = 0;
 	for (int i = 0; i < SIZE_ROW; i++) {

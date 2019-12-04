@@ -1,4 +1,4 @@
-
+﻿
 #include "Header.hpp"
 
 /* 사용자 홈 화면 */
@@ -9,8 +9,8 @@ int UI::userHome(void) {
 	printf("사용자 홈 화면\n\n");
 
 	printf("┌─────────────────────────────────┐\n");
-	printf("│  1. 영화 선택                    │\n");
-	printf("│  2. 티켓 정보 확인               │\n");
+	printf("│  1. 영화 선택                   │\n");
+	printf("│  2. 티켓 정보 확인              │\n");
 	printf("└─────────────────────────────────┘\n");
 
 
@@ -62,14 +62,15 @@ int UI::userHome(void) {
 }
 
 //영화 예매 선택 시 영화 리스트 출력하는 화면
-int UI::chooseMovie(Admin admin, int *index) {
+int UI::chooseMovie(Admin admin, int* index) {
 	int y_min;
+	system("cls");
 	cout << "영화 선택" << endl;
 	//전체 영화 리스트 출력
 	admin.printInfoTable();
 
 	cout << "예매하실 영화를 선택해주세요";
-	x = 1; y_min = 3; y = y_min;
+	x = 1; y_min = 4; y = y_min;
 
 	gotoxy(x, y);
 
@@ -105,7 +106,7 @@ int UI::chooseMovie(Admin admin, int *index) {
 			return CHOOSEROOM;
 		}
 		/* u -> 사용자 홈 화면 */
-		else if (key == 117){
+		else if (key == 117) {
 			return USER;
 		}
 		/* backspace -> 뒤로가기 */
@@ -152,7 +153,7 @@ int UI::chooseRoom(Admin admin, int* room_index) {
 	else {
 		return CHOOSETIME;
 	}
-	
+
 	/*
 	int time_index = 0;
 	Ticket* ticket = NULL;
@@ -227,13 +228,19 @@ int UI::chooseTime(Admin admin, int room, int* index) {
 			return CHOOSEROOM;
 		}
 	}
-	
+
 
 }
 //영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 int UI::checkTicket(bool check) {
 	return 0;
 }
+
+int UI::chooseSeat(){
+	return 0;
+}
+
+
 //관리자 홈 화면
 int UI::adminHome(void) {
 	return 0;

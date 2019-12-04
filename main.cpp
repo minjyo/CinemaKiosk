@@ -15,9 +15,9 @@ using namespace std;
 int main()
 {
 	char mode = USER;
-	char* input = (char *)malloc(1);
+	char* input = (char*)malloc(1);
 	*input = '\0';
-	int room_index;
+	int room_index = 0;
 	int movie_index;
 
 	Admin admin;
@@ -74,7 +74,8 @@ int main()
 			}
 			else if (*input == '2') {
 				mode = MANROOM;
-			} else if (*input == 'U')
+			}
+			else if (*input == 'U')
 			{
 				mode = USER;
 				cout << "사용자 모드 전환" << endl;
