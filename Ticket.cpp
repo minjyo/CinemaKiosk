@@ -13,6 +13,7 @@ Ticket::~Ticket() {
 	cout << "해당 예매가 정상 취소 되었습니다." << endl;
 }
 
+
 void Ticket::printTicket() {
 	cout << "-- 예매정보 확인 --" << endl << endl;
 	cout << "예매번호 : " << ticketNumber << endl;

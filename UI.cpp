@@ -759,6 +759,7 @@ int UI::manRoom(int* room_index) {
 	}
 }
 
+
 //영화관 관리 - 상영 영화 추가
 int UI::addMovie(Admin* admin, int room_index) {
 	system("cls");

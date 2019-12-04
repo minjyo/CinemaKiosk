@@ -206,6 +206,7 @@ void Admin::printInfoTable(void) {
 			select->~Ticket();
 		}
 	}
+
 	void Admin::deleteMovieInfo(short index)
 	{
 		short i;
