@@ -3,6 +3,42 @@
 Admin::Admin() {
 	ticketHead = NULL;
 	ticketTail = NULL;
+
+	//영화관 기본 셋팅
+	for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+		roomTable[i] = new MovieRoom(i);
+	}
+
+	infoTable[0] = new MovieInfo("Frozen2", "Jenniffer.L", 143, 8000);
+	infoTable[1] = new MovieInfo("Jocker", "토트 필립스", 140, 9000);
+	infoTable[2] = new MovieInfo("나를 찾아줘", "김승호", 148, 10000);
+	infoTable[3] = new MovieInfo("어벤저스 엔드게임", "안소니 루소", 301, 15000);
+	infoCount = 4;
+
+	/* 1관 */
+	roomTable[0]->addMovieToRoom(infoTable[0], 900);
+	roomTable[0]->addMovieToRoom(infoTable[1], 1100);
+	roomTable[0]->addMovieToRoom(infoTable[0], 1300);
+	roomTable[0]->addMovieToRoom(infoTable[1], 1500);
+	roomTable[0]->addMovieToRoom(infoTable[0], 1700);
+	roomTable[0]->addMovieToRoom(infoTable[1], 1900);
+	roomTable[0]->addMovieToRoom(infoTable[0], 2100);
+
+	/* 2관 */
+	roomTable[1]->addMovieToRoom(infoTable[2], 900);
+	roomTable[1]->addMovieToRoom(infoTable[3], 1130);
+	roomTable[1]->addMovieToRoom(infoTable[2], 1500);
+	roomTable[1]->addMovieToRoom(infoTable[3], 1730);
+	roomTable[1]->addMovieToRoom(infoTable[2], 2100);
+	roomTable[1]->addMovieToRoom(infoTable[3], 2330);
+
+	/* 4관 */
+	roomTable[3]->addMovieToRoom(infoTable[2], 900);
+	roomTable[3]->addMovieToRoom(infoTable[3], 1130);
+	roomTable[3]->addMovieToRoom(infoTable[2], 1500);
+	roomTable[3]->addMovieToRoom(infoTable[3], 1730);
+	roomTable[3]->addMovieToRoom(infoTable[2], 2100);
+	roomTable[3]->addMovieToRoom(infoTable[3], 2330);
 }
 
 //전체 영화 리스트 출력

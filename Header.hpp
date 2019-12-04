@@ -21,20 +21,19 @@
 #define MOVIE_ROOM_ARR_SIZE 5
 #define FIRST_TICKET 100001
 
-#define HOME 'H'
-
-#define USER 'U'
+#define USER 10
 #define CHOOSEMOVIE 11
-#define TICKET 12
+#define CHOOSEROOM 12
+#define CHOOSETIME 13
+#define CHECKTICKET 14
 
-#define ADMIN 'M'
+#define ADMIN 20
 #define MANMOVIE 21
 #define MAKEMOVIE 22
 #define DELETEALL 23
 #define MANROOM 24
-#define ROOMSTATUS 25
-#define ADDMOVIE 26
-#define DELETEMOVIE 27
+#define ADDMOVIE 25
+#define DELETEMOVIE 26
 
 using namespace std;
 
@@ -93,7 +92,7 @@ public:
 	MovieRoom(char roomNumber);
 	~MovieRoom();
 	void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
-	void printMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
+	int printMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	void setStatus(bool status);
 	MoviePlay* canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
 	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
@@ -165,8 +164,9 @@ public:
 	int key;
 	int x, y;
 	int userHome(void);					//사용자 홈 화면
-	int movieList(Admin);				//영화 예매 선택 시 영화 리스트 출력하는 화면
-	int moviePlayList(Admin, int);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
+	int chooseMovie(Admin admin, int* index);				//영화 예매 선택 시 영화 리스트 출력하는 화면
+	int chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** movie);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
+	int chooseTime(Admin admin, int room_index, int* movie_index, MovieInfo* movie, MoviePlay** play);
 	int checkTicket(bool check);		//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 
 	int adminHome(void);				//관리자 홈 화면
