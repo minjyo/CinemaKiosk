@@ -7,8 +7,7 @@
 //
 
 #include "Header.hpp"
-#include <iostream>
-#include <list>
+
 
 using namespace std;
 
@@ -20,6 +19,8 @@ int main()
 
 	//기본 객체 생성(admin, movie, movieroom)
 	Admin admin;
+
+	UI ui;
 
 	//영화관 기본 셋팅
 	for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
@@ -75,64 +76,24 @@ int main()
 			cin >> input;
 			break;
 		case USER: //사용자 홈
-			cout << "사용자 홈" << endl;
-			cout << "1. 영화선택\t2. 티켓 정보 확인" << endl;
-			cin >> input;
-			if (input[0] == '1') {
+			input[0] = ui.userHome();
+			if (input[0] == CHOOSEMOVIE) {
 				mode = CHOOSEMOVIE;
 			}
-			else if (input[0] == '2') {
+			else if (input[0] == TICKET) {
 				mode = TICKET;
 			}
 
 			break;
 		case CHOOSEMOVIE: //영화 선택 
 		{
-			cout << "영화 선택" << endl;
-			//전체 영화 리스트 출력
-			admin.printInfoTable();
-
-			int index;
-			cout << "예매하실 영화를 선택해주세요 : ";
-			cin >> index;
-
-			//선택한 영화의 상영 리스트 (영화관별 시간, 잔여 좌석)
-			MovieInfo* movie = admin.infoTable[index - 1];
-
-			for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
-				admin.roomTable[i]->printMovieInfo(movie);
+			int index = ui.movieList(admin);
+			if (index == USER) {
+				mode = USER;
+				break;
 			}
-
-			int room, time;
-			cout << "원하시는 영화관을 선택해주세요 : ";
-			cin >> room;
-			cout << "원하시는 시간을 선택해주세요 : ";
-			cin >> time;
-
-			int time_index = 0;
-			Ticket* ticket = NULL;
-
-			//선택한 영화가 상영되는 영화관의 좌석 상태 출력하고 좌석 선택
-			MoviePlay* temp = admin.roomTable[room - 1]->head;
-			while (temp != NULL) {
-				if (temp->info == movie) {
-					time_index++;
-					if (time == time_index) {
-						//예매
-						ticket = admin.addTicket(temp);
-					}
-				}
-				temp = temp->nextPlay;
-
-			}
-
-			//예매 결과 출력
-			if (ticket != NULL) {
-				ticket->printTicket();
-			}
-
-			//티켓에 예매 정보 추가
-			mode = USER;
+			
+			mode = ui.moviePlayList(admin, index);
 		}
 		break;
 		case TICKET: //티켓 정보 확인
