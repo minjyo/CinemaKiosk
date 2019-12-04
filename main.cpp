@@ -12,6 +12,7 @@ using namespace std;
 
 int main()
 {
+	system("mode con cols=97");
 	char mode = USER;
 	char* input = (char *)malloc(1);
 	*input = '\0';
@@ -146,6 +147,10 @@ int main()
 			cout << "추가할 영화 시간을 입력하세요: ";
 			short time;
 			cin >> time;
+			while (time > 2359) {
+				cout << "입력값 오류입니다. 다시 입력해주세요 : ";
+				cin >> time;
+			}
 
 			if (admin.roomTable[room_index - 1]->addMovieToRoom(admin.infoTable[input - 1], time)) {
 				admin.roomTable[room_index - 1]->printTimeTable();
