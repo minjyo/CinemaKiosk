@@ -7,8 +7,6 @@
 //
 
 #include "Header.hpp"
-#include <iostream>
-#include <list>
 
 using namespace std;
 
@@ -17,8 +15,11 @@ int main()
 	char mode = USER;
 	char* input = (char *)malloc(1);
 	*input = '\0';
-	int room_index;
-	int movie_index;
+	int room_index=0;
+	int movie_index=0;
+	MovieInfo* movie = NULL;
+	MoviePlay* play = NULL;
+	Ticket* ticket = NULL;
 
 	Admin admin;
 	UI ui;
@@ -32,16 +33,15 @@ int main()
 		case USER: //사용자 홈
 			mode = ui.userHome();
 			break;
-
 		case CHOOSEMOVIE: //영화 선택
 			mode = ui.chooseMovie(admin, &movie_index);
 			break;
 		case CHOOSEROOM:
-			mode = ui.chooseRoom(admin, &room_index);
+			mode = ui.chooseRoom(admin, &room_index, movie_index, &movie);
 			break;
 		case CHOOSETIME:
-			mode = ui.chooseTime(admin, room_index, &movie_index);
-		case TICKET: //티켓 정보 확인
+			mode = ui.chooseTime(admin, room_index, &movie_index, movie, &play);
+		case CHECKTICKET: //티켓 정보 확인
 			int number;
 			Ticket* temp;
 			cout << "티켓 정보 확인" << endl;
