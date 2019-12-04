@@ -148,7 +148,6 @@ int main()
 			if (ticket != NULL) {
 				ticket->printTicket();
 			}
-
 			//티켓에 예매 정보 추가
 			mode = USER;
 		}
