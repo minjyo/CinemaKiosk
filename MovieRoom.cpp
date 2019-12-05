@@ -1,6 +1,7 @@
 #include "Header.hpp"
 
 MovieRoom::MovieRoom(char roomNumber) {
+	//list<MoviePlay> movielist;
 	head = new MoviePlay();
 	head->nextPlay = NULL;
 	this->roomNumber = roomNumber;
@@ -16,90 +17,97 @@ MovieRoom::~MovieRoom() {
 
 }
 
-//¿µÈ­°üÀÇ ¿µÈ­ Å¸ÀÓ Å×ÀÌºí Ãâ·Â
+//ì˜í™”ê´€ì˜ ì˜í™” íƒ€ì„ í…Œì´ë¸” ì¶œë ¥
 void MovieRoom::printTimeTable() {
 	MoviePlay* temp = head;
 
 	int Count = 1;
-	cout << setw(6) << " ";
-	cout << "--------------------------------- " << (int)roomNumber + 1 << "°ü ---------------------------------" << endl;
+	cout << "   ";
+	cout << "--------------------------------- " << (int)roomNumber + 1 << "ê´€ ---------------------------------" << endl;
+	cout << "   ";
 	cout.setf(ios::left);
-	cout << setw(6) << " ";
-	cout << setw(20) << "¿µÈ­ Á¦¸ñ";
-	cout << setw(20) << "½ÃÀÛ ½Ã°£";
-	cout << setw(20) << "Á¾·á ½Ã°£";
-	cout << setw(20) << "ÀÜ¿© ÁÂ¼®" << endl;
+	cout << setw(20) << "ì˜í™” ì œëª©";
+	cout << setw(20) << "ì‹œì‘ ì‹œê°„";
+	cout << setw(20) << "ì¢…ë£Œ ì‹œê°„";
+	cout << setw(20) << "ì”ì—¬ ì¢Œì„";
 
 	while (temp->nextPlay != NULL) {
 		temp = temp->nextPlay;
-		cout << setw(6) << to_string(Count) + ".";
-		cout << setw(20) << temp->info->getInfo().title;
-		cout << setw(20) << to_string((temp->startTime / 100) % 24) + "½Ã " + to_string(temp->startTime % 100) + "ºĞ";
-		cout << setw(20) << to_string((temp->endTime / 100) % 24) + "½Ã " + to_string(temp->endTime % 100) + "ºĞ";
+		/*temp->info->printInfo();
+		cout << temp->startTime;
+		cout << temp->restSeat();*/
+		cout << Count << ". ";
+		cout << setw(20) << temp->info->title;
+		string start_string = to_string(temp->startTime / 100) + "ì‹œ " + to_string(temp->startTime % 100) + "ë¶„";
+		string end_string = to_string(temp->endTime / 100) + "ì‹œ " + to_string(temp->endTime % 100) + "ë¶„";
+		cout << setw(20) << start_string;
+		cout << setw(20) << end_string;
 		cout << temp->restSeat() << "/25" << endl;
 		Count++;
 	}
 	cout << endl;
 }
 
-//¿µÈ­ »ğÀÔ °¡´É ¿©ºÎ È®ÀÎ (ÀÌ¶§, ³ÖÀ¸·Á´Â °÷ÀÇ ¾Õ ³ëµåÀÇ index¸¦ ¸®ÅÏÇØÁØ´Ù) ±Ù¿µ¼öÁ¤
-int MovieRoom::canAddMovie(MovieInfo* info, short select) {
+//ì˜í™” ì‚½ì… ê°€ëŠ¥ ì—¬ë¶€ í™•ì¸ (ì´ë•Œ, ë§ˆì§€ë§‰ì— ë„£ìœ¼ë ¤ëŠ” ê³³ì˜ ì „ ë…¸ë“œë¥¼ return í•´ì¤€ë‹¤.)
+MoviePlay* MovieRoom::canAddMovie(MovieInfo* info, short select) {
+	//list <MoviePlay>::iterator index = movielist.begin();
 	MoviePlay* temp = head->nextPlay;
-	unsigned short runningTime = info->getInfo().runningTime;
+	unsigned short runningTime = info->runningTime;
 	unsigned short endTime = 0;
-	//½Ã°£À» ÀÔ·Â½Ã ÁÖÀÇ»çÇ×Àº ºĞ ´ÜÀ§°¡ ¾Æ´Ñ ½Ã¿Í ºĞÀ» µÑ´Ù ½áÁÙ°Í.
-	//Ex) 90ºĞ ¿µÈ­¸é 1½Ã°£ 30ºĞÀÌ¹Ç·Î 130 ÀÌ¶ó°í ½áÁÙ°Í.
+	//ì‹œê°„ì„ ì…ë ¥ì‹œ ì£¼ì˜ì‚¬í•­ì€ ë¶„ ë‹¨ìœ„ê°€ ì•„ë‹Œ ì‹œì™€ ë¶„ì„ ë‘˜ë‹¤ ì¨ì¤„ê²ƒ.
+	//Ex) 90ë¶„ ì˜í™”ë©´ 1ì‹œê°„ 30ë¶„ì´ë¯€ë¡œ 130 ì´ë¼ê³  ì¨ì¤„ê²ƒ.
 	if (((select % 100) + (runningTime % 100)) > 60) {
-		/* 60ºĞ »©°í 1½Ã°£ ´õÇÏ´Ï±î 40À» ´õÇÔ */
-		endTime = select + runningTime + 40;
+		/* 60ë¶„ ë¹¼ê³  1ì‹œê°„ ë”í•˜ë‹ˆê¹Œ 40ì„ ë”í•¨ */
+		endTime += 40;
 	}
 	else {
 		endTime = select + runningTime;
 	}
-	int select_index = 1;
-	if (this->movieCount == 0 || head->nextPlay->startTime > endTime) {
-		return 0;
+	int i = 0;
+	if (this->movieCount == 0) {
+		return head;
 	}
 	else {
-		while (temp->nextPlay != NULL) {
-			if (temp->endTime < select && endTime < temp->nextPlay->startTime) {
-				return select_index;
+		//countëŠ” í˜„ì¬ ë“¤ì–´ê°€ìˆëŠ” ì˜í™”ì˜ ê°œìˆ˜
+		while (temp != NULL) {
+			if (temp->nextPlay == NULL) {
+				if (temp->endTime < select) {
+					return temp;
+				}
+				return NULL;
 			}
+			//ìƒˆë¡œ ì¶”ê°€í•´ì¤„ ì˜í™”ê°€ ë“¤ì–´ê°ˆ ìˆ˜ ìˆì„ ë•Œ
+			if (temp->endTime < select && endTime < temp->nextPlay->startTime) {
+				return temp;
+			}
+			//ì—†ìœ¼ë©´ ê·¸ëƒ¥ pass, tempë¥¼ ë‹¤ìŒ ì˜í™”ë¡œ ë„˜ê²¨ë²„ë¦¼
 			else {
 				temp = temp->nextPlay;
-				select_index++;
+				i++;
 			}
 		}
-		if (temp->endTime < select) {
-			return select_index;
-		}
-		else
-			return -1;
 	}
 }
 
 bool MovieRoom::addMovieToRoom(MovieInfo* info, short select) {
-	int select_index = canAddMovie(info, select);
-	if (select_index == -1) {
-		cout << "¿µÈ­¸¦ ³ÖÀ» ¼ö ÀÖ´Â ½Ã°£ÀÌ ¾ø½À´Ï´Ù." << endl;
+	MoviePlay* prevmov = canAddMovie(info, select);
+	//tempì— ë„£ìœ¼ë ¤ëŠ” ì˜í™”ë“¤ì˜ ì •ë³´ë¥¼ ë„£ì–´ì¤€ë‹¤.
+
+	if (prevmov == NULL) {
+		//cout << "ì˜í™”ë¥¼ ë„£ì„ ìˆ˜ ìˆëŠ” ì‹œê°„ì´ ì—†ìŠµë‹ˆë‹¤." << endl;
 		return FALSE;
 	}
 	else {
-		int search_index = 0;
-		MoviePlay* temp = head;
-		while (search_index != select_index) {
-			temp = temp->nextPlay;
-			search_index++;
-		}
-		MoviePlay* insertMovie = new MoviePlay(select, info, temp->nextPlay);
-		insertMovie->nextPlay = temp->nextPlay;
-		temp->nextPlay = insertMovie;
+		MoviePlay* temp = new MoviePlay(select, info, prevmov->nextPlay);
+		//temp->nextPlay = prevmov->nextPlay;
+		prevmov->nextPlay = temp;
 		this->movieCount++;
+		//cout << "ì˜í™” ì¶”ê°€ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤." << endl;
 		return TRUE;
 	}
 }
 
-//1125 ±Ù¿µ ¼öÁ¤/Ãß°¡ »èÁ¦ÇÏ´Â ¿µÈ­ °³¼ö´Â È®ÀÎ¿ë, Áö¿öµµ ¹«¹æ
+//1125 ê·¼ì˜ ìˆ˜ì •/ì¶”ê°€ ì‚­ì œí•˜ëŠ” ì˜í™” ê°œìˆ˜ëŠ” í™•ì¸ìš©, ì§€ì›Œë„ ë¬´ë°©
 void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 
 	MoviePlay* start = head;
@@ -119,7 +127,7 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 			temp = start->nextPlay;
 		}
 	}
-	cout << "»èÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù!" << endl;
+	cout << "ì‚­ì œê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
 	this->movieCount -= deleteCount;
 }
 
@@ -132,7 +140,6 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	while (temp != NULL) {
 		if (temp->info == mov) {
-			Info movieinfo = temp->info->getInfo();
 			start = temp;
 			temp = start->nextPlay;
 			Count++;
@@ -145,19 +152,22 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	if (Count != 0) {
 		temp = head->nextPlay;
-		cout << setw(6) << " ";
-		cout << "--------------------------------- " << (int)roomNumber + 1 << "°ü ---------------------------------" << endl;
-		cout << setw(6) << " ";
-		cout << setw(20) << "½ÃÀÛ ½Ã°£";
-		cout << setw(20) << "Á¾·á ½Ã°£";
-		cout << setw(20) << "ÀÜ¿© ÁÂ¼®" << endl;
+		cout << "   ";
+		cout << "--------------------------------- " << (int)roomNumber + 1 << "ê´€ ---------------------------------" << endl;
+		cout << "   ";
+		cout << setw(20) << "ì‹œì‘ ì‹œê°„";
+		cout << setw(20) << "ì¢…ë£Œ ì‹œê°„";
+		cout << setw(20) << "ì”ì—¬ ì¢Œì„" << endl;
 		Count = 1;
 		while (temp != NULL) {
 			if (temp->info == mov) {
-				cout << setw(6) << to_string(Count) + ".";
-				cout << setw(20) << to_string((temp->startTime / 100) % 24) + "½Ã " + to_string(temp->startTime % 100) + "ºĞ";
-				cout << setw(20) << to_string((temp->endTime / 100) % 24) + "½Ã " + to_string(temp->endTime % 100) + "ºĞ";
-				cout << temp->restSeat() << "/25" << endl;
+				//Info movieinfo = temp->info->getInfo();
+				cout << Count << ". ";
+				string start_string = to_string(temp->startTime / 100) + "ì‹œ " + to_string(temp->startTime % 100) + "ë¶„";
+				string end_string = to_string(temp->endTime / 100) + "ì‹œ " + to_string(temp->endTime % 100) + "ë¶„";
+				cout << setw(20) << start_string;
+				cout << setw(20) << end_string;
+				cout << temp->restSeat() << " / " << SIZE_COLUMN * SIZE_ROW << endl;
 				start = temp;
 				temp = start->nextPlay;
 				Count++;
@@ -170,27 +180,9 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	}
 	return Count;
+
 }
 
-MoviePlay* MovieRoom::findMoviePlay(MovieInfo* minfo, int index) {
-
-	MoviePlay* temp = head->nextPlay;
-	int compareIndex = 1;
-	while (temp != NULL) {
-		if (temp->info == minfo) {
-			if (compareIndex == index)
-				return temp;
-			else {
-				temp = temp->nextPlay;
-				compareIndex++;
-			}
-		}
-		else {
-			temp = temp->nextPlay;
-		}
-	}
-	return NULL;
-}
 
 void MovieRoom::deleteMoviePlay(short starttime) {
 
@@ -209,5 +201,6 @@ void MovieRoom::deleteMoviePlay(short starttime) {
 		}
 	}
 	this->movieCount--;
-	cout << "»èÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù!" << endl;
+	cout << "ì‚­ì œê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+
 }
