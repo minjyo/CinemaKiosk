@@ -37,6 +37,7 @@ int main()
 		case USER: //사용자 홈
 			mode = ui.userHome();
 			break;
+
 		case CHOOSEMOVIE: //영화 선택
 			mode = ui.chooseMovie(admin, &movie_index);
 			break;
