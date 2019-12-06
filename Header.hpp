@@ -80,7 +80,7 @@ public:
 	void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	int printMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	void setStatus(bool status);
-	int canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
+	MoviePlay* canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
 	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
 	void printTimeTable(); //영화관의 영화 타임 테이블 출력
 	void deleteMoviePlay(short starttime);
@@ -166,4 +166,5 @@ public:
 	int deleteMovie(Admin* admin, int room_index);						//영화관 관리 - 상영 영화 삭제
 
 	void gotoxy(short x, short y);
+	void printBorder(void);
 };
