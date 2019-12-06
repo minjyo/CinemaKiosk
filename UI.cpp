@@ -289,33 +289,28 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 			switch (key)
 			{
 			case 72:
-				if (y > 1)
-				{
+				if (y > 1) {
 					y--;
 				}
 				break;
 			case 75:
-				if (x > 1)
-				{
+				if (x > 1) {
 					x--;
 				}
 				break;
 			case 77:
-				if (x < SIZE_COLUMN)
-				{
+				if (x < SIZE_COLUMN) {
 					x++;
 				}
 				break;
 			case 80:
-				if (y < SIZE_ROW)
-				{
+				if (y < SIZE_ROW) {
 					y++;
 				}
 				break;
 			default:
 				break;
 			}
-			gotoxy(2 * (x_min + x), y_min + y);
 		}
 		else if (key == 13) {
 			/* 엔터가 눌렸을 때 */
@@ -340,7 +335,6 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 				printf("%c열 %d 취소 성공!       ", 64 + y, x);
 				gotoxy(x_min + 6, y_min + SIZE_ROW + 4);
 				printf("%2d", count);
-				gotoxy(2 * (x_min + x), y_min + y);
 			}
 			/* 배열 내에 temp와 같은 값이 저장되어 있지 않으면(신규 좌석 예매)  */
 			else
@@ -350,7 +344,6 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 				{
 					gotoxy(x_min + 6, y_min + SIZE_ROW + 5);
 					cout << "이미 예매된 좌석입니다.";
-					gotoxy(2 * (x_min + x), y_min + y);
 				}
 				/* 예매된 좌석이 아니면 신규 예매 */
 				else
@@ -367,7 +360,7 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 					printf("%c열 %d 예매 성공!       \n", 64 + y, x);
 					gotoxy(x_min + 6, y_min + SIZE_ROW + 4);
 					printf("%2d", count);
-					gotoxy(2 * (x_min + x), y_min + y);
+					
 				}
 			}
 		}
@@ -379,6 +372,13 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 		else if (key == 8) {
 			return CHOOSETIME;
 		}
+		if (x< (SIZE_COLUMN/2 +1)) {
+			gotoxy(2 * (x_min + x), y_min + y);
+		}
+		else {
+			gotoxy(2 * (x_min + x + 2), y_min + y);
+		}
+		
 	}
 	/* 예매가 완료되면 tail다음에 티켓 추가해주기 */
 	if (admin.ticketHead == NULL)                 //첫 티켓일 경우 tail과 head에 추가
