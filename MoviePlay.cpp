@@ -29,16 +29,12 @@ MoviePlay::~MoviePlay() {
 //좌석 현황 출력. 예매 가능하면 ▩, 안되면 ■
 void MoviePlay::printSeat() {
 	int i, j;
-	for (i = 0; i < 48; i++) {
-		printf("■");
-	}
-	printf("\n");
-	//printf(" #########################################\n");
-	printf("  #                                       #\n");
-	printf("  #          ┌────────────────┐           #\n");
-	printf("  #          │      screen    │           #\n");
-	printf("  #          └────────────────┘           #\n");
-	cout << "  #           ";
+	printf("                        #############################################\n");
+	printf("                        #                                           #\n");
+	printf("                        #          ┌───────────────────┐            #\n");
+	printf("                        #          │       screen      │            #\n");
+	printf("                        #          └───────────────────┘            #\n");
+	cout << "                        #           ";
 	for (i = 1; i < SIZE_COLUMN/2 + 1; i++) {
 		printf("%2d", i);
 	}
@@ -46,7 +42,7 @@ void MoviePlay::printSeat() {
 	for (i = SIZE_COLUMN/2 + 1; i < SIZE_COLUMN + 1; i++) {
 		printf("%2d", i);
 	}
-	cout << "            #\n  #         ";
+	cout << "            #\n                        #         ";
 	for (i = 0; i < SIZE_ROW; i++) {
 		printf(" %c ", 65 + i);
 		for (j = 0; j < SIZE_COLUMN/2 ; j++) {
@@ -62,15 +58,15 @@ void MoviePlay::printSeat() {
 			else
 				cout << "□";
 		}
-		cout << "           #\n  #         ";
+		cout << "           #\n                        #         ";
 	}
-	printf("                              #\n");
-	printf("  #                                       #\n");
-	printf("  #                                       #\n");
-	printf("  #                                       #\n");
-	printf("  #                                       #\n");
-	printf("  #                                       #\n");
-	printf("  #########################################\n");
+	printf("                                  #\n");
+	printf("                        #                                           #\n");
+	printf("                        #                                           #\n");
+	printf("                        #                                           #\n");
+	printf("                        #                                           #\n");
+	printf("                        #                                           #\n");
+	printf("                        #############################################\n");
 }
 
 //해당 좌표에 있는 좌석이 예매 가능한지 리턴. 자리가 이미 예약되어 있으면 True, 그렇지 않을 경우 False 리턴.

@@ -166,4 +166,5 @@ public:
 	int deleteMovie(Admin* admin, int room_index);						//영화관 관리 - 상영 영화 삭제
 
 	void gotoxy(short x, short y);
+	void printBorder(void);
 };
