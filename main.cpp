@@ -37,17 +37,17 @@ int main()
 		case USER: //사용자 홈
 			mode = ui.userHome();
 			break;
-
 		case CHOOSEMOVIE: //영화 선택
 			mode = ui.chooseMovie(admin, &movie_index);
 			break;
 		case CHOOSEROOM:	//영화관 선택
 			mode = ui.chooseRoom(admin, &room_index, movie_index, &movie);
 			break;
-		case CHOOSETIME:	//시간 선택
+		case CHOOSETIME:	//시간 선택 근영수정 제대로 안들어가는거 수정
 			mode = ui.chooseTime(admin, room_index, &movie_index, movie, &play);
 			break;
 		case CHOOSESEAT:	//좌석 선택
+			play = admin.roomTable[room_index - 1]->findMoviePlay(movie, movie_index);
 			mode = ui.chooseSeat(admin, play, &ticket);
 			break;
 		case CHECKINFO:		//영화 정보 확인

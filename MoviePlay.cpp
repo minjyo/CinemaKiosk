@@ -4,7 +4,6 @@ MoviePlay::MoviePlay() {
 
 }
 
-
 MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
 	//this->seat[SIZE_ROW][SIZE_COLUMN] = { false, };
 	unsigned short running_time = minfo->runningTime;
@@ -87,33 +86,6 @@ bool MoviePlay::checkSeat(short x, short y) {
 
 //예매할 때는 status True, 취소할때는 Status False.
 void MoviePlay::changeSeat(short x, short y, bool status) {
-	/*
-	if (x > 5 || y > 5 || x < 1 || y < 1) {
-		cout << "잘못된 입력입니다" << endl;
-	}
-	else {
-
-		if (status == true) {
-			if (checkSeat(x, y) == true) {
-				cout << "좌석이 찼습니다." << endl;
-			}
-			else {
-				seat[x - 1][y - 1] = true;
-				cout << "좌석 예매 완료" << endl;
-			}
-		}
-		else {
-			if (checkSeat(x, y) == false) {
-				cout << "좌석이 예약된 상태가 아닙니다." << endl;
-			}
-			else {
-				seat[x - 1][y - 1] = false;
-				cout << "좌석 취소 완료" << endl;
-			}
-		}
-		printSeat();
-
-	} */
 	seat[x - 1][y - 1] = status;
 }
 

@@ -43,17 +43,18 @@ Admin::Admin() {
 
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
-	//system("cls");
-	cout << "   ";
+	cout << setw(6) << "   ";
 	cout.setf(ios::left);
 	cout << setw(20) << "영화 이름";
 	cout << setw(20) << "영화 가격";
 	cout << setw(20) << "영화 감독";
-	cout << setw(20) << "런닝 타임";
-	cout << "\n-----------------------------------------------------------------------" << endl;
+	cout << setw(20) << "런닝 타임" << endl;
+	cout << setw(6) << "   ";
+	cout << "-----------------------------------------------------------------------" << endl;
 
 	for (int i = 0; i < infoCount; i++) {
-		cout << i + 1 << ". ";
+		cout << setw(3) << " ";
+		cout << setw(3) << to_string(i+1) + ".";
 		infoTable[i]->printInfo();
 	}
 }
@@ -69,20 +70,30 @@ void Admin::printInfoTable(void) {
 		short runningTime;
 		int price;
 
-		cout << "영화 정보를 입력해주세요." << endl;
-		cout << "영화 제목: ";
+		cout << "■    영화 추가 (최소 러닝타임 30분, 최소 가격 1000원" << endl;
+		cout << "■   +──────────────────────────+" << endl;
+		/* 최소 영화 가격은 10000원, 러닝타임 최소 30분 */
+		cout << "■    영화 정보를 입력해주세요." << endl;
+		cout << "■    영화 제목: ";
 		cin >> title;
-		cout << "영화 감독: ";
+		cout << "■    영화 감독: ";
 		cin >> pd;
-		cout << "러닝타임: ";
+		cout << "■    러닝타임: ";
 		cin >> runningTime;
-		cout << "영화 가격: ";
+		while (runningTime < 30) {
+			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
+			cin >> runningTime;
+		}
+		cout << "■    영화 가격: ";
 		cin >> price;
+		while (price < 1000) {
+			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
+			cin >> price;
+		}
 
-		//MovieInfo movie(title, pd, runningTime, price);
 		MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
 		if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
-			cout << "최대 영화 개수를 넘었습니다." << endl;
+			cout << "      최대 영화 개수를 넘었습니다." << endl;
 			return;
 		}
 		else {
@@ -212,7 +223,7 @@ void Admin::printInfoTable(void) {
 		short i;
 
 		//모든 영화관에서 영화정보로 영화 삭제
-		for (i = 0; i < roomCount; i++)
+		for (i = 0; i < MOVIE_ROOM_ARR_SIZE; i++)
 		{
 			roomTable[i]->deleteMovieInfo(infoTable[index]);
 		}
