@@ -235,7 +235,6 @@ int UI::chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** mo
 
 int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePlay** play) {
 	int y_min;
-	x = 1; y_min = 3; y = y_min;
 	system("cls");
 	gotoxy(1, 2);
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
@@ -257,15 +256,15 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 	movie->printInfo();
 	cout << endl;
 
-	admin.roomTable[room - 1]->printMovieInfo(movie);
+	int n_movie = admin.roomTable[room - 1]->printMovieInfo(movie);
 
 	printBorder();
 
 	gotoxy(32, 35);
 	cout << "키보드를 움직여 영화를 선택해주세요\n";
 
-	gotoxy(x, y);
-
+	x = 4; y = 1; y_min = 16;
+	gotoxy(x, y_min + 1);
 	while (1) {
 		key = _getch();
 		/* 방향키 눌렸을 때 */
@@ -275,27 +274,24 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 			switch (key)
 			{
 			case 72:
-				if (y > y_min)
-				{
+				if (y > 1) {
 					y--;
-					gotoxy(x, y);
 				}
 				break;
 			case 80:
-				if (y < y_min + admin.roomTable[room - 1]->movieCount - 1);
-				{
+				if (y < n_movie - 1) {
 					y++;
-					gotoxy(x, y);
 				}
 				break;
 			default:
 				break;
 			}
+			gotoxy(x, y + y_min);
 		}
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
 			//cout << y-y_min << endl;
-			*index = (y - y_min);
+			*index = y;
 			return CHOOSESEAT;
 		}
 		/* u -> 사용자 홈 화면 */
