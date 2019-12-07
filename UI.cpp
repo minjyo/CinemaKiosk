@@ -209,28 +209,6 @@ int UI::chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** mo
 			return CHOOSEMOVIE;
 		}
 	}
-	/*
-	int time_index = 0;
-	Ticket* ticket = NULL;
-
-	//선택한 영화가 상영되는 영화관의 좌석 상태 출력하고 좌석 선택
-	MoviePlay* temp = admin.roomTable[room - 1]->head;
-	while (temp != NULL) {
-		if (temp->info == movie) {
-			time_index++;
-			if (time == time_index) {
-				//예매
-				ticket = admin.addTicket(temp);
-			}
-		}
-		temp = temp->nextPlay;
-	}
-
-	//예매 결과 출력
-	if (ticket != NULL) {
-		ticket->printTicket();
-	}
-	*/
 }
 
 int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePlay** play) {
@@ -657,6 +635,7 @@ int UI::checkTicket(Admin* admin) {
 			key = _getch();
 			/* y -> 예매취소 */
 			if (key == 121) {
+				cout << endl << endl;
 				(*admin).deleteTicket(ticket);
 				Sleep(3000);
 				return USER;

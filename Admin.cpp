@@ -16,7 +16,6 @@ Admin::Admin() {
 	infoCount = 4;
 
 	/* 1관 */
-	roomTable[0]->addMovieToRoom(infoTable[0], 830);
 	roomTable[0]->addMovieToRoom(infoTable[1], 1100);
 	roomTable[0]->addMovieToRoom(infoTable[0], 1300);
 	roomTable[0]->addMovieToRoom(infoTable[1], 1500);

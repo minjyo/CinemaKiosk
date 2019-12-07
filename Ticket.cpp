@@ -9,8 +9,9 @@ Ticket::Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* n
 }
 
 Ticket::~Ticket() {
-	cout << "■                          예매번호 : " << this->ticketNumber << endl;
-	cout << "■                          해당 예매가 정상 취소 되었습니다." << endl;
+	cout << "■                             예매번호 : " << this->ticketNumber << endl<<endl;
+	cout << "■                             해당 예매가 정상 취소 되었습니다." << endl;
+
 }
 
 
