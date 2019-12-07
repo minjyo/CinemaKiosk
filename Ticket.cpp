@@ -19,6 +19,7 @@ void Ticket::printTicket() {
 	cout << "■                          예매번호 : " << ticketNumber << endl;
 	/* 영화 시작, 종료 시간과 영화제목 출력 */
 	/* 문제점 : 영화관 출력 불가 */
+	// 출력 형태 변경 gy
 	cout << "■                          예매영화 : " << playInfo->info->title << endl;
 	cout << "■                          상영시간 : " << to_string(playInfo->startTime / 100) + "시 " + to_string(playInfo->startTime % 100) + "분" +
 		" ~ " << to_string(playInfo->endTime / 100) + "시 " + to_string(playInfo->endTime % 100) + "분" << endl;

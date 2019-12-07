@@ -16,7 +16,7 @@ Admin::Admin() {
 	infoCount = 4;
 
 	/* 1관 */
-	roomTable[0]->addMovieToRoom(infoTable[0], 900);
+	roomTable[0]->addMovieToRoom(infoTable[0], 830);
 	roomTable[0]->addMovieToRoom(infoTable[1], 1100);
 	roomTable[0]->addMovieToRoom(infoTable[0], 1300);
 	roomTable[0]->addMovieToRoom(infoTable[1], 1500);
@@ -227,7 +227,7 @@ void Admin::printInfoTable(void) {
 		{
 			roomTable[i]->deleteMovieInfo(infoTable[index]);
 		}
-
+		
 		//배열에서 줄여주기
 		for (i = index; i < infoCount; i++)
 		{

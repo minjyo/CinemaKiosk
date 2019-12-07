@@ -47,6 +47,7 @@ int main()
 			mode = ui.chooseTime(admin, room_index, &movie_index, movie, &play);
 			break;
 		case CHOOSESEAT:	//좌석 선택
+			//설정한 MoviePlay 객체로 변경, 인욱이형 좌표 넘겨줄때 2번째 영화 선택하면 1번째로 선택되는거 수정 요청
 			play = admin.roomTable[room_index - 1]->findMoviePlay(movie, movie_index);
 			mode = ui.chooseSeat(admin, play, &ticket);
 			break;

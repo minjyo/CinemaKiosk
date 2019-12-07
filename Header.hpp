@@ -82,7 +82,7 @@ public:
 	int canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
 	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
 	void printTimeTable(); //영화관의 영화 타임 테이블 출력
-	int deleteMoviePlay(short starttime);
+	int deleteMoviePlay(short starttime); //반환타입은 삭제한 영화 개수
 	MoviePlay* findMoviePlay(MovieInfo * minfo, int index);
 };
 

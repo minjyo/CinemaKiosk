@@ -174,6 +174,7 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 	return Count;
 }
 
+// 여긴 0부터아니라 1부터, 4관의 해당영화 중 세번째 찾으려면 index에 3 넣어야함
 MoviePlay* MovieRoom::findMoviePlay(MovieInfo* minfo, int index) {
 	MoviePlay* temp = head->nextPlay;
 	int compareIndex = 1;
