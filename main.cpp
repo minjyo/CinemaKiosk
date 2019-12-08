@@ -41,7 +41,7 @@ int main()
 			mode = ui.chooseRoom(admin, &room_index, movie_index, &movie);
 			break;
 		case CHOOSETIME:
-			mode = ui.chooseTime(admin, room_index, &movie_index, movie, &play);
+			mode = ui.chooseTime(admin, room_index, movie_index, movie, &play);
 		case CHECKTICKET: //티켓 정보 확인
 			int number;
 			Ticket* temp;

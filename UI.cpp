@@ -7,7 +7,10 @@ int UI::userHome(void) {
 	system("cls");
 
 	printf("사용자 홈 화면\n\n");
-
+	for (int i = 0; i < 48; i++) {}
+		printf("■");
+	}
+printf("■                                                                                  ■");
 	printf("┌─────────────────────────────────┐\n");
 	printf("│  1. 영화 선택                   │\n");
 	printf("│  2. 티켓 정보 확인              │\n");
@@ -183,13 +186,12 @@ int UI::chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** mo
 	*/
 }
 
-int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePlay** play) {
+int UI::chooseTime(Admin admin, int room_index, int movie_index, MovieInfo* movie, MoviePlay** play) {
 	int y_min;
 	x = 1; y_min = 3; y = y_min;
 
 	system("cls");
-	admin.roomTable[room-1]->printMovieInfo(movie);
-	//*play = admin.roomTable[room-1]->
+	admin.roomTable[room_index -1]->printMovieInfo(movie);
 
 	gotoxy(x, y);
 
@@ -209,7 +211,7 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 				}
 				break;
 			case 80:
-				if (y < y_min + admin.roomTable[room - 1]->movieCount - 1);
+				if (y < y_min + admin.roomTable[room_index - 1]->movieCount - 1);
 				{
 					y++;
 					gotoxy(x, y);
@@ -221,7 +223,8 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 		}
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
-			*index = (y - y_min);
+			*play = admin.roomTable[room_index - 1]->findMoviePlay(movie, y-y_min+1);
+			cout << (*play)->startTime;
 			return CHECKTICKET;
 		}
 		/* u -> 사용자 홈 화면 */

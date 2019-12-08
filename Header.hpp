@@ -161,7 +161,7 @@ public:
 	int userHome(void);					//사용자 홈 화면
 	int chooseMovie(Admin admin, int* index);				//영화 예매 선택 시 영화 리스트 출력하는 화면
 	int chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** movie);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
-	int chooseTime(Admin admin, int room_index, int* movie_index, MovieInfo* movie, MoviePlay** play);
+	int chooseTime(Admin admin, int room_index, int movie_index, MovieInfo* movie, MoviePlay** play);
 	int checkTicket(bool check);		//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 
 	int adminHome(void);				//관리자 홈 화면
