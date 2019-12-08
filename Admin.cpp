@@ -99,15 +99,38 @@ void Admin::printInfoTable(void) {
 		cin >> pd;
 		cout << "■    러닝타임: ";
 		cin >> runningTime;
+		
+		if (!runningTime) {
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+			
+		}
+
 		while (runningTime < 30) {
 			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
+			
 			cin >> runningTime;
+			if (!runningTime) {
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+			}
+			
 		}
 		cout << "■    영화 가격: ";
 		cin >> price;
+		if (!price) {
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+
 		while (price < 1000) {
+			
 			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 			cin >> price;
+			if (!price) {
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+			}
 		}
 
 		MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);

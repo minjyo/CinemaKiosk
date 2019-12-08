@@ -526,7 +526,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 	gotoxy(38, 17);
-	cout << "결제 금액 : " << total;
+	cout << "결제 금액 : " << to_string(total) + "원";
 	gotoxy(26, 19);
 	cout << "무엇으로 결제하시겠습니까 ? 1. 현금  2. 카드" << endl;
 	while (check) {
@@ -543,9 +543,9 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 				}
 				else {
 					gotoxy(38, 21);
-					cout << "총 금액 : " << total;
+					cout << "총 금액 : " << to_string(total) + "원";
 					gotoxy(38, 23);
-					cout << "남은 금액 : " << total - money;
+					cout << "남은 금액 : " << to_string(total - money)+"원";
 					gotoxy(32, 25);
 					cout << "금액을 넣어주세요. (-1 : 취소)";
 					gotoxy(65, 25);
@@ -1012,6 +1012,7 @@ int UI::addMovie(Admin* admin, int room_index) {
 	(*admin).printInfoTable();
 	cout << endl;
 
+	gotoxy(4, 22);
 	(*admin).roomTable[room_index]->printTimeTable();
 	printBorder();
 	gotoxy(30, 35);
@@ -1046,7 +1047,9 @@ int UI::addMovie(Admin* admin, int room_index) {
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
 			short time;
+
 			gotoxy(x, 32);
+
 			cout << "추가할 영화의 시작 시간을 입력하세요 : ";
 			cin >> time;
 
@@ -1060,7 +1063,9 @@ int UI::addMovie(Admin* admin, int room_index) {
 				return ADMIN;
 			}
 			else {
+
 				gotoxy(x, 33);
+
 				cout << "영화를 넣을 수 있는 시간이 없습니다.\n";
 				Sleep(2000);
 				return ADMIN;

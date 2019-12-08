@@ -12,6 +12,7 @@ using namespace std;
 
 int main()
 {
+	system("mode con cols=96 lines=37");
 	Admin admin;
 	char mode = USER;
 	char* input = (char*)malloc(1);
