@@ -54,13 +54,19 @@ class MoviePlay {
 private:
 	bool seat[SIZE_ROW][SIZE_COLUMN] = { false, };
 public:
+	/* 생성자 & 소멸자 */
 	MoviePlay();
-	MovieInfo* info;                   //영화 정보
-	MoviePlay* nextPlay;               //현재 관 다음 상영 영화
-	MoviePlay(short sTime, MovieInfo* mInfo, MoviePlay* nextP);          //생성자
+	MoviePlay(short sTime, MovieInfo* mInfo, MoviePlay* nextP);
+	~MoviePlay();
+
+	/* 영화 정보*/
+	MovieInfo* info;    
+	/* 현재 관 다음 상영 영화 */
+	MoviePlay* nextPlay;               
+
 	void changeSeat(short x, short y, bool status); //좌석 입력 받아서 예매
 	bool checkSeat(short x, short y); //해당 좌석이 예매 가능한지
-	~MoviePlay();
+
 	void printSeat();
 	unsigned short restSeat();
 	unsigned short startTime;           //시작 시간
