@@ -152,7 +152,7 @@ public:
 	int chooseTime(Admin admin, int room_index, int* movie_index, MovieInfo* movie, MoviePlay** play);
 	int checkTicket(Admin* admin);		//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 
-	int chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket);
+	int chooseSeat(Admin admin, int room_index, int movid_index, MovieInfo * movie, MoviePlay* play, Ticket** newTicket);
 	int checkInfo(Ticket* newTicket);
 	int checkMoney(Admin* admin, Ticket* newTicket);
 

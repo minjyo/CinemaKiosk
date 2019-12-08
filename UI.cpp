@@ -278,7 +278,8 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 	}
 }
 
-int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
+int UI::chooseSeat(Admin admin, int room_index, int movie_index, MovieInfo* movie, MoviePlay* play, Ticket** newTicket) {
+	play = admin.roomTable[room_index - 1]->findMoviePlay(movie, movie_index);
 	short numberOfHead;                 //인원 수
 	short restSeat = play->restSeat(); //잔여 좌석
 	short i, temp;                      //반복문
