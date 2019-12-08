@@ -107,7 +107,7 @@ int UI::chooseMovie(Admin admin, int* movie_index) {
 	cout << endl;
 	cout << "      예매하실 영화를 선택해주세요" << endl;
 	printBorder();
-	x = 1; y_min = 4; y = y_min;
+	x = 4; y_min = 16; y = y_min;
 
 	gotoxy(x, y);
 
@@ -158,7 +158,7 @@ int UI::chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** mo
 	*movie = admin.infoTable[movie_index];
 	int y_min;
 
-	x = 1; y_min = 3; y = y_min;
+	//x = 4; y_min = 16; y = y_min;
 
 	system("cls");
 	gotoxy(1, 2);
@@ -317,11 +317,11 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 	system("cls");
 	cout << endl;
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
-	cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
-	cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
-	cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■           ####      #####     ###     ######           ■■■■■■■■■    ■■■  ■■  ■" << endl;
+	cout << "■         ##    #    ##       ##  ##     ##              ■■■■■■■■■  ■  ■■■    ■■" << endl;
+	cout << "■           ##      ####     ######     ##               ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■        #    ##   ##       ##  ##     ##                ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■         ####    #####    ##  ##     ##                 ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl;
 	gotoxy(1, y_min - 5);
@@ -339,10 +339,25 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 		else if (numberOfHead > restSeat) {
 			gotoxy(x_min + 17, y_min + SIZE_ROW + 4);
 			cout << "잔여 좌석보다 많습니다.      " << endl;
+			gotoxy(x_min + 30, y_min + SIZE_ROW + 3);
+			cout << "           ";
+
 		}
+
+		else if (!cin) {
+			gotoxy(x_min + 17, y_min + SIZE_ROW + 4);
+			cout << "잘못된 입력입니다.      " << endl;
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+			gotoxy(x_min + 30, y_min + SIZE_ROW + 3);
+			cout << "           ";
+		}
+
 		else {
 			gotoxy(x_min + 17, y_min + SIZE_ROW + 4);
 			cout << "잘못된 입력입니다.      " << endl;
+			gotoxy(x_min + 30, y_min + SIZE_ROW + 3);
+			cout << "           ";
 		}
 	} while (check);
 
@@ -358,11 +373,11 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 	system("cls");
 	cout << endl;
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
-	cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
-	cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
-	cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■           ####      #####     ###     ######           ■■■■■■■■■    ■■■  ■■  ■" << endl;
+	cout << "■         ##    #    ##       ##  ##     ##              ■■■■■■■■■  ■  ■■■    ■■" << endl;
+	cout << "■           ##      ####     ######     ##               ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■        #    ##   ##       ##  ##     ##                ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■         ####    #####    ##  ##     ##                 ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl;
 	gotoxy(1, y_min - 5);
@@ -492,11 +507,11 @@ int UI::checkInfo(Ticket* newTicket) {
 	printBorder();
 	gotoxy(1,2);
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
-	cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
-	cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
-	cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■     ######  ######    ###   ##   ##  #####  ######     ■■■■■■■■■    ■■■  ■■  ■" << endl;
+	cout << "■       ##      ##    ##   #  ## ##    ##       ##       ■■■■■■■■■  ■  ■■■    ■■" << endl;
+	cout << "■       ##      ##    ##      ###      ####     ##       ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■       ##      ##    ##   #  ## ##    ##       ##       ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■       ##    ######    ###   ##   ##  #####    ##       ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 	newTicket->printTicket();
@@ -530,11 +545,11 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 	printBorder();
 	gotoxy(1, 2);
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
-	cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
-	cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
-	cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■         #####            ###            ##  ##         ■■■■■■■■■    ■■■  ■■  ■" << endl;
+	cout << "■         ##   #         ##  ##           ##  ##         ■■■■■■■■■  ■  ■■■    ■■" << endl;
+	cout << "■         #####          ######            ####          ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■         ##             ##  ##             ##           ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■         ##             ##  ##             ##           ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 	gotoxy(38, 17);
@@ -624,13 +639,13 @@ int UI::checkTicket(Admin* admin) {
 	system("cls");
 	cout << endl;
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
-	cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
-	cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
-	cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■     ######  ######    ###   ##   ##  #####  ######     ■■■■■■■■■    ■■■  ■■  ■" << endl;
+	cout << "■       ##      ##    ##   #  ## ##    ##       ##       ■■■■■■■■■  ■  ■■■    ■■" << endl;
+	cout << "■       ##      ##    ##      ###      ####     ##       ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■       ##      ##    ##   #  ## ##    ##       ##       ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■       ##    ######    ###   ##   ##  #####    ##       ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl<<endl<<endl<<endl;
+	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl;
 	cout << "■                          예매하신 티켓 번호를 입력하세요 : ";
 	printBorder();
 	gotoxy(63,13);
@@ -796,6 +811,7 @@ int UI::manMovie(void) {
 				break;
 			}
 		}
+
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
 			/* 영화 관리 - 영화 추가 */
@@ -854,7 +870,8 @@ int UI::deleteAll(Admin* admin) {
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 	int y_min;
 
-	x = 1; y_min = 3; y = 0;
+	//x = 1; y_min = 3; y = 0;
+	x = 4; y_min = 14; y = 0;
 
 	gotoxy(1, 12);
 	(*admin).printInfoTable();
@@ -862,7 +879,7 @@ int UI::deleteAll(Admin* admin) {
 	
 	printBorder();
 
-	gotoxy(1, y_min);
+	gotoxy(x, y_min);
 	while (1) {
 		key = _getch();
 		/* 방향키 눌렸을 때 */
@@ -883,12 +900,12 @@ int UI::deleteAll(Admin* admin) {
 			default:
 				break;
 			}
-			gotoxy(1, y_min + y);
+			gotoxy(4, y_min + y);
 		}
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
 			(*admin).deleteMovieInfo(y);
-			gotoxy(1, y_min + (*admin).infoCount + 2);
+			gotoxy(7, y_min + (*admin).infoCount + 8);
 			cout << "정상 삭제 되었습니다.";
 			Sleep(2000);
 
@@ -1008,11 +1025,11 @@ int UI::addMovie(Admin* admin, int room_index) {
 	printBorder();
 	gotoxy(1, 2);
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
-	cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
-	cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
-	cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■           ###          #####          #####            ■■■■■■■■■    ■■■  ■■  ■" << endl;
+	cout << "■         ##  ##         ##   #         ##   #           ■■■■■■■■■  ■  ■■■    ■■" << endl;
+	cout << "■         ######         ##   #         ##   #           ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■         ##  ##         ##   #         ##   #           ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■         ##  ##         #####          #####            ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 	//전체 영화 리스트 출력
@@ -1024,9 +1041,9 @@ int UI::addMovie(Admin* admin, int room_index) {
 	gotoxy(30, 35);
 	cout<< "추가할 영화를 선택하세요 ";
 
-	int y_min = 3;
-	x = 1; y = 0;
-	gotoxy(1, y_min);
+	int y_min = 16;
+	x = 4; y = 0;
+	gotoxy(4, y_min);
 	while (1) {
 		key = _getch();
 		/* 방향키 눌렸을 때 */
@@ -1093,11 +1110,11 @@ int UI::deleteMovie(Admin* admin, int room_index) {
 	printBorder();
 	gotoxy(1, 2);
 	cout << "■                                                        ■■■■■■■■■  ■  ■■  ■■  ■" << endl;
-	cout << "■       ##       ##    ###    ##   #  ####   ####        ■■■■■■■■■    ■■■  ■■  ■" << endl;
-	cout << "■       ###     ###   ##  #   ##   #   ##   #            ■■■■■■■■■  ■  ■■■    ■■" << endl;
-	cout << "■       ## #   ## #   ##  #   ##   #   ##   ####         ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##  # ##  #   ##  #    ## #    ##   #            ■■■■■■■■■■■■■■■■■■■" << endl;
-	cout << "■       ##   ##   #    ###      ##    ####  #####        ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■     #####   ######  ##      ######  ######  ######     ■■■■■■■■■    ■■■  ■■  ■" << endl;
+	cout << "■     ##   #  ##      ##      ##        ##    ##         ■■■■■■■■■  ■  ■■■    ■■" << endl;
+	cout << "■     ##   #  ####    ##      ####      ##    ####       ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■     ##   #  ##      ##      ##        ##    ##         ■■■■■■■■■■■■■■■■■■■" << endl;
+	cout << "■     #####   ######  ######  ######    ##    ######     ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■                                                        ■■■■■■■■■■■■■■■■■■■" << endl;
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 
