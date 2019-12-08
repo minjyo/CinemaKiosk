@@ -280,7 +280,8 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 	}
 }
 
-int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
+int UI::chooseSeat(Admin admin, int room_index, int movie_index, MovieInfo* movie, MoviePlay* play, Ticket** newTicket) {
+	play = admin.roomTable[room_index - 1]->findMoviePlay(movie, movie_index);
 	short numberOfHead;                 //인원 수
 	short restSeat = play->restSeat(); //잔여 좌석
 	short i, temp;                      //반복문
@@ -515,9 +516,7 @@ int UI::checkInfo(Ticket* newTicket) {
 	return 0;
 }
 int UI::checkMoney(Admin* admin, Ticket* newTicket) {
-	MovieInfo* minfo; short numberOfHead;
-	//금액
-	int i;
+
 	int insertMoney = 0; //입력 금액
 	int total; //총 금액
 	int money = 0;	//입력 된 금액
@@ -558,9 +557,9 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 					cout << "총 금액 : " << to_string(total) + "원";
 					gotoxy(38, 23);
 					cout << "남은 금액 : " << to_string(total - money)+"원";
-					gotoxy(32, 25);
+					gotoxy(38, 25);
 					cout << "금액을 넣어주세요.";
-					gotoxy(65, 25);
+					gotoxy(58, 25);
 					key = _getch();
 					if (key == 8) {
 						return CHOOSESEAT;
@@ -570,9 +569,9 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 					if (insertMoney > -2) {
 						money += insertMoney;
 					}
-					gotoxy(65, 25);
+					gotoxy(58, 25);
 					cout << "           ";
-					gotoxy(65, 25);
+					gotoxy(58, 25);
 				}
 			}
 			gotoxy(38, 27);
@@ -584,7 +583,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 			cout << endl;
 
 			gotoxy(38, 29);
-			cout << "거스름돈 : " << money - total;
+			cout << "거스름돈 : " << to_string(money - total)+"원";
 			gotoxy(38, 31);
 			cout << "결제가 완료되었습니다.";
 
@@ -875,7 +874,6 @@ int UI::deleteAll(Admin* admin) {
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 	int y_min;
 
-	//x = 1; y_min = 3; y = 0;
 	x = 4; y_min = 14; y = 0;
 
 	gotoxy(1, 12);
@@ -1034,7 +1032,7 @@ int UI::addMovie(Admin* admin, int room_index) {
 	cout << endl;
 
 	gotoxy(4, 22);
-	(*admin).roomTable[room_index]->printTimeTable();
+	(*admin).printTimetable(room_index);
 	printBorder();
 	gotoxy(30, 35);
 	cout << "추가할 영화를 선택하세요 ";
@@ -1078,20 +1076,18 @@ int UI::addMovie(Admin* admin, int room_index) {
 				return ADDMOVIE;
 			}
 			cin >> time;
-
 			//해당 시간으로 입력 가능한지 검사한 후 입력
-			if ((*admin).roomTable[room_index]->addMovieToRoom((*admin).infoTable[y], time)) {
+			if ((*admin).addMovie((*admin).infoTable[y], (*admin).roomTable[room_index], time)==true) {				
 				gotoxy(x, (*admin).infoCount + 1 + y_min);
-				(*admin).roomTable[room_index]->printTimeTable();
-				cout << "   영화가 추가되었습니다.";
+				(*admin).printTimetable(room_index);
+				gotoxy(x, 33);
+				cout << "영화가 추가되었습니다.";
 				printBorder();
 				Sleep(2000);
 				return ADDMOVIE;
 			}
 			else {
-
 				gotoxy(x, 33);
-
 				cout << "영화를 넣을 수 있는 시간이 없습니다.\n";
 				Sleep(2000);
 				return ADDMOVIE;
@@ -1123,7 +1119,6 @@ int UI::deleteMovie(Admin* admin, int room_index) {
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 
 	short sTime;
-	//cout << room_index << endl;
 	//영화관의 상영 영화 리스트 출력
 	(*admin).roomTable[room_index]->printTimeTable();
 	printBorder();
@@ -1145,7 +1140,6 @@ int UI::deleteMovie(Admin* admin, int room_index) {
 			return DELETEMOVIE;
 		}
 		else {
-			//(*admin).roomTable[room_index]->printTimeTable();
 			gotoxy(66, 32);
 			cout << "정상 삭제되었습니다.\n";
 			Sleep(3000);
