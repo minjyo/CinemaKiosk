@@ -339,10 +339,25 @@ int UI::chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket) {
 		else if (numberOfHead > restSeat) {
 			gotoxy(x_min + 17, y_min + SIZE_ROW + 4);
 			cout << "잔여 좌석보다 많습니다.      " << endl;
+			gotoxy(x_min + 30, y_min + SIZE_ROW + 3);
+			cout << "           ";
+
 		}
+
+		else if (!cin) {
+			gotoxy(x_min + 17, y_min + SIZE_ROW + 4);
+			cout << "잘못된 입력입니다.      " << endl;
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+			gotoxy(x_min + 30, y_min + SIZE_ROW + 3);
+			cout << "           ";
+		}
+
 		else {
 			gotoxy(x_min + 17, y_min + SIZE_ROW + 4);
 			cout << "잘못된 입력입니다.      " << endl;
+			gotoxy(x_min + 30, y_min + SIZE_ROW + 3);
+			cout << "           ";
 		}
 	} while (check);
 
@@ -854,7 +869,8 @@ int UI::deleteAll(Admin* admin) {
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl << endl;
 	int y_min;
 
-	x = 1; y_min = 3; y = 0;
+	//x = 1; y_min = 3; y = 0;
+	x = 4; y_min = 14; y = 0;
 
 	gotoxy(1, 12);
 	(*admin).printInfoTable();
@@ -862,7 +878,7 @@ int UI::deleteAll(Admin* admin) {
 	
 	printBorder();
 
-	gotoxy(1, y_min);
+	gotoxy(x, y_min);
 	while (1) {
 		key = _getch();
 		/* 방향키 눌렸을 때 */
@@ -883,12 +899,12 @@ int UI::deleteAll(Admin* admin) {
 			default:
 				break;
 			}
-			gotoxy(1, y_min + y);
+			gotoxy(4, y_min + y);
 		}
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
 			(*admin).deleteMovieInfo(y);
-			gotoxy(1, y_min + (*admin).infoCount + 2);
+			gotoxy(7, y_min + (*admin).infoCount + 8);
 			cout << "정상 삭제 되었습니다.";
 			Sleep(2000);
 
