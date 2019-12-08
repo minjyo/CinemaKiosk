@@ -61,10 +61,13 @@ Admin::Admin() {
 
 
 void Admin::showStatistic() {
-	cout << "영화 통계" << endl << endl;
+	cout << "영화 누적 통계" << endl << endl;
 	cout.setf(ios::left);
+	Ticket* temp = ticketHead;
+	total = 0;
+
 	for (int i = 0; i < infoCount; i++) {
-		cout << "■    " << setw(20) << infoTable[i]->title << " : 총 예매 수 " << infoTable[i]->count << " / 총 수입: " << infoTable[i]->count * infoTable[i]->price << endl;
+		cout << "■    " << setw(20) << infoTable[i]->title << " : 총 관객 수 " << infoTable[i]->count << " / 총 수입: " << infoTable[i]->count * infoTable[i]->price << endl;
 		total += infoTable[i]->count * infoTable[i]->price;
 	}
 	cout << endl << "■    " << setw(20) << "최종 수입 : " << total << endl;
@@ -84,220 +87,225 @@ void Admin::printInfoTable(void) {
 
 	for (int i = 0; i < infoCount; i++) {
 		cout << setw(3) << "■";
-		cout << setw(3) << to_string(i+1) + ".";
+		cout << setw(3) << to_string(i + 1) + ".";
 		infoTable[i]->printInfo();
 	}
 }
-	//영화관 선택 시 시작시간 순으로 상영영화 출력
-	void Admin::printTimetable(short index) {
-		roomTable[index]->printTimeTable();
+//영화관 선택 시 시작시간 순으로 상영영화 출력
+void Admin::printTimetable(short index) {
+	roomTable[index]->printTimeTable();
+}
+
+//영화 정보 만들기
+bool Admin::createMovieInfo() {
+	string title;
+	string pd;
+	short runningTime;
+	int price;
+
+	cout << "■    영화 추가" << endl;
+	cout << "■   +──────────────────────────+" << endl;
+	/* 최소 영화 가격은 10000원, 러닝타임 최소 30분 */
+	cout << "■    영화 정보를 입력해주세요." << endl;
+	cout << "■    영화 제목: ";
+	char key = _getch();
+
+	if (key == 8) {
+		return false;
+	}
+	cin >> title;
+	cout << "■    영화 감독: ";
+	cin >> pd;
+	cout << "■    러닝타임: ";
+	cin >> runningTime;
+
+	if (!runningTime) {
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
 	}
 
-	//영화 정보 만들기
-	bool Admin::createMovieInfo() {
-		string title;
-		string pd;
-		short runningTime;
-		int price;
-
-		cout << "■    영화 추가" << endl;
-		cout << "■   +──────────────────────────+" << endl;
-		/* 최소 영화 가격은 10000원, 러닝타임 최소 30분 */
-		cout << "■    영화 정보를 입력해주세요." << endl;
-		cout << "■    영화 제목: ";
-		char key = _getch();
-
-		if (key == 8) {
-			return false;
-		}
-		cin >> title;
-		cout << "■    영화 감독: ";
-		cin >> pd;
-		cout << "■    러닝타임: ";
+	while (runningTime < 30) {
+		cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 		cin >> runningTime;
-		
 		if (!runningTime) {
 			cin.clear();
 			cin.ignore(INT_MAX, '\n');
-			
 		}
+	}
+	cout << "■    영화 가격: ";
+	cin >> price;
+	if (!price) {
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+	}
 
-		while (runningTime < 30) {
-			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
-			cin >> runningTime;
-			if (!runningTime) {
-				cin.clear();
-				cin.ignore(INT_MAX, '\n');
-			}
-			
-		}
-		cout << "■    영화 가격: ";
+	while (price < 1000) {
+		cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 		cin >> price;
 		if (!price) {
 			cin.clear();
 			cin.ignore(INT_MAX, '\n');
 		}
+	}
 
-		while (price < 1000) {
-			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
-			cin >> price;
-			if (!price) {
-				cin.clear();
-				cin.ignore(INT_MAX, '\n');
+	MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
+	if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
+		cout << "      최대 영화 개수를 넘었습니다." << endl;
+		Sleep(3000);
+		return false;
+	}
+	else {
+		infoTable[this->infoCount] = movie;
+		infoCount++;
+	}
+	return true;
+}
+
+void Admin::printAllMovies(string name) {
+	for (int i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+		cout << i + 1 << "관" << endl;
+
+		MoviePlay* movie = roomTable[i]->head;
+		for (int j = 0; j < roomTable[i]->movieCount; j++) {
+			if (movie->info->title == name) {
+				movie->info->printInfo();
+				cout << "잔여좌석: " << movie->restSeat() << endl;
 			}
 		}
+	}
+}
 
-		MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
-		if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
-			cout << "      최대 영화 개수를 넘었습니다." << endl;
-			Sleep(3000);
-			return false;
-		}
-		else {
-			infoTable[this->infoCount] = movie;
-			infoCount++;
-		}
+//영화관 내 상영영화 Linked List에 시간 검사 후 생성하기 (movie room의 canaddmovie + addmovie 호출)
+bool Admin::addMovie(MovieInfo* info, MovieRoom* room, short selectTime) {
+	if (room->addMovieToRoom(info, selectTime) == true) {
 		return true;
 	}
+	else
+		return false;
+}
 
-	void Admin::printAllMovies(string name) {
-		for (int i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
-			cout << i + 1 << "관" << endl;
-
-			MoviePlay* movie = roomTable[i]->head;
-			for (int j = 0; j < roomTable[i]->movieCount; j++) {
-				if (movie->info->title == name) {
-					movie->info->printInfo();
-					cout << "잔여좌석: " << movie->restSeat() << endl;
-				}
-			}
-		}
+//티켓 테이블에서 티켓번호로 티켓 정보 찾기
+Ticket* Admin::findTicket(int tNumber) {
+	Ticket* temp = ticketHead;
+	if (temp == NULL) {
+		return NULL;
 	}
-
-	//영화관 사용 가능, 불가능
-	void Admin::setMovieRoomStatus(MovieRoom & room, bool status) {
-		room.setStatus(status);
-		cout << "해당 영화관 사용이 " << (status ? "가능" : "불가능") << "으로 변경되었습니다." << endl;
-	}
-
-	//영화관 내 상영영화 Linked List에 시간 검사 후 생성하기 (movie room의 canaddmovie + addmovie 호출)
-	void Admin::addMovie(MovieInfo * info, MovieRoom & room, short selectTime) {
-		if (room.canAddMovie(info, selectTime)) {
-			room.addMovieToRoom(info, selectTime);
-			cout << "영화가 추가되었습니다." << endl;
-			room.printTimeTable();
-			return;
-		}
-		cout << "해당 시간에 영화를 추가할 수 없습니다. 다시 선택해주세요." << endl;
-	}
-
-	//티켓 테이블에서 티켓번호로 티켓 정보 찾기
-	Ticket* Admin::findTicket(int tNumber) {
-		Ticket* temp = ticketHead;
-		if (temp == NULL) {
-			return NULL;
-		}
-		if (ticketTail->ticketNumber < tNumber || tNumber < ticketHead->ticketNumber) {
-			return NULL;
-		}
-
-		if (ticketTail->ticketNumber == tNumber) {
-			return ticketTail;
-		}
-
-		while (temp != ticketTail) {
-			if (temp->ticketNumber == tNumber) {
-				return temp;
-			}
-			temp = temp->nextTicket;
-		}
+	if (ticketTail->ticketNumber < tNumber || tNumber < ticketHead->ticketNumber) {
 		return NULL;
 	}
 
-	//예매 번호로 티켓 정보 출력
-	void Admin::printTicket(int tNumber) {
-		Ticket* temp = findTicket(tNumber);
-
-		if (temp != NULL) {
-			temp->printTicket();
-			return;
-		}
-		cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
+	if (ticketTail->ticketNumber == tNumber) {
+		return ticketTail;
 	}
 
-	//예매 번호로 티켓 삭제 (예매취소)
-
-	void Admin::deleteTicket(Ticket * select) {
-		/* 좌석 상태 반영 */
-		for (short i = 0; i < select->number; i++) {
-			select->playInfo->changeSeat(select->seatNumber[i] / 10, select->seatNumber[i] % 10, false);
+	while (temp != ticketTail) {
+		if (temp->ticketNumber == tNumber) {
+			return temp;
 		}
+		temp = temp->nextTicket;
+	}
+	return NULL;
+}
 
-		/* 삭제하려는 티켓이 Head일때 && Tail일때 */
-		if ((select == ticketHead) && (select == ticketTail)) {
-			select->~Ticket();
-			ticketHead = NULL;
-			ticketTail = NULL;
-		}
-		/* 삭제하려는 티켓이 Head일때 */
-		else if (select == ticketHead) {
-			ticketHead = select->nextTicket;
-			select->~Ticket();
-		}
-		/* 삭제하려는 티켓이 Tail일때 */
-		else if (select == ticketTail) {
-			Ticket* temp = ticketHead;
+//예매 번호로 티켓 정보 출력
+void Admin::printTicket(int tNumber) {
+	Ticket* temp = findTicket(tNumber);
 
-			while (temp->nextTicket != ticketTail) {
-				temp = temp->nextTicket;
-			}
+	if (temp != NULL) {
+		temp->printTicket();
+		return;
+	}
+	cout << "해당 번호로 예매된 예매 정보가 없습니다." << endl;
+}
 
-			ticketTail = temp;
-			temp->nextTicket = NULL;
-			select->~Ticket();
-		}
-		/* 그 외 (중간에 있을 때) */
-		else {
-			Ticket* temp = ticketHead;
+//예매 번호로 티켓 삭제 (예매취소)
 
-			while (temp->nextTicket != select) {
-				temp = temp->nextTicket;
-			}
-			temp->nextTicket = select->nextTicket;
-			select->~Ticket();
-		}
+void Admin::deleteTicket(Ticket* select) {
+	/* 좌석 상태 반영 */
+	for (short i = 0; i < select->number; i++) {
+		select->playInfo->changeSeat(select->seatNumber[i] / 10, select->seatNumber[i] % 10, false);
 	}
 
-	void Admin::deleteMovieInfo(short index)
+	/* 삭제하려는 티켓이 Head일때 && Tail일때 */
+	if ((select == ticketHead) && (select == ticketTail)) {
+		select->~Ticket();
+		ticketHead = NULL;
+		ticketTail = NULL;
+	}
+	/* 삭제하려는 티켓이 Head일때 */
+	else if (select == ticketHead) {
+		ticketHead = select->nextTicket;
+		select->~Ticket();
+	}
+	/* 삭제하려는 티켓이 Tail일때 */
+	else if (select == ticketTail) {
+		Ticket* temp = ticketHead;
+
+		while (temp->nextTicket != ticketTail) {
+			temp = temp->nextTicket;
+		}
+
+		ticketTail = temp;
+		temp->nextTicket = NULL;
+		select->~Ticket();
+	}
+	/* 그 외 (중간에 있을 때) */
+	else {
+		Ticket* temp = ticketHead;
+
+		while (temp->nextTicket != select) {
+			temp = temp->nextTicket;
+		}
+		temp->nextTicket = select->nextTicket;
+		select->~Ticket();
+	}
+}
+
+void Admin::deleteMovieInfo(short index)
+{
+	short i;
+
+	//모든 영화관에서 영화정보로 영화 삭제
+	for (i = 0; i < MOVIE_ROOM_ARR_SIZE; i++)
 	{
-		short i;
-
-		//모든 영화관에서 영화정보로 영화 삭제
-		for (i = 0; i < MOVIE_ROOM_ARR_SIZE; i++)
-		{
-			roomTable[i]->deleteMovieInfo(infoTable[index]);
-		}
-		
-		//배열에서 줄여주기
-		for (i = index; i < infoCount; i++)
-		{
-			infoTable[i] = infoTable[i + 1];
-		}
-		infoTable[infoCount] = 0x00;
-		infoCount--;
+		roomTable[i]->deleteMovieInfo(infoTable[index]);
 	}
 
-	void Admin::deleteMoviePlay(short roomNumber, short startTime) {
-		roomTable[roomNumber]->deleteMoviePlay(startTime);
-	}
-
-
-	void Admin::gotoxy(short x, short y)
+	//배열에서 줄여주기
+	for (i = index; i < infoCount; i++)
 	{
-		COORD Pos = { x - 1, y - 1 };
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+		infoTable[i] = infoTable[i + 1];
 	}
+	infoTable[infoCount] = 0x00;
+	infoCount--;
+}
 
-	Admin::~Admin() {
+void Admin::deleteMoviePlay(unsigned short roomNumber, short startTime) {
+	roomTable[roomNumber]->deleteMoviePlay(startTime);
+}
 
-	}
+
+void Admin::gotoxy(short x, short y)
+{
+	COORD Pos = { x - 1, y - 1 };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+Admin::~Admin() {
+
+}
+
+int Admin::printMoviefromRoom(unsigned short roomNumber, MovieInfo* minfo) {
+	int n = roomTable[roomNumber]->printMovieInfo(minfo);
+	return n;
+}
+
+MoviePlay* Admin::findMoviePlayfromRoom(unsigned short roomNumber, MovieInfo* minfo, int index) {
+	MoviePlay* returnMoviePlay = roomTable[roomNumber]->findMoviePlay(minfo, index);
+	return returnMoviePlay;
+}
+
+int Admin::deleteMoviePlayfromRoom(unsigned short roomNumber, unsigned short startTime) {
+	return roomTable[roomNumber]->deleteMoviePlay(startTime);
+}
+

@@ -22,7 +22,7 @@ MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
 MoviePlay::~MoviePlay() {
 }
 
-//좌석 현황 출력. 예매 가능하면 ▩, 안되면 ■
+// 8*8 좌석 출력좌석 현황 출력. 예매 가능하면 ▩, 안되면 ■
 void MoviePlay::printSeat() {
 	int i, j;
 	printf("                        #############################################\n");

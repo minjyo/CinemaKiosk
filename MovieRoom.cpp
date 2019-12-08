@@ -1,28 +1,23 @@
 ﻿#include "Header.hpp"
 
-MovieRoom::MovieRoom(char roomNumber) {
+MovieRoom::MovieRoom(unsigned short roomNumber) {
 	head = new MoviePlay();
 	head->nextPlay = NULL;
 	this->roomNumber = roomNumber;
-	this->status = true;
 	this->movieCount = 0;
-}
-
-void MovieRoom::setStatus(bool status) {
-	this->status = status;
 }
 
 MovieRoom::~MovieRoom() {
 
 }
 
-//영화관의 영화 타임 테이블 출력
+// 영화관의 영화 타임 테이블 출력
 void MovieRoom::printTimeTable() {
 	MoviePlay* temp = head;
 
 	int Count = 1;
 	cout << setw(6) << " ";
-	cout << "--------------------------------- " << (int)roomNumber + 1 << "관 ---------------------------------" << endl;
+	cout << "--------------------------------- " << roomNumber + 1 << "관 ---------------------------------" << endl;
 	cout.setf(ios::left);
 	cout << setw(6) << "■";
 	cout << setw(20) << "영화 제목";
@@ -43,7 +38,56 @@ void MovieRoom::printTimeTable() {
 	cout << endl;
 }
 
-//1208 근영추가, 시작시간, 러닝타임으로 종료시간 계산해서 리턴!!
+// 해당 관 안에서 특정 영화만 출력
+int MovieRoom::printMovieInfo(MovieInfo* mov) {
+
+	MoviePlay* start = head;
+	MoviePlay* temp = start->nextPlay;
+
+	int Count = 0;
+
+	while (temp != NULL) {
+		if (temp->info == mov) {
+			start = temp;
+			temp = start->nextPlay;
+			Count++;
+		}
+		else {
+			start = temp;
+			temp = start->nextPlay;
+		}
+	}
+
+	if (Count != 0) {
+		temp = head->nextPlay;
+		cout << setw(6) << "■";
+		cout << "--------------------------------- " << roomNumber + 1 << "관 ---------------------------------" << endl;
+		cout << setw(6) << "■";
+		cout << setw(20) << "시작 시간";
+		cout << setw(20) << "종료 시간";
+		cout << setw(20) << "잔여 좌석" << endl;
+		Count = 1;
+		while (temp != NULL) {
+			if (temp->info == mov) {
+				cout << setw(3) << "■";
+				cout << setw(3) << to_string(Count) + ".";
+				cout << setw(20) << to_string((temp->startTime / 100) % 24) + "시 " + to_string(temp->startTime % 100) + "분";
+				cout << setw(20) << to_string((temp->endTime / 100) % 24) + "시 " + to_string(temp->endTime % 100) + "분";
+				cout << temp->restSeat() << " / " << SIZE_COLUMN * SIZE_ROW << endl;
+				start = temp;
+				temp = start->nextPlay;
+				Count++;
+			}
+			else {
+				start = temp;
+				temp = start->nextPlay;
+			}
+		}
+	}
+	return Count;
+}
+
+// 시작시간, 러닝타임으로 종료시간 리턴
 unsigned short MovieRoom::getEndTime(unsigned short startTime, unsigned short runningTime) {
 	unsigned short endTime = 0;
 	if (((startTime % 100) + (runningTime % 100)) > 60) {
@@ -56,7 +100,7 @@ unsigned short MovieRoom::getEndTime(unsigned short startTime, unsigned short ru
 	return endTime;
 }
 
-//영화 삽입 가능 여부 확인 (이때, 넣으려는 곳의 앞 노드의 index를 리턴해준다) 근영수정
+// 영화관에 영화 추가 가능하면 추가할 곳의 앞 영화 인덱스, 불가능하면 -1 리턴
 int MovieRoom::canAddMovie(MovieInfo* info, unsigned short select) {
 	MoviePlay* temp = head->nextPlay;
 	unsigned short runningTime = info->runningTime;
@@ -86,7 +130,7 @@ int MovieRoom::canAddMovie(MovieInfo* info, unsigned short select) {
 	}
 }
 
-//근영수정, 인덱스를 받아와서 -1이면 생성 X 그 외에는 추가해줄 곳의 앞 인덱스를 받아서 추가해줌
+// 인덱스를 받아와서 -1이면 생성 X 그 외에는 추가해줄 곳의 앞 인덱스를 받아서 추가해줌
 bool MovieRoom::addMovieToRoom(MovieInfo* info, unsigned short select) {
 	int select_index = canAddMovie(info, select);
 	if (select_index == -1) {
@@ -108,7 +152,7 @@ bool MovieRoom::addMovieToRoom(MovieInfo* info, unsigned short select) {
 	}
 }
 
-//1125 근영 수정/추가 삭제하는 영화 개수는 확인용, 지워도 무방
+// 해당 관 안에서 상영중인 영화중 일치하는 영화 모두 삭제
 void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 
 	MoviePlay* start = head;
@@ -131,75 +175,7 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 	this->movieCount -= deleteCount;
 }
 
-//UI 맞추게 수정
-int MovieRoom::printMovieInfo(MovieInfo* mov) {
-
-	MoviePlay* start = head;
-	MoviePlay* temp = start->nextPlay;
-
-	int Count = 0;
-
-	while (temp != NULL) {
-		if (temp->info == mov) {
-			start = temp;
-			temp = start->nextPlay;
-			Count++;
-		}
-		else {
-			start = temp;
-			temp = start->nextPlay;
-		}
-	}
-
-	if (Count != 0) {
-		temp = head->nextPlay;
-		cout << setw(6) << "■";
-		cout << "--------------------------------- " << (int)roomNumber + 1 << "관 ---------------------------------" << endl;
-		cout << setw(6) << "■";
-		cout << setw(20) << "시작 시간";
-		cout << setw(20) << "종료 시간";
-		cout << setw(20) << "잔여 좌석" << endl;
-		Count = 1;
-		while (temp != NULL) {
-			if (temp->info == mov) {
-				cout << setw(3) << "■";
-				cout << setw(3) << to_string(Count) + ".";
-				cout << setw(20) << to_string((temp->startTime / 100) % 24) + "시 " + to_string(temp->startTime % 100) + "분";
-				cout << setw(20) << to_string((temp->endTime / 100) % 24) + "시 " + to_string(temp->endTime % 100) + "분";
-				cout << temp->restSeat() << " / " << SIZE_COLUMN * SIZE_ROW << endl;
-				start = temp;
-				temp = start->nextPlay;
-				Count++;
-			}
-			else {
-				start = temp;
-				temp = start->nextPlay;
-			}
-		}
-	}
-	return Count;
-}
-
-// 여긴 0부터아니라 1부터, 4관의 해당영화 중 세번째 찾으려면 index에 3 넣어야함
-MoviePlay* MovieRoom::findMoviePlay(MovieInfo* minfo, int index) {
-	MoviePlay* temp = head->nextPlay;
-	int compareIndex = 1;
-	while (temp != NULL) {
-		if (temp->info == minfo) {
-			if (compareIndex == index)
-				return temp;
-			else {
-				temp = temp->nextPlay;
-				compareIndex++;
-			}
-		}
-		else {
-			temp = temp->nextPlay;
-		}
-	}
-	return NULL;
-}
-
+// 해당 관 안에서 상영중인 특정영화 하나 삭제
 int MovieRoom::deleteMoviePlay(short starttime) {
 
 	MoviePlay* start = head;
@@ -221,4 +197,24 @@ int MovieRoom::deleteMoviePlay(short starttime) {
 	}
 	this->movieCount--;
 	return deleteCount;
+}
+
+// 영화관에서 몇번째 상영중인 특정 영화 객체 리턴
+MoviePlay* MovieRoom::findMoviePlay(MovieInfo* minfo, int index) {
+	MoviePlay* temp = head->nextPlay;
+	int compareIndex = 1;
+	while (temp != NULL) {
+		if (temp->info == minfo) {
+			if (compareIndex == index)
+				return temp;
+			else {
+				temp = temp->nextPlay;
+				compareIndex++;
+			}
+		}
+		else {
+			temp = temp->nextPlay;
+		}
+	}
+	return NULL;
 }

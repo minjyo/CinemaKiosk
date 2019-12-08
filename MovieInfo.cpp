@@ -7,7 +7,7 @@
 
 #include "Header.hpp"
 
-MovieInfo::MovieInfo(string title, string pd, short runningTime, int price) {
+MovieInfo::MovieInfo(string title, string pd, unsigned short runningTime, int price) {
 	this->title = title;
 	this->pd = pd;
 	this->runningTime = runningTime;
@@ -18,7 +18,7 @@ MovieInfo::MovieInfo(string title, string pd, short runningTime, int price) {
 void MovieInfo::printInfo() {
 	cout.setf(ios::left);
 	cout << setw(20) << title;
-	cout << setw(20) << to_string(price)+"원";
+	cout << setw(20) << to_string(price) + "원";
 	cout << setw(20) << pd;
 	cout << runningTime / 100 << "시간 " << runningTime % 100 << "분" << endl;
 }

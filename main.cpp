@@ -20,14 +20,12 @@ int main()
 
 	int room_index = 0;
 	int movie_index = 0;
+	int y = 0;
 	MovieInfo* movie = NULL;
 	MoviePlay* play = NULL;
 	Ticket* ticket = NULL;
 
 	UI ui;
-	//////////////////////////////////////////////////////////////			임시 play 나중에 함수로 바꿔주기
-	play = admin.roomTable[0]->head->nextPlay;
-	//////////////////////////////////////////////////////////////
 	while (*input != 'Q')
 	{
 		*input = '\0';
@@ -43,12 +41,10 @@ int main()
 		case CHOOSEROOM:	//영화관 선택
 			mode = ui.chooseRoom(admin, &room_index, movie_index, &movie);
 			break;
-		case CHOOSETIME:	//시간 선택 근영수정 제대로 안들어가는거 수정
-			mode = ui.chooseTime(admin, room_index, &movie_index, movie, &play);
+		case CHOOSETIME:	//시간 선택
+			mode = ui.chooseTime(admin, room_index, &y, movie, &play);
 			break;
 		case CHOOSESEAT:	//좌석 선택
-			//설정한 MoviePlay 객체로 변경, 인욱이형 좌표 넘겨줄때 2번째 영화 선택하면 1번째로 선택되는거 수정 요청
-			play = admin.roomTable[room_index - 1]->findMoviePlay(movie, movie_index);
 			mode = ui.chooseSeat(admin, play, &ticket);
 			break;
 		case CHECKINFO:		//영화 정보 확인
@@ -58,7 +54,7 @@ int main()
 			mode = ui.checkMoney(&admin, ticket, movie);
 			break;
 		case CHECKTICKET:	//티켓 확인
-			mode = ui.checkTicket(&admin);
+			mode = ui.checkTicket(&admin, movie_index);
 			break;
 		case ADMIN: //관리자 홈
 			mode = ui.adminHome();
