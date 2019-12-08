@@ -7,7 +7,7 @@
 
 #include "Header.hpp"
 
-MovieInfo::MovieInfo(string title, string pd, short runningTime, int price) {
+MovieInfo::MovieInfo(string title, string pd, unsigned short runningTime, int price) {
 	this->title = title;
 	this->pd = pd;
 	this->runningTime = runningTime;

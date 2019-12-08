@@ -83,42 +83,68 @@ void Admin::printInfoTable(void) {
 	}
 
 	//영화 정보 만들기
-	void Admin::createMovieInfo() {
+	bool Admin::createMovieInfo() {
 		string title;
 		string pd;
 		short runningTime;
 		int price;
 
-		cout << "■    영화 추가 (최소 러닝타임 30분, 최소 가격 1000원" << endl;
+		cout << "■    영화 추가" << endl;
 		cout << "■   +──────────────────────────+" << endl;
 		/* 최소 영화 가격은 10000원, 러닝타임 최소 30분 */
 		cout << "■    영화 정보를 입력해주세요." << endl;
 		cout << "■    영화 제목: ";
+		char key = _getch();
+
+		if (key == 8) {
+			return false;
+		}
 		cin >> title;
 		cout << "■    영화 감독: ";
 		cin >> pd;
 		cout << "■    러닝타임: ";
 		cin >> runningTime;
+		
+		if (!runningTime) {
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+
 		while (runningTime < 30) {
 			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 			cin >> runningTime;
+			if (!runningTime) {
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+			}
 		}
 		cout << "■    영화 가격: ";
 		cin >> price;
+		if (!price) {
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+
 		while (price < 1000) {
 			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 			cin >> price;
+			if (!price) {
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+			}
 		}
 
 		MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
 		if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
 			cout << "      최대 영화 개수를 넘었습니다." << endl;
-			return;
+			Sleep(3000);
+			return false;
 		}
 		else {
 			infoTable[this->infoCount] = movie;
 			infoCount++;
 		}
+		return true;
 	}
 
 	void Admin::printAllMovies(string name) {
@@ -135,21 +161,13 @@ void Admin::printInfoTable(void) {
 		}
 	}
 
-	//영화관 사용 가능, 불가능
-	void Admin::setMovieRoomStatus(MovieRoom & room, bool status) {
-		room.setStatus(status);
-		cout << "해당 영화관 사용이 " << (status ? "가능" : "불가능") << "으로 변경되었습니다." << endl;
-	}
-
 	//영화관 내 상영영화 Linked List에 시간 검사 후 생성하기 (movie room의 canaddmovie + addmovie 호출)
-	void Admin::addMovie(MovieInfo * info, MovieRoom & room, short selectTime) {
-		if (room.canAddMovie(info, selectTime)) {
-			room.addMovieToRoom(info, selectTime);
-			cout << "영화가 추가되었습니다." << endl;
-			room.printTimeTable();
-			return;
+	bool Admin::addMovie(MovieInfo * info, MovieRoom * room, short selectTime) {
+		if (room->addMovieToRoom(info, selectTime)==true) {
+			return true;
 		}
-		cout << "해당 시간에 영화를 추가할 수 없습니다. 다시 선택해주세요." << endl;
+		else
+			return false;
 	}
 
 	//티켓 테이블에서 티켓번호로 티켓 정보 찾기
@@ -248,7 +266,7 @@ void Admin::printInfoTable(void) {
 		infoCount--;
 	}
 
-	void Admin::deleteMoviePlay(short roomNumber, short startTime) {
+	void Admin::deleteMoviePlay(unsigned short roomNumber, short startTime) {
 		roomTable[roomNumber]->deleteMoviePlay(startTime);
 	}
 
