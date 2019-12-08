@@ -83,17 +83,22 @@ void Admin::printInfoTable(void) {
 	}
 
 	//영화 정보 만들기
-	void Admin::createMovieInfo() {
+	bool Admin::createMovieInfo() {
 		string title;
 		string pd;
 		short runningTime;
 		int price;
 
-		cout << "■    영화 추가 (최소 러닝타임 30분, 최소 가격 1000원" << endl;
+		cout << "■    영화 추가" << endl;
 		cout << "■   +──────────────────────────+" << endl;
 		/* 최소 영화 가격은 10000원, 러닝타임 최소 30분 */
 		cout << "■    영화 정보를 입력해주세요." << endl;
 		cout << "■    영화 제목: ";
+		char key = _getch();
+
+		if (key == 8) {
+			return false;
+		}
 		cin >> title;
 		cout << "■    영화 감독: ";
 		cin >> pd;
@@ -108,7 +113,6 @@ void Admin::printInfoTable(void) {
 
 		while (runningTime < 30) {
 			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
-			
 			cin >> runningTime;
 			if (!runningTime) {
 				cin.clear();
@@ -124,7 +128,6 @@ void Admin::printInfoTable(void) {
 		}
 
 		while (price < 1000) {
-			
 			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 			cin >> price;
 			if (!price) {
@@ -136,12 +139,14 @@ void Admin::printInfoTable(void) {
 		MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
 		if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
 			cout << "      최대 영화 개수를 넘었습니다." << endl;
-			return;
+			Sleep(3000);
+			return false;
 		}
 		else {
 			infoTable[this->infoCount] = movie;
 			infoCount++;
 		}
+		return true;
 	}
 
 	void Admin::printAllMovies(string name) {

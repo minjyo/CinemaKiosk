@@ -124,7 +124,7 @@ public:
 	void printAllMovies(string name); //해당 영화를 선택했을 때 그 영화의 모든 관에서의 상영 정보 출력
 
 	/* 영화 정보 관련 함수 (추가, 삭제) */
-	void createMovieInfo();   //영화 정보 만들기
+	bool createMovieInfo();   //영화 정보 만들기
 	void deleteMovieInfo(short index);   //영화 정보 삭제하면서 해당 상영영화 모두 삭제
 
 	/* 영화관 관련 함수 (영화관&좌석 상태 관리, 상영 영화 추가, 삭제) */
@@ -149,6 +149,7 @@ public:
 	int chooseMovie(Admin admin, int* index);				//영화 예매 선택 시 영화 리스트 출력하는 화면
 
 	int chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** movie);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
+
 	int chooseTime(Admin admin, int room_index, int* movie_index, MovieInfo* movie, MoviePlay** play);
 	int checkTicket(Admin* admin);		//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 
