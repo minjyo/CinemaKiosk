@@ -1036,6 +1036,7 @@ int UI::addMovie(Admin* admin, int room_index) {
 	(*admin).printInfoTable();
 	cout << endl;
 
+	gotoxy(4, 25);
 	(*admin).roomTable[room_index]->printTimeTable();
 	printBorder();
 	gotoxy(30, 35);
@@ -1070,7 +1071,7 @@ int UI::addMovie(Admin* admin, int room_index) {
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
 			short time;
-			gotoxy(x, 20);
+			gotoxy(x, 23);
 			cout << "추가할 영화의 시작 시간을 입력하세요 : ";
 			cin >> time;
 
@@ -1083,7 +1084,7 @@ int UI::addMovie(Admin* admin, int room_index) {
 				return ADMIN;
 			}
 			else {
-				gotoxy(x, 21);
+				gotoxy(x, 24);
 				cout << "영화를 넣을 수 있는 시간이 없습니다.\n";
 				Sleep(2000);
 				return ADMIN;
