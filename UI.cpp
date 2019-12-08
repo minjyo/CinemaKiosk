@@ -308,6 +308,10 @@ int UI::chooseSeat(Admin admin, int room_index, int movie_index, MovieInfo* movi
 	{
 		gotoxy(x_min + 17, y_min + SIZE_ROW + 3);
 		cout << "인원 수를 입력하세요 : ";
+		key = _getch();
+		if (key == 8) {
+			return CHOOSETIME;
+		}
 		cin >> numberOfHead;
 		if ((numberOfHead > 0) && (numberOfHead <= restSeat)) {
 			check = false;
@@ -553,17 +557,21 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 					cout << "총 금액 : " << to_string(total) + "원";
 					gotoxy(38, 23);
 					cout << "남은 금액 : " << to_string(total - money)+"원";
-					gotoxy(32, 25);
-					cout << "금액을 넣어주세요. (-1 : 취소)";
-					gotoxy(65, 25);
+					gotoxy(38, 25);
+					cout << "금액을 넣어주세요.";
+					gotoxy(58, 25);
+					key = _getch();
+					if (key == 8) {
+						return CHOOSESEAT;
+					}
 					cin >> insertMoney;
 					//현금 -2보다 작게 들어오면 삭제 안시킴! -1은 취소기 때문에 냅둠~
 					if (insertMoney > -2) {
 						money += insertMoney;
 					}
-					gotoxy(65, 25);
+					gotoxy(58, 25);
 					cout << "           ";
-					gotoxy(65, 25);
+					gotoxy(58, 25);
 				}
 			}
 			gotoxy(38, 27);
@@ -581,7 +589,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 
 			check = false;
 		}
-		else if (key == 50) { /* 숫자 1*/
+		else if (key == 50) { /* 숫자 2 */
 			gotoxy(38, 24);
 			cout << "카드를 넣어주세요!" << endl;
 			Sleep(2000);
@@ -597,8 +605,8 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 
 			check = false;
 		}
-		/* n -> USER */
-		else if (key == 110) {
+		/* u -> USER */
+		else if (key == 117) {
 			newTicket->~Ticket();
 			return USER;
 		}
