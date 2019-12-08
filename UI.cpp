@@ -811,6 +811,7 @@ int UI::manMovie(void) {
 				break;
 			}
 		}
+
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
 			/* 영화 관리 - 영화 추가 */
