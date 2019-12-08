@@ -5,19 +5,16 @@ MoviePlay::MoviePlay() {
 }
 
 MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
-	//this->seat[SIZE_ROW][SIZE_COLUMN] = { false, };
 	unsigned short running_time = minfo->runningTime;
-
 	/* 분의 합이 60분이 넘으면 */
 	if (((sTime % 100) + (running_time % 100)) > 60) {
 		/* 60분 빼고 1시간 더하니까 40을 더함 */
-		this->endTime += 40;
+		this->endTime = startTime + running_time + 40;
 	}
 	else {
-		this->endTime = sTime + running_time;
+		this->endTime = startTime + running_time;
 	}
 	this->info = minfo;
-	//this->nextPlay = nextP;
 	nextPlay = NULL;
 	this->startTime = sTime;
 }
@@ -89,7 +86,7 @@ void MoviePlay::changeSeat(short x, short y, bool status) {
 	seat[x - 1][y - 1] = status;
 }
 
-//예매 가능한 빈자리 리턴.
+//예매 가능한 빈자리 개수 리턴.
 unsigned short MoviePlay::restSeat() {
 	unsigned short count = 0;
 	for (int i = 0; i < SIZE_ROW; i++) {

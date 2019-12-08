@@ -12,6 +12,7 @@ using namespace std;
 
 int main()
 {
+	Admin admin;
 	char mode = USER;
 	char* input = (char*)malloc(1);
 	*input = '\0';
@@ -22,8 +23,6 @@ int main()
 	MoviePlay* play = NULL;
 	Ticket* ticket = NULL;
 
-
-	Admin admin;
 	UI ui;
 	//////////////////////////////////////////////////////////////			임시 play 나중에 함수로 바꿔주기
 	play = admin.roomTable[0]->head->nextPlay;
@@ -47,6 +46,7 @@ int main()
 			mode = ui.chooseTime(admin, room_index, &movie_index, movie, &play);
 			break;
 		case CHOOSESEAT:	//좌석 선택
+			//설정한 MoviePlay 객체로 변경, 인욱이형 좌표 넘겨줄때 2번째 영화 선택하면 1번째로 선택되는거 수정 요청
 			play = admin.roomTable[room_index - 1]->findMoviePlay(movie, movie_index);
 			mode = ui.chooseSeat(admin, play, &ticket);
 			break;
