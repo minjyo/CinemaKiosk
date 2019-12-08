@@ -76,11 +76,12 @@ public:
 	unsigned short movieCount;
 	MovieRoom(char roomNumber);
 	~MovieRoom();
+	unsigned short getEndTime(unsigned short startTime, unsigned short runningTime); //시작시간, 러닝타임으로 종료시간 리턴
 	void deleteMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	int printMovieInfo(MovieInfo* info);  //영화 정보 삭제하면서 해당 관 내 상영영화 모두 삭제
 	void setStatus(bool status);
-	int canAddMovie(MovieInfo* info, short select); //영화관에 영화 추가 가능한지
-	bool addMovieToRoom(MovieInfo* info, short select); // 영화관에 영화 추가
+	int canAddMovie(MovieInfo* info, unsigned short select); //영화관에 영화 추가 가능한지
+	bool addMovieToRoom(MovieInfo* info, unsigned short select); // 영화관에 영화 추가
 	void printTimeTable(); //영화관의 영화 타임 테이블 출력
 	int deleteMoviePlay(short starttime); //반환타입은 삭제한 영화 개수
 	MoviePlay* findMoviePlay(MovieInfo * minfo, int index);

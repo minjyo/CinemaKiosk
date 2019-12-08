@@ -12,6 +12,7 @@ using namespace std;
 
 int main()
 {
+	Admin admin;
 	char mode = USER;
 	char* input = (char*)malloc(1);
 	*input = '\0';
@@ -22,8 +23,6 @@ int main()
 	MoviePlay* play = NULL;
 	Ticket* ticket = NULL;
 
-
-	Admin admin;
 	UI ui;
 	//////////////////////////////////////////////////////////////			임시 play 나중에 함수로 바꿔주기
 	play = admin.roomTable[0]->head->nextPlay;

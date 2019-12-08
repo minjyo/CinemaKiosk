@@ -24,7 +24,7 @@ void MovieRoom::printTimeTable() {
 	cout << setw(6) << " ";
 	cout << "--------------------------------- " << (int)roomNumber + 1 << "관 ---------------------------------" << endl;
 	cout.setf(ios::left);
-	cout << setw(6) << " ";
+	cout << setw(6) << "■";
 	cout << setw(20) << "영화 제목";
 	cout << setw(20) << "시작 시간";
 	cout << setw(20) << "종료 시간";
@@ -32,7 +32,7 @@ void MovieRoom::printTimeTable() {
 
 	while (temp->nextPlay != NULL) {
 		temp = temp->nextPlay;
-		cout << setw(3) << " ";
+		cout << setw(3) << "■";
 		cout << setw(3) << to_string(Count) + ".";
 		cout << setw(20) << temp->info->title;
 		cout << setw(20) << to_string((temp->startTime / 100) % 24) + "시 " + to_string(temp->startTime % 100) + "분";
@@ -43,20 +43,27 @@ void MovieRoom::printTimeTable() {
 	cout << endl;
 }
 
+//1208 근영추가, 시작시간, 러닝타임으로 종료시간 계산해서 리턴!!
+unsigned short MovieRoom::getEndTime(unsigned short startTime, unsigned short runningTime) {
+	unsigned short endTime = 0;
+	if (((startTime % 100) + (runningTime % 100)) > 60) {
+		/* 60분 빼고 1시간 더하니까 40을 더함 */
+		endTime = startTime + runningTime + 40;
+	}
+	else {
+		endTime = startTime + runningTime;
+	}
+	return endTime;
+}
+
 //영화 삽입 가능 여부 확인 (이때, 넣으려는 곳의 앞 노드의 index를 리턴해준다) 근영수정
-int MovieRoom::canAddMovie(MovieInfo* info, short select) {
+int MovieRoom::canAddMovie(MovieInfo* info, unsigned short select) {
 	MoviePlay* temp = head->nextPlay;
 	unsigned short runningTime = info->runningTime;
 	unsigned short endTime = 0;
 	//시간을 입력시 주의사항은 분 단위가 아닌 시와 분을 둘다 써줄것.
 	//Ex) 90분 영화면 1시간 30분이므로 130 이라고 써줄것.
-	if (((select % 100) + (runningTime % 100)) > 60) {
-		/* 60분 빼고 1시간 더하니까 40을 더함 */
-		endTime = select + runningTime + 40;
-	}
-	else {
-		endTime = select + runningTime;
-	}
+	endTime = getEndTime(select, runningTime);
 	int select_index = 1;
 	if (this->movieCount == 0 || head->nextPlay->startTime > endTime) {
 		return 0;
@@ -80,10 +87,9 @@ int MovieRoom::canAddMovie(MovieInfo* info, short select) {
 }
 
 //근영수정, 인덱스를 받아와서 -1이면 생성 X 그 외에는 추가해줄 곳의 앞 인덱스를 받아서 추가해줌
-bool MovieRoom::addMovieToRoom(MovieInfo* info, short select) {
+bool MovieRoom::addMovieToRoom(MovieInfo* info, unsigned short select) {
 	int select_index = canAddMovie(info, select);
 	if (select_index == -1) {
-		cout << "영화를 넣을 수 있는 시간이 없습니다." << endl;
 		return FALSE;
 	}
 	else {
@@ -94,6 +100,7 @@ bool MovieRoom::addMovieToRoom(MovieInfo* info, short select) {
 			search_index++;
 		}
 		MoviePlay* insertMovie = new MoviePlay(select, info, temp->nextPlay);
+		insertMovie->endTime = getEndTime(select, info->runningTime);
 		insertMovie->nextPlay = temp->nextPlay;
 		temp->nextPlay = insertMovie;
 		this->movieCount++;
@@ -146,16 +153,16 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 
 	if (Count != 0) {
 		temp = head->nextPlay;
-		cout << setw(6) << " ";
+		cout << setw(6) << "■";
 		cout << "--------------------------------- " << (int)roomNumber + 1 << "관 ---------------------------------" << endl;
-		cout << setw(6) << " ";
+		cout << setw(6) << "■";
 		cout << setw(20) << "시작 시간";
 		cout << setw(20) << "종료 시간";
 		cout << setw(20) << "잔여 좌석" << endl;
 		Count = 1;
 		while (temp != NULL) {
 			if (temp->info == mov) {
-				cout << setw(3) << " ";
+				cout << setw(3) << "■";
 				cout << setw(3) << to_string(Count) + ".";
 				cout << setw(20) << to_string((temp->startTime / 100) % 24) + "시 " + to_string(temp->startTime % 100) + "분";
 				cout << setw(20) << to_string((temp->endTime / 100) % 24) + "시 " + to_string(temp->endTime % 100) + "분";
@@ -169,7 +176,6 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 				temp = start->nextPlay;
 			}
 		}
-
 	}
 	return Count;
 }

@@ -13,7 +13,8 @@ Admin::Admin() {
 	infoTable[1] = new MovieInfo("Jocker", "토트 필립스", 140, 9000);
 	infoTable[2] = new MovieInfo("나를 찾아줘", "김승호", 148, 10000);
 	infoTable[3] = new MovieInfo("어벤저스 엔드게임", "안소니 루소", 301, 15000);
-	infoCount = 4;
+	infoTable[4] = new MovieInfo("김정식", "jungsheek", 100, 3000);
+	infoCount = 5;
 
 	/* 1관 */
 	roomTable[0]->addMovieToRoom(infoTable[1], 1100);
@@ -31,28 +32,47 @@ Admin::Admin() {
 	roomTable[1]->addMovieToRoom(infoTable[2], 2100);
 	roomTable[1]->addMovieToRoom(infoTable[3], 2330);
 
+
+	/* 3관 */
+	roomTable[2]->addMovieToRoom(infoTable[2], 700);
+	roomTable[2]->addMovieToRoom(infoTable[3], 1130);
+	roomTable[2]->addMovieToRoom(infoTable[2], 1300);
+	roomTable[2]->addMovieToRoom(infoTable[2], 1630);
+	roomTable[2]->addMovieToRoom(infoTable[2], 2000);
+
+
 	/* 4관 */
 	roomTable[3]->addMovieToRoom(infoTable[2], 900);
-	roomTable[3]->addMovieToRoom(infoTable[3], 1130);
-	roomTable[3]->addMovieToRoom(infoTable[2], 1500);
+	roomTable[3]->addMovieToRoom(infoTable[1], 1130);
+	roomTable[3]->addMovieToRoom(infoTable[0], 1500);
 	roomTable[3]->addMovieToRoom(infoTable[3], 1730);
-	roomTable[3]->addMovieToRoom(infoTable[2], 2100);
+	roomTable[3]->addMovieToRoom(infoTable[1], 2100);
 	roomTable[3]->addMovieToRoom(infoTable[3], 2330);
+
+
+	/* 5관 */
+	roomTable[4]->addMovieToRoom(infoTable[2], 900);
+	roomTable[4]->addMovieToRoom(infoTable[1], 1130);
+	roomTable[4]->addMovieToRoom(infoTable[3], 1500);
+	roomTable[4]->addMovieToRoom(infoTable[0], 1730);
+	roomTable[4]->addMovieToRoom(infoTable[2], 2100);
+	roomTable[4]->addMovieToRoom(infoTable[4], 2330);
 }
 
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
-	cout << setw(6) << "   ";
+
 	cout.setf(ios::left);
+	cout << setw(6) << "■";
 	cout << setw(20) << "영화 이름";
 	cout << setw(20) << "영화 가격";
 	cout << setw(20) << "영화 감독";
 	cout << setw(20) << "런닝 타임" << endl;
-	cout << setw(6) << "   ";
+	cout << setw(6) << "■";
 	cout << "-----------------------------------------------------------------------" << endl;
 
 	for (int i = 0; i < infoCount; i++) {
-		cout << setw(3) << " ";
+		cout << setw(3) << "■";
 		cout << setw(3) << to_string(i+1) + ".";
 		infoTable[i]->printInfo();
 	}
@@ -152,14 +172,6 @@ void Admin::printInfoTable(void) {
 			}
 			temp = temp->nextTicket;
 		}
-		/*
-		while (ticketHead->nextTicket != ticketTail) {
-			if (temp->ticketNumber == tNumber) {
-				return temp;
-			}
-			temp = temp->nextTicket;
-		} */
-
 		return NULL;
 	}
 

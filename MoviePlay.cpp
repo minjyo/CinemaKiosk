@@ -6,14 +6,13 @@ MoviePlay::MoviePlay() {
 
 MoviePlay::MoviePlay(short sTime, MovieInfo* minfo, MoviePlay* nextP) {
 	unsigned short running_time = minfo->runningTime;
-
 	/* 분의 합이 60분이 넘으면 */
 	if (((sTime % 100) + (running_time % 100)) > 60) {
 		/* 60분 빼고 1시간 더하니까 40을 더함 */
-		this->endTime += 40;
+		this->endTime = startTime + running_time + 40;
 	}
 	else {
-		this->endTime = sTime + running_time;
+		this->endTime = startTime + running_time;
 	}
 	this->info = minfo;
 	nextPlay = NULL;
