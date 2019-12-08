@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <iomanip>
+#include <fstream>
 
 #define SIZE_COLUMN 8
 #define SIZE_ROW 8
@@ -35,6 +36,7 @@
 #define MANROOM 24
 #define ADDMOVIE 25
 #define DELETEMOVIE 26
+#define STATISTICS 27
 
 using namespace std;
 
@@ -44,6 +46,7 @@ public:
 	string pd;
 	short runningTime;
 	int price;
+	int count;
 
 	MovieInfo(string title, string pd, short runningTime, int price);
 	void printInfo();
@@ -110,19 +113,21 @@ public:
 /* 관리자 객체 */
 class Admin
 {
-private:
-
 public:
 	Admin();
 	~Admin();
 	short infoCount = 0;
 	short roomCount = 0;
+	short total = 0;
 
 	MovieInfo* infoTable[MOVIE_INFO_ARR_SIZE];
 	MovieRoom* roomTable[MOVIE_ROOM_ARR_SIZE];
 
 	Ticket* ticketHead;
 	Ticket* ticketTail;
+
+	void showStatistic();
+
 	/* 화면 출력 관련 함수 */
 	void printInfoTable(void);               //영화 리스트 출력 화면 (for문)
 	void printTimetable(short index);  //영화관 선택 시 시작시간 순으로 상영영화 출력(상영 영화 추가 제거 화면)
@@ -161,7 +166,7 @@ public:
 
 	int chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket);
 	int checkInfo(Ticket* newTicket);
-	int checkMoney(Admin* admin, Ticket* newTicket);
+	int checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie);
 
 	int adminHome(void);					//관리자 홈 화면
 	int manMovie(void);						//영화 관리 화면
@@ -171,6 +176,7 @@ public:
 	int manRoom(int* room_index);						//영화관 관리 화면
 	int addMovie(Admin* admin, int room_index);					//영화관 관리 - 상영 영화 추가
 	int deleteMovie(Admin* admin, int room_index);						//영화관 관리 - 상영 영화 삭제
+	int showStatistics(Admin* admin);
 
 	void gotoxy(short x, short y);
 	void printBorder(void);

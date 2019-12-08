@@ -55,7 +55,7 @@ int main()
 			mode = ui.checkInfo(ticket);
 			break;
 		case CHECKMONEY:	//결제 화면
-			mode = ui.checkMoney(&admin, ticket);
+			mode = ui.checkMoney(&admin, ticket, movie);
 			break;
 		case CHECKTICKET:	//티켓 확인
 			mode = ui.checkTicket(&admin);
@@ -80,6 +80,9 @@ int main()
 			break;
 		case DELETEMOVIE: //영화관에 영화 삭제
 			mode = ui.deleteMovie(&admin, room_index);
+			break;
+		case STATISTICS:
+			mode = ui.showStatistics(&admin);
 			break;
 		default:
 			break;

@@ -12,6 +12,7 @@ MovieInfo::MovieInfo(string title, string pd, short runningTime, int price) {
 	this->pd = pd;
 	this->runningTime = runningTime;
 	this->price = price;
+	this->count = 0;
 }
 
 void MovieInfo::printInfo() {

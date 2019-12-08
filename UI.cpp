@@ -514,7 +514,7 @@ int UI::checkInfo(Ticket* newTicket) {
 	}
 	return 0;
 }
-int UI::checkMoney(Admin* admin, Ticket* newTicket) {
+int UI::checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie) {
 	MovieInfo* minfo; short numberOfHead;
 	//금액
 	int i;
@@ -629,6 +629,8 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 	for (short i = 0; i < newTicket->number; i++) {
 		newTicket->playInfo->changeSeat(newTicket->seatNumber[i] / 10, newTicket->seatNumber[i] % 10, true);
 	}
+	//총 예매횟수 증가
+	movie->count++;
 	Sleep(2000);
 	return USER;
 }
@@ -699,13 +701,13 @@ int UI::adminHome(void) {
 	cout << "■                                                                                            ■" << endl;
 	cout << "■                                                                                            ■" << endl;
 	cout << "■                                      관리자 홈                                             ■" << endl;
-	cout << "■                                                                                            ■" << endl;
-	cout << "■                                                                                            ■" << endl;
 	cout << "■               ┌──────────────────────────────────────────────────────────┐                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
 	cout << "■               │                      ☞ 영화 관리                        │                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
 	cout << "■               │                      ☞ 영화관 관리                      │                 ■" << endl;
+	cout << "■               │                                                          │                 ■" << endl;
+	cout << "■               │                      ☞ 영화별 매출                      │                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
 	cout << "■               └──────────────────────────────────────────────────────────┘                 ■" << endl;
 	cout << "■                                                                                            ■" << endl;
@@ -713,7 +715,7 @@ int UI::adminHome(void) {
 	cout << "■                                                                                            ■" << endl;
 	printBorder();
 
-	int y_min = 24;
+	int y_min = 22;
 	x = 41;  y = 0;
 	gotoxy(x, y_min);
 	while (1) {
@@ -729,9 +731,18 @@ int UI::adminHome(void) {
 					y -= 2;
 					gotoxy(x, y + y_min);
 				}
+				else if (y == 4) {
+					y -= 2;
+					gotoxy(x, y + y_min);
+				}
 				break;
 			case 80:
 				if (y == 0)
+				{
+					y += 2;
+					gotoxy(x, y + y_min);
+				}
+				else if (y == 2)
 				{
 					y += 2;
 					gotoxy(x, y + y_min);
@@ -749,6 +760,9 @@ int UI::adminHome(void) {
 			/* 영화관 관리 */
 			if (y == 2)
 				return MANROOM;
+
+			if (y == 4)
+				return STATISTICS;
 		}
 		/* u -> 유저 홈 화면 */
 		else if (key == 117) {
@@ -1151,6 +1165,17 @@ int UI::deleteMovie(Admin* admin, int room_index) {
 			Sleep(3000);
 			return DELETEMOVIE;
 		}
+}
+
+int UI::showStatistics(Admin* admin) {
+	system("cls");
+	printBorder();
+	gotoxy(7, 4);
+	admin->showStatistic();
+	key = _getch();
+	if (key == 8) {
+		return ADMIN;
+	}
 }
 
 void UI::gotoxy(short x, short y) {
