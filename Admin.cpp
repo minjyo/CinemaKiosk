@@ -13,10 +13,10 @@ Admin::Admin() {
 	infoTable[1] = new MovieInfo("Jocker", "토트 필립스", 140, 9000);
 	infoTable[2] = new MovieInfo("나를 찾아줘", "김승호", 148, 10000);
 	infoTable[3] = new MovieInfo("어벤저스 엔드게임", "안소니 루소", 301, 15000);
-	infoCount = 4;
+	infoTable[4] = new MovieInfo("김정식", "jungsheek", 100, 3000);
+	infoCount = 5;
 
 	/* 1관 */
-	roomTable[0]->addMovieToRoom(infoTable[0], 900);
 	roomTable[0]->addMovieToRoom(infoTable[1], 1100);
 	roomTable[0]->addMovieToRoom(infoTable[0], 1300);
 	roomTable[0]->addMovieToRoom(infoTable[1], 1500);
@@ -32,28 +32,47 @@ Admin::Admin() {
 	roomTable[1]->addMovieToRoom(infoTable[2], 2100);
 	roomTable[1]->addMovieToRoom(infoTable[3], 2330);
 
+
+	/* 3관 */
+	roomTable[2]->addMovieToRoom(infoTable[2], 700);
+	roomTable[2]->addMovieToRoom(infoTable[3], 1130);
+	roomTable[2]->addMovieToRoom(infoTable[2], 1300);
+	roomTable[2]->addMovieToRoom(infoTable[2], 1630);
+	roomTable[2]->addMovieToRoom(infoTable[2], 2000);
+
+
 	/* 4관 */
 	roomTable[3]->addMovieToRoom(infoTable[2], 900);
-	roomTable[3]->addMovieToRoom(infoTable[3], 1130);
-	roomTable[3]->addMovieToRoom(infoTable[2], 1500);
+	roomTable[3]->addMovieToRoom(infoTable[1], 1130);
+	roomTable[3]->addMovieToRoom(infoTable[0], 1500);
 	roomTable[3]->addMovieToRoom(infoTable[3], 1730);
-	roomTable[3]->addMovieToRoom(infoTable[2], 2100);
+	roomTable[3]->addMovieToRoom(infoTable[1], 2100);
 	roomTable[3]->addMovieToRoom(infoTable[3], 2330);
+
+
+	/* 5관 */
+	roomTable[4]->addMovieToRoom(infoTable[2], 900);
+	roomTable[4]->addMovieToRoom(infoTable[1], 1130);
+	roomTable[4]->addMovieToRoom(infoTable[3], 1500);
+	roomTable[4]->addMovieToRoom(infoTable[0], 1730);
+	roomTable[4]->addMovieToRoom(infoTable[2], 2100);
+	roomTable[4]->addMovieToRoom(infoTable[4], 2330);
 }
 
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
-	cout << setw(6) << "   ";
+
 	cout.setf(ios::left);
+	cout << setw(6) << "■";
 	cout << setw(20) << "영화 이름";
 	cout << setw(20) << "영화 가격";
 	cout << setw(20) << "영화 감독";
 	cout << setw(20) << "런닝 타임" << endl;
-	cout << setw(6) << "   ";
+	cout << setw(6) << "■";
 	cout << "-----------------------------------------------------------------------" << endl;
 
 	for (int i = 0; i < infoCount; i++) {
-		cout << setw(3) << " ";
+		cout << setw(3) << "■";
 		cout << setw(3) << to_string(i+1) + ".";
 		infoTable[i]->printInfo();
 	}
@@ -85,15 +104,36 @@ void Admin::printInfoTable(void) {
 		cin >> pd;
 		cout << "■    러닝타임: ";
 		cin >> runningTime;
+		
+		if (!runningTime) {
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+			
+		}
+
 		while (runningTime < 30) {
-			cout << "■    러닝타임을 최소 30분이상으로 입력해주세요 : ";
+			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 			cin >> runningTime;
+			if (!runningTime) {
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+			}
+			
 		}
 		cout << "■    영화 가격: ";
 		cin >> price;
+		if (!price) {
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+
 		while (price < 1000) {
-			cout << "■    가격은 최소 1000원이상으로 입력해주세요 : ";
+			cout << "■    입력값 오류입니다. 다시 입력해주세요 : ";
 			cin >> price;
+			if (!price) {
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+			}
 		}
 
 		MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
@@ -160,14 +200,6 @@ void Admin::printInfoTable(void) {
 			}
 			temp = temp->nextTicket;
 		}
-		/*
-		while (ticketHead->nextTicket != ticketTail) {
-			if (temp->ticketNumber == tNumber) {
-				return temp;
-			}
-			temp = temp->nextTicket;
-		} */
-
 		return NULL;
 	}
 
@@ -234,7 +266,7 @@ void Admin::printInfoTable(void) {
 		{
 			roomTable[i]->deleteMovieInfo(infoTable[index]);
 		}
-
+		
 		//배열에서 줄여주기
 		for (i = index; i < infoCount; i++)
 		{
