@@ -1,21 +1,21 @@
-#include "Header.hpp"
+ï»¿#include "Header.hpp"
 
 Admin::Admin() {
 	ticketHead = NULL;
 	ticketTail = NULL;
 
-	//¿µÈ­°ü ±âº» ¼ÂÆÃ
+	//ì˜í™”ê´€ ê¸°ë³¸ ì…‹íŒ…
 	for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
 		roomTable[i] = new MovieRoom(i);
 	}
 
 	infoTable[0] = new MovieInfo("Frozen2", "Jenniffer.L", 143, 8000);
-	infoTable[1] = new MovieInfo("Jocker", "ÅäÆ® ÇÊ¸³½º", 140, 9000);
-	infoTable[2] = new MovieInfo("³ª¸¦ Ã£¾ÆÁà", "±è½ÂÈ£", 148, 10000);
-	infoTable[3] = new MovieInfo("¾îº¥Àú½º ¿£µå°ÔÀÓ", "¾È¼Ò´Ï ·ç¼Ò", 301, 15000);
+	infoTable[1] = new MovieInfo("Jocker", "í† íŠ¸ í•„ë¦½ìŠ¤", 140, 9000);
+	infoTable[2] = new MovieInfo("ë‚˜ë¥¼ ì°¾ì•„ì¤˜", "ê¹€ìŠ¹í˜¸", 148, 10000);
+	infoTable[3] = new MovieInfo("ì–´ë²¤ì €ìŠ¤ ì—”ë“œê²Œì„", "ì•ˆì†Œë‹ˆ ë£¨ì†Œ", 301, 15000);
 	infoCount = 4;
 
-	/* 1°ü */
+	/* 1ê´€ */
 	roomTable[0]->addMovieToRoom(infoTable[0], 900);
 	roomTable[0]->addMovieToRoom(infoTable[1], 1100);
 	roomTable[0]->addMovieToRoom(infoTable[0], 1300);
@@ -24,7 +24,7 @@ Admin::Admin() {
 	roomTable[0]->addMovieToRoom(infoTable[1], 1900);
 	roomTable[0]->addMovieToRoom(infoTable[0], 2100);
 
-	/* 2°ü */
+	/* 2ê´€ */
 	roomTable[1]->addMovieToRoom(infoTable[2], 900);
 	roomTable[1]->addMovieToRoom(infoTable[3], 1130);
 	roomTable[1]->addMovieToRoom(infoTable[2], 1500);
@@ -32,7 +32,7 @@ Admin::Admin() {
 	roomTable[1]->addMovieToRoom(infoTable[2], 2100);
 	roomTable[1]->addMovieToRoom(infoTable[3], 2330);
 
-	/* 4°ü */
+	/* 4ê´€ */
 	roomTable[3]->addMovieToRoom(infoTable[2], 900);
 	roomTable[3]->addMovieToRoom(infoTable[3], 1130);
 	roomTable[3]->addMovieToRoom(infoTable[2], 1500);
@@ -41,452 +41,220 @@ Admin::Admin() {
 	roomTable[3]->addMovieToRoom(infoTable[3], 2330);
 }
 
-//ÀüÃ¼ ¿µÈ­ ¸®½ºÆ® Ãâ·Â
+//ì „ì²´ ì˜í™” ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
 void Admin::printInfoTable(void) {
 	cout << setw(6) << "   ";
 	cout.setf(ios::left);
-	cout << setw(20) << "¿µÈ­ ÀÌ¸§";
-	cout << setw(20) << "¿µÈ­ °¡°İ";
-	cout << setw(20) << "¿µÈ­ °¨µ¶";
-	cout << setw(20) << "·±´× Å¸ÀÓ" << endl;
+	cout << setw(20) << "ì˜í™” ì´ë¦„";
+	cout << setw(20) << "ì˜í™” ê°€ê²©";
+	cout << setw(20) << "ì˜í™” ê°ë…";
+	cout << setw(20) << "ëŸ°ë‹ íƒ€ì„" << endl;
 	cout << setw(6) << "   ";
 	cout << "-----------------------------------------------------------------------" << endl;
 
 	for (int i = 0; i < infoCount; i++) {
-		cout << setw(6) << to_string(i + 1) + ".";
+		cout << setw(3) << " ";
+		cout << setw(3) << to_string(i+1) + ".";
 		infoTable[i]->printInfo();
 	}
 }
-//¿µÈ­°ü ¼±ÅÃ ½Ã ½ÃÀÛ½Ã°£ ¼øÀ¸·Î »ó¿µ¿µÈ­ Ãâ·Â
-void Admin::printTimetable(short index) {
-	roomTable[index]->printTimeTable();
-}
+	//ì˜í™”ê´€ ì„ íƒ ì‹œ ì‹œì‘ì‹œê°„ ìˆœìœ¼ë¡œ ìƒì˜ì˜í™” ì¶œë ¥
+	void Admin::printTimetable(short index) {
+		roomTable[index]->printTimeTable();
+	}
 
-//¿µÈ­ Á¤º¸ ¸¸µé±â
-void Admin::createMovieInfo() {
-	string title;
-	string pd;
-	short runningTime;
-	int price;
+	//ì˜í™” ì •ë³´ ë§Œë“¤ê¸°
+	bool Admin::createMovieInfo() {
+		string title;
+		string pd;
+		short runningTime;
+		int price;
 
-	/* ÃÖ¼Ò ¿µÈ­ °¡°İÀº 10000¿ø, ·¯´×Å¸ÀÓ ÃÖ¼Ò 30ºĞ */
-	cout << "¿µÈ­ Á¤º¸¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä." << endl;
-	cout << "¿µÈ­ Á¦¸ñ: ";
-	cin >> title;
-	cout << "¿µÈ­ °¨µ¶: ";
-	cin >> pd;
-	cout << "·¯´×Å¸ÀÓ: ";
-	cin >> runningTime;
-	while (runningTime < 30) {
-		cout << "ÀÔ·Â°ª ¿À·ùÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä : ";
+		cout << "â–     ì˜í™” ì¶”ê°€" << endl;
+		cout << "â–    +â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€+" << endl;
+		/* ìµœì†Œ ì˜í™” ê°€ê²©ì€ 10000ì›, ëŸ¬ë‹íƒ€ì„ ìµœì†Œ 30ë¶„ */
+		cout << "â–     ì˜í™” ì •ë³´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”." << endl;
+		cout << "â–     ì˜í™” ì œëª©: ";
+		char key = _getch();
+
+		if (key == 8) {
+			return false;
+		}
+		cin >> title;
+		cout << "â–     ì˜í™” ê°ë…: ";
+		cin >> pd;
+		cout << "â–     ëŸ¬ë‹íƒ€ì„: ";
 		cin >> runningTime;
-	}
-	cout << "¿µÈ­ °¡°İ: ";
-	cin >> price;
-	while (price < 1000) {
-		cout << "ÀÔ·Â°ª ¿À·ùÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä : ";
+		while (runningTime < 30) {
+			cout << "â–     ëŸ¬ë‹íƒ€ì„ì„ ìµœì†Œ 30ë¶„ì´ìƒìœ¼ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš” : ";
+			cin >> runningTime;
+		}
+		cout << "â–     ì˜í™” ê°€ê²©: ";
 		cin >> price;
-	}
-
-	MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
-	if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
-		cout << "ÃÖ´ë ¿µÈ­ °³¼ö¸¦ ³Ñ¾ú½À´Ï´Ù." << endl;
-		return;
-	}
-	else {
-		infoTable[this->infoCount] = movie;
-		infoCount++;
-	}
-}
-
-void Admin::printAllMovies(string name) {
-	for (int i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
-		cout << i + 1 << "°ü" << endl;
-
-		MoviePlay* movie = roomTable[i]->head;
-		for (int j = 0; j < roomTable[i]->movieCount; j++) {
-			if (movie->info->title == name) {
-				movie->info->printInfo();
-				cout << "ÀÜ¿©ÁÂ¼®: " << movie->restSeat() << endl;
-			}
-		}
-	}
-}
-
-//¿µÈ­°ü »ç¿ë °¡´É, ºÒ°¡´É
-void Admin::setMovieRoomStatus(MovieRoom& room, bool status) {
-	room.setStatus(status);
-	cout << "ÇØ´ç ¿µÈ­°ü »ç¿ëÀÌ " << (status ? "°¡´É" : "ºÒ°¡´É") << "À¸·Î º¯°æµÇ¾ú½À´Ï´Ù." << endl;
-}
-
-//¿µÈ­°ü ³» »ó¿µ¿µÈ­ Linked List¿¡ ½Ã°£ °Ë»ç ÈÄ »ı¼ºÇÏ±â (movie roomÀÇ canaddmovie + addmovie È£Ãâ)
-void Admin::addMovie(MovieInfo* info, MovieRoom& room, short selectTime) {
-	if (room.canAddMovie(info, selectTime)) {
-		room.addMovieToRoom(info, selectTime);
-		cout << "¿µÈ­°¡ Ãß°¡µÇ¾ú½À´Ï´Ù." << endl;
-		room.printTimeTable();
-		return;
-	}
-	cout << "ÇØ´ç ½Ã°£¿¡ ¿µÈ­¸¦ Ãß°¡ÇÒ ¼ö ¾ø½À´Ï´Ù. ´Ù½Ã ¼±ÅÃÇØÁÖ¼¼¿ä." << endl;
-}
-
-//Æ¼ÄÏ Å×ÀÌºí¿¡¼­ Æ¼ÄÏ¹øÈ£·Î Æ¼ÄÏ Á¤º¸ Ã£±â
-Ticket* Admin::findTicket(int tNumber) {
-	Ticket* temp = ticketHead;
-
-	if (ticketTail->ticketNumber < tNumber || tNumber < FIRST_TICKET) {
-		return NULL;
-	}
-
-	if (ticketTail->ticketNumber == tNumber) {
-		return ticketTail;
-	}
-
-	while (temp != ticketTail) {
-		if (temp->ticketNumber == tNumber) {
-			return temp;
-		}
-		temp = temp->nextTicket;
-	}
-	/*
-	while (ticketHead->nextTicket != ticketTail) {
-		if (temp->ticketNumber == tNumber) {
-			return temp;
-		}
-		temp = temp->nextTicket;
-	} */
-
-	return NULL;
-}
-
-//¿¹¸Å ¹øÈ£·Î Æ¼ÄÏ Á¤º¸ Ãâ·Â
-void Admin::printTicket(int tNumber) {
-	Ticket* temp = findTicket(tNumber);
-
-	if (temp != NULL) {
-		temp->printTicket();
-		return;
-	}
-	cout << "ÇØ´ç ¹øÈ£·Î ¿¹¸ÅµÈ ¿¹¸Å Á¤º¸°¡ ¾ø½À´Ï´Ù." << endl;
-}
-
-//¿¹¸Å ¹øÈ£·Î Æ¼ÄÏ »èÁ¦ (¿¹¸ÅÃë¼Ò)
-
-void Admin::deleteTicket(Ticket* select) {
-	/* ÁÂ¼® »óÅÂ ¹İ¿µ */
-	for (short i = 0; i < select->number; i++) {
-		select->playInfo->changeSeat(select->seatNumber[i] / 10, select->seatNumber[i] % 10, false);
-	}
-	/* »èÁ¦ÇÏ·Á´Â Æ¼ÄÏÀÌ HeadÀÏ¶§ && TailÀÏ¶§ */
-	if (select == ticketHead && select == ticketTail) {
-		select->~Ticket();
-		ticketHead = NULL;
-		ticketTail = NULL;
-	}
-	/* »èÁ¦ÇÏ·Á´Â Æ¼ÄÏÀÌ HeadÀÏ¶§ */
-	else if (select == ticketHead) {
-		ticketHead = select->nextTicket;
-		select->~Ticket();
-	}
-	/* »èÁ¦ÇÏ·Á´Â Æ¼ÄÏÀÌ TailÀÏ¶§ */
-	else if (select == ticketTail) {
-		Ticket* temp = ticketHead;
-
-		while (temp->nextTicket != ticketTail) {
-			temp = temp->nextTicket;
+		while (price < 1000) {
+			cout << "â–     ê°€ê²©ì€ ìµœì†Œ 1000ì›ì´ìƒìœ¼ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš” : ";
+			cin >> price;
 		}
 
-		ticketTail = temp;
-		temp->nextTicket = NULL;
-		select->~Ticket();
-	}
-	/* ±× ¿Ü (Áß°£¿¡ ÀÖÀ» ¶§) */
-	else {
-		Ticket* temp = ticketHead;
-
-		while (temp->nextTicket != select) {
-			temp = temp->nextTicket;
+		MovieInfo* movie = new MovieInfo(title, pd, runningTime, price);
+		if (this->infoCount + 1 >= MOVIE_INFO_ARR_SIZE) {
+			cout << "      ìµœëŒ€ ì˜í™” ê°œìˆ˜ë¥¼ ë„˜ì—ˆìŠµë‹ˆë‹¤." << endl;
+			Sleep(3000);
+			return false;
 		}
-		temp->nextTicket = select->nextTicket;
-		select->~Ticket();
-	}
-}
-void Admin::deleteMovieInfo(short index)
-{
-	short i;
-
-	//¸ğµç ¿µÈ­°ü¿¡¼­ ¿µÈ­Á¤º¸·Î ¿µÈ­ »èÁ¦
-	for (i = 0; i < MOVIE_ROOM_ARR_SIZE; i++)
-	{
-		roomTable[i]->deleteMovieInfo(infoTable[index]);
-	}
-
-	//¹è¿­¿¡¼­ ÁÙ¿©ÁÖ±â
-	for (i = index; i < infoCount; i++)
-	{
-		infoTable[i] = infoTable[i + 1];
-	}
-	infoTable[infoCount] = 0x00;
-	infoCount--;
-}
-
-void Admin::deleteMoviePlay(short roomNumber, short startTime) {
-	roomTable[roomNumber]->deleteMoviePlay(startTime);
-}
-
-Ticket* Admin::addTicket(MoviePlay* movie)
-{
-	short numberOfHead;                 //ÀÎ¿ø ¼ö
-	short x, y;                         //ÁÂÇ¥ º¯¼ö
-	short restSeat = movie->restSeat(); //ÀÜ¿© ÁÂ¼®
-	short i, temp;                      //¹İº¹¹®
-	short count;                    //¸î¸í ¿¹¸ÅÇß´ÂÁö
-	bool check;
-	int key; //ÀÔ·ÂµÈ Å°º¸µå °ª
-
-	system("cls");
-	movie->printSeat();
-
-	//ÀÎ¿ø¼ö ÀÔ·Â¹Ş±â, ¿¹¿ÜÃ³¸® : 0¶Ç´Â À½¼ö°Å³ª ÀÜ¿©ÁÂ¼®º¸´Ù Å©°Ô ÀÔ·Â¹ŞÀ» ¶§
-	do
-	{
-		gotoxy(0, SIZE_ROW + 1);
-		cout << "ÀÎ¿ø ¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä : ";
-		gotoxy(0, SIZE_ROW + 2);
-		cin >> numberOfHead;
-		check = (numberOfHead <= 0) || (numberOfHead > restSeat);
-		if (check)
-		{
-			gotoxy(0, SIZE_ROW + 3);
-			cout << "ÀÜ¿© ÁÂ¼®º¸´Ù ¸¹½À´Ï´Ù." << endl;
+		else {
+			infoTable[this->infoCount] = movie;
+			infoCount++;
 		}
-	} while (check);
-
-	count = numberOfHead;
-
-	//ÀÔ·Â¹ŞÀº ÀÎ¿ø¼ö¸¸Å­ short ¹è¿­ ¸¸µé±â & -1·Î ÃÊ±âÈ­
-	short* seatArr = new short[numberOfHead];
-	for (i = 0; i < numberOfHead; i++)
-	{
-		seatArr[i] = -1;
-	}
-	system("cls");
-	movie->printSeat();
-	gotoxy(0, SIZE_ROW + 1);
-
-	cout << "¿øÇÏ´Â ÁÂ¼®À» ¼±ÅÃÇÏ¼¼¿ä." << endl << endl;
-	printf("%d", count);
-	cout << "¸í ³²¾Ò½À´Ï´Ù." << endl;
-	x = 2; y = 2;
-	gotoxy(2 * x, y);
-
-	while (count != 0)
-	{
-		//while (_kbhit())
-		//{
-		key = _getch();
-		/* ¹æÇâÅ° ´­·ÈÀ» ¶§ */
-		if (key == 224 || key == 0)
-		{
-			key = _getch();
-			switch (key)
-			{
-			case 72:
-				if (y > 2)
-				{
-					y--;
-					gotoxy(2 * x, y);
-				}
-				break;
-			case 75:
-				if (x > 2)
-				{
-					x--;
-					gotoxy(2 * x, y);
-				}
-				break;
-			case 77:
-				if (x < SIZE_COLUMN + 1)
-				{
-					x++;
-					gotoxy(2 * x, y);
-				}
-				break;
-			case 80:
-				if (y < SIZE_ROW + 1)
-				{
-					y++;
-					gotoxy(2 * x, y);
-				}
-				break;
-			default:
-				break;
-			}
-		}
-		else
-		{
-			/* ¿£ÅÍ°¡ ´­·ÈÀ» ¶§ */
-			if (key == 13)
-			{
-				check = false;
-
-				temp = (y - 1) * 10 + (x - 1);
-
-				for (i = 0; i < numberOfHead; i++)
-				{
-					if (seatArr[i] == temp)
-					{
-						seatArr[i] = -1;
-						check = true;
-					}
-				}
-				/* ÀÌ¹Ì ¹è¿­ ³»¿¡ temp¿Í °°Àº °ªÀÌ ÀúÀåµÇ¾î ÀÖÀ¸¸é(±âÁ¸ ÁÂ¼® Ãë¼Ò)  */
-				if (check)
-				{
-					cout << "¡à";
-					count++;
-					gotoxy(1, SIZE_COLUMN + 3);
-					printf("%c¿­ %d Ãë¼Ò ¼º°ø!       \n", 63 + y, x - 1);
-					printf("%2d", count);
-					gotoxy(2 * x, y);
-				}
-				/* ¹è¿­ ³»¿¡ temp¿Í °°Àº °ªÀÌ ÀúÀåµÇ¾î ÀÖÁö ¾ÊÀ¸¸é(½Å±Ô ÁÂ¼® ¿¹¸Å)  */
-				else
-				{
-					/* ÀÌ¹Ì ¿¹¸ÅµÈ ÁÂ¼®ÀÌ¸é (checkSeat°¡ true¸é ÀÌ¹Ì ¿¹¸ÅµÈ ÁÂ¼®À¸·Î ÀÏ´Ü ±¸Çö) */
-					if (movie->checkSeat(y - 1, x - 1))
-					{
-						gotoxy(1, SIZE_ROW + 3);
-						cout << "ÀÌ¹Ì ¿¹¸ÅµÈ ÁÂ¼®ÀÔ´Ï´Ù.";
-						gotoxy(2 * x, y);
-					}
-					/* ¿¹¸ÅµÈ ÁÂ¼®ÀÌ ¾Æ´Ï¸é ½Å±Ô ¿¹¸Å */
-					else
-					{
-						i = 0;
-						while (seatArr[i] != -1)
-						{
-							i++;
-						}
-						seatArr[i] = temp;
-						cout << "¡á";
-						count--;
-						gotoxy(1, SIZE_ROW + 3);
-						printf("%c¿­ %d ¿¹¸Å ¼º°ø!       \n", 63 + y, x - 1);
-						printf("%2d", count);
-						gotoxy(2 * x, y);
-					}
-				}
-				//	}
-			}
-		}
-	}
-
-	gotoxy(1, SIZE_ROW + 5);
-	if (getMoney(movie->info, numberOfHead) == false) {
-		cout << "¿¹¸Å°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù." << endl;
-		return NULL;
-	}
-
-	Ticket* newTicket;
-	/* ¿¹¸Å°¡ ¿Ï·áµÇ¸é tail´ÙÀ½¿¡ Æ¼ÄÏ Ãß°¡ÇØÁÖ±â */
-	if (ticketHead == 0x00)                 //Ã¹ Æ¼ÄÏÀÏ °æ¿ì tail°ú head¿¡ Ãß°¡
-	{
-
-		newTicket = new Ticket(numberOfHead, FIRST_TICKET, seatArr, movie, 0x00);
-
-		ticketHead = newTicket;
-		ticketTail = newTicket;
-	}
-	else
-	{
-		newTicket = new Ticket(numberOfHead, ticketTail->ticketNumber + 1, seatArr, movie, 0x00);
-		ticketTail->nextTicket = newTicket;
-		ticketTail = newTicket;
-	}
-
-	/* MoviePlay¿¡ ÁÂ¼® Á¤º¸ ¹İ¿µ */
-	for (i = 0; i < numberOfHead; i++) {
-		movie->changeSeat(seatArr[i] / 10, seatArr[i] % 10, true);
-	}
-
-	gotoxy(1, 1);
-
-	return newTicket;
-}
-
-bool Admin::getMoney(MovieInfo* minfo, short numberOfHead)
-{
-	//±İ¾×
-	int i;
-	int insertMoney = 0; //ÀÔ·Â ±İ¾×
-	int total; //ÃÑ ±İ¾×
-	int money = 0;	//ÀÔ·Â µÈ ±İ¾×
-
-	total = minfo->getInfo().price * numberOfHead;
-
-	cout << "¹«¾ùÀ¸·Î °áÁ¦ÇÏ½Ã°Ú½À´Ï±î ? 1. Çö±İ  2. Ä«µå" << endl;
-	cin >> i;
-
-	if (i == 1) {
-
-		while (money < total) {
-			if (insertMoney == -1) {
-				return false;
-			}
-			else {
-				cout << "ÃÑ ±İ¾× : " << total << endl;
-				cout << "³²Àº ±İ¾× : " << total - money << endl;
-				cout << "±İ¾×À» ³Ö¾îÁÖ¼¼¿ä. (-1 : Ãë¼Ò)" << endl;
-				cin >> insertMoney;
-				while (insertMoney < 10) {
-					cout << "ÀÔ·Â°ª ¿À·ùÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä : ";
-					cin >> insertMoney;
-				}
-				money += insertMoney;
-			}
-		}
-		cout << "°áÁ¦ ÁøÇàÁß";
-		for (int i = 0; i < 10; i++) {
-			cout << ".";
-			Sleep(300);
-		}
-		cout << endl;
-		cout << "°Å½º¸§µ· : " << money - total << endl;
-
-		cout << "°áÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù." << endl;
-		
-		Sleep(2000);
-		system("cls");
 		return true;
 	}
 
+	void Admin::printAllMovies(string name) {
+		for (int i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
+			cout << i + 1 << "ê´€" << endl;
 
-	else if (i == 2) {
-		cout << "Ä«µå¸¦ ³Ö¾îÁÖ¼¼¿ä" << endl;
-		Sleep(2000);
-		cout << "°áÁ¦ ÁøÇàÁßÀÔ´Ï´Ù";
-		for (int i = 0; i < 10; i++) {
-			cout << ".";
-			Sleep(300);
+			MoviePlay* movie = roomTable[i]->head;
+			for (int j = 0; j < roomTable[i]->movieCount; j++) {
+				if (movie->info->title == name) {
+					movie->info->printInfo();
+					cout << "ì”ì—¬ì¢Œì„: " << movie->restSeat() << endl;
+				}
+			}
 		}
-		cout << endl;
-		cout << "°áÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù." << endl;
-		Sleep(2000);
-		system("cls");
-		return true;
 	}
-	else {
-		cout << "Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. " << endl;
+
+	//ì˜í™”ê´€ ì‚¬ìš© ê°€ëŠ¥, ë¶ˆê°€ëŠ¥
+	void Admin::setMovieRoomStatus(MovieRoom & room, bool status) {
+		room.setStatus(status);
+		cout << "í•´ë‹¹ ì˜í™”ê´€ ì‚¬ìš©ì´ " << (status ? "ê°€ëŠ¥" : "ë¶ˆê°€ëŠ¥") << "ìœ¼ë¡œ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤." << endl;
 	}
-}
 
-void Admin::gotoxy(short x, short y)
-{
-	COORD Pos = { x - 1, y - 1 };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
-}
+	//ì˜í™”ê´€ ë‚´ ìƒì˜ì˜í™” Linked Listì— ì‹œê°„ ê²€ì‚¬ í›„ ìƒì„±í•˜ê¸° (movie roomì˜ canaddmovie + addmovie í˜¸ì¶œ)
+	void Admin::addMovie(MovieInfo * info, MovieRoom & room, short selectTime) {
+		if (room.canAddMovie(info, selectTime)) {
+			room.addMovieToRoom(info, selectTime);
+			cout << "ì˜í™”ê°€ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤." << endl;
+			room.printTimeTable();
+			return;
+		}
+		cout << "í•´ë‹¹ ì‹œê°„ì— ì˜í™”ë¥¼ ì¶”ê°€í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•´ì£¼ì„¸ìš”." << endl;
+	}
 
-Admin::~Admin() {
+	//í‹°ì¼“ í…Œì´ë¸”ì—ì„œ í‹°ì¼“ë²ˆí˜¸ë¡œ í‹°ì¼“ ì •ë³´ ì°¾ê¸°
+	Ticket* Admin::findTicket(int tNumber) {
+		Ticket* temp = ticketHead;
+		if (temp == NULL) {
+			return NULL;
+		}
+		if (ticketTail->ticketNumber < tNumber || tNumber < ticketHead->ticketNumber) {
+			return NULL;
+		}
 
-}
+		if (ticketTail->ticketNumber == tNumber) {
+			return ticketTail;
+		}
+
+		while (temp != ticketTail) {
+			if (temp->ticketNumber == tNumber) {
+				return temp;
+			}
+			temp = temp->nextTicket;
+		}
+		/*
+		while (ticketHead->nextTicket != ticketTail) {
+			if (temp->ticketNumber == tNumber) {
+				return temp;
+			}
+			temp = temp->nextTicket;
+		} */
+
+		return NULL;
+	}
+
+	//ì˜ˆë§¤ ë²ˆí˜¸ë¡œ í‹°ì¼“ ì •ë³´ ì¶œë ¥
+	void Admin::printTicket(int tNumber) {
+		Ticket* temp = findTicket(tNumber);
+
+		if (temp != NULL) {
+			temp->printTicket();
+			return;
+		}
+		cout << "í•´ë‹¹ ë²ˆí˜¸ë¡œ ì˜ˆë§¤ëœ ì˜ˆë§¤ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤." << endl;
+	}
+
+	//ì˜ˆë§¤ ë²ˆí˜¸ë¡œ í‹°ì¼“ ì‚­ì œ (ì˜ˆë§¤ì·¨ì†Œ)
+
+	void Admin::deleteTicket(Ticket * select) {
+		/* ì¢Œì„ ìƒíƒœ ë°˜ì˜ */
+		for (short i = 0; i < select->number; i++) {
+			select->playInfo->changeSeat(select->seatNumber[i] / 10, select->seatNumber[i] % 10, false);
+		}
+
+		/* ì‚­ì œí•˜ë ¤ëŠ” í‹°ì¼“ì´ Headì¼ë•Œ && Tailì¼ë•Œ */
+		if ((select == ticketHead) && (select == ticketTail)) {
+			select->~Ticket();
+			ticketHead = NULL;
+			ticketTail = NULL;
+		}
+		/* ì‚­ì œí•˜ë ¤ëŠ” í‹°ì¼“ì´ Headì¼ë•Œ */
+		else if (select == ticketHead) {
+			ticketHead = select->nextTicket;
+			select->~Ticket();
+		}
+		/* ì‚­ì œí•˜ë ¤ëŠ” í‹°ì¼“ì´ Tailì¼ë•Œ */
+		else if (select == ticketTail) {
+			Ticket* temp = ticketHead;
+
+			while (temp->nextTicket != ticketTail) {
+				temp = temp->nextTicket;
+			}
+
+			ticketTail = temp;
+			temp->nextTicket = NULL;
+			select->~Ticket();
+		}
+		/* ê·¸ ì™¸ (ì¤‘ê°„ì— ìˆì„ ë•Œ) */
+		else {
+			Ticket* temp = ticketHead;
+
+			while (temp->nextTicket != select) {
+				temp = temp->nextTicket;
+			}
+			temp->nextTicket = select->nextTicket;
+			select->~Ticket();
+		}
+	}
+
+	void Admin::deleteMovieInfo(short index)
+	{
+		short i;
+
+		//ëª¨ë“  ì˜í™”ê´€ì—ì„œ ì˜í™”ì •ë³´ë¡œ ì˜í™” ì‚­ì œ
+		for (i = 0; i < MOVIE_ROOM_ARR_SIZE; i++)
+		{
+			roomTable[i]->deleteMovieInfo(infoTable[index]);
+		}
+
+		//ë°°ì—´ì—ì„œ ì¤„ì—¬ì£¼ê¸°
+		for (i = index; i < infoCount; i++)
+		{
+			infoTable[i] = infoTable[i + 1];
+		}
+		infoTable[infoCount] = 0x00;
+		infoCount--;
+	}
+
+	void Admin::deleteMoviePlay(short roomNumber, short startTime) {
+		roomTable[roomNumber]->deleteMoviePlay(startTime);
+	}
+
+
+	void Admin::gotoxy(short x, short y)
+	{
+		COORD Pos = { x - 1, y - 1 };
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+	}
+
+	Admin::~Admin() {
+
+	}

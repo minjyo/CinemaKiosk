@@ -1,4 +1,4 @@
-#include "Header.hpp"
+ï»¿#include "Header.hpp"
 
 Ticket::Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* nTicket) {
 	number = n;
@@ -9,27 +9,31 @@ Ticket::Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* n
 }
 
 Ticket::~Ticket() {
-	cout << "¿¹¸Å¹øÈ£ : " << this->ticketNumber << endl;
-	cout << "ÇØ´ç ¿¹¸Å°¡ Á¤»ó Ãë¼Ò µÇ¾ú½À´Ï´Ù." << endl;
+	cout << "â–                           ì˜ˆë§¤ë²ˆí˜¸ : " << this->ticketNumber << endl;
+	cout << "â–                           í•´ë‹¹ ì˜ˆë§¤ê°€ ì •ìƒ ì·¨ì†Œ ë˜ì—ˆìŠµë‹ˆë‹¤." << endl;
 }
 
+
 void Ticket::printTicket() {
-	Info temp = playInfo->info->getInfo();
-	cout << "-- ¿¹¸ÅÁ¤º¸ È®ÀÎ --" << endl << endl;
-	cout << "¿¹¸Å¹øÈ£ : " << ticketNumber << endl;
-	/* ¿µÈ­ ½ÃÀÛ, Á¾·á ½Ã°£°ú ¿µÈ­Á¦¸ñ Ãâ·Â */
-	/* ¹®Á¦Á¡ : ¿µÈ­°ü Ãâ·Â ºÒ°¡ */
-	cout << "¿¹¸Å¿µÈ­ : " << temp.title << endl;
-	cout << "»ó¿µ½Ã°£ : " << to_string(playInfo->startTime / 100) + "½Ã " + to_string(playInfo->startTime % 100) + "ºÐ" + 
-	 " ~ "  << to_string(playInfo->endTime / 100) + "½Ã " + to_string(playInfo->endTime % 100) + "ºÐ"<<endl;
-	cout << "¿¹¸ÅÀÎ¿ø : " << number << "¸í" << endl;
-	cout << "¿¹¸ÅÁÂ¼® : ";
+	cout << "â–                           -- ì˜ˆë§¤ì •ë³´ í™•ì¸ --" << endl << endl;
+	cout << "â–                           ì˜ˆë§¤ë²ˆí˜¸ : " << ticketNumber << endl;
+	/* ì˜í™” ì‹œìž‘, ì¢…ë£Œ ì‹œê°„ê³¼ ì˜í™”ì œëª© ì¶œë ¥ */
+	/* ë¬¸ì œì  : ì˜í™”ê´€ ì¶œë ¥ ë¶ˆê°€ */
+	cout << "â–                           ì˜ˆë§¤ì˜í™” : " << playInfo->info->title << endl;
+	cout << "â–                           ìƒì˜ì‹œê°„ : " << to_string(playInfo->startTime / 100) + "ì‹œ " + to_string(playInfo->startTime % 100) + "ë¶„" +
+		" ~ " << to_string(playInfo->endTime / 100) + "ì‹œ " + to_string(playInfo->endTime % 100) + "ë¶„" << endl;
+	cout << "â–                           ì˜ˆë§¤ì¸ì› : " << number << "ëª…" << endl;
+	cout << "â–                           ì˜ˆë§¤ì¢Œì„ : ";
 	int i;
 	for (i = 0; i < number; i++) {
-		printf("%c¿­ %d", seatNumber[i] / 10 + 64, seatNumber[i] % 10);
+		printf("%cì—´ %d", seatNumber[i] / 10 + 64, seatNumber[i] % 10);
 		if (i != number - 1) {
 			cout << " / ";
 		}
+		if (i % 3 == 2)
+			cout << endl << "â–                                      ";
 	}
 	cout << endl;
+
+
 }
