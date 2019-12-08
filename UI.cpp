@@ -181,7 +181,7 @@ int UI::chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** mo
 	int array[5] = { 0, };
 
 	for (short i = 0; i < MOVIE_ROOM_ARR_SIZE; i++) {
-		array[i] = admin.roomTable[i]->printMovieInfo(*movie);
+		array[i] = admin.printMoviefromRoom(i, *movie);
 	}
 	printBorder();
 	gotoxy(30, 35);
@@ -232,7 +232,7 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 	movie->printInfo();
 	cout << endl;
 
-	int n_movie = admin.roomTable[room - 1]->printMovieInfo(movie);
+	int n_movie = admin.printMoviefromRoom(room - 1, movie);
 	printBorder();
 
 	gotoxy(32, 35);
@@ -266,6 +266,7 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 		}
 		/* 엔터가 눌렸을 때 */
 		else if (key == 13) {
+			*play = admin.findMoviePlayfromRoom(room - 1, movie, y);
 			*index = y;
 			return CHOOSESEAT;
 		}
@@ -281,7 +282,8 @@ int UI::chooseTime(Admin admin, int room, int* index, MovieInfo* movie, MoviePla
 }
 
 int UI::chooseSeat(Admin admin, int room_index, int movie_index, MovieInfo* movie, MoviePlay* play, Ticket** newTicket) {
-	play = admin.roomTable[room_index - 1]->findMoviePlay(movie, movie_index);
+	
+	
 	short numberOfHead;                 //인원 수
 	short restSeat = play->restSeat(); //잔여 좌석
 	short i, temp;                      //반복문
@@ -542,7 +544,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 	while (check) {
 		gotoxy(71, 19);
 		key = _getch();
-		
+
 		if (key == 49) { /* 숫자 1*/
 			while (money < total) {
 				if (insertMoney == -1) {
@@ -556,7 +558,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 					gotoxy(38, 21);
 					cout << "총 금액 : " << to_string(total) + "원";
 					gotoxy(38, 23);
-					cout << "남은 금액 : " << to_string(total - money)+"원";
+					cout << "남은 금액 : " << to_string(total - money) + "원";
 					gotoxy(38, 25);
 					cout << "금액을 넣어주세요.";
 					gotoxy(58, 25);
@@ -583,7 +585,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket) {
 			cout << endl;
 
 			gotoxy(38, 29);
-			cout << "거스름돈 : " << to_string(money - total)+"원";
+			cout << "거스름돈 : " << to_string(money - total) + "원";
 			gotoxy(38, 31);
 			cout << "결제가 완료되었습니다.";
 
@@ -647,7 +649,7 @@ int UI::checkTicket(Admin* admin) {
 	cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" << endl << endl << endl << endl;
 	cout << "■                          예매하신 티켓 번호를 입력하세요 : ";
 	printBorder();
-	gotoxy(63,13);
+	gotoxy(63, 13);
 	key = _getch();
 	if (key == 8) {
 		return USER;
@@ -1077,7 +1079,7 @@ int UI::addMovie(Admin* admin, int room_index) {
 			}
 			cin >> time;
 			//해당 시간으로 입력 가능한지 검사한 후 입력
-			if ((*admin).addMovie((*admin).infoTable[y], (*admin).roomTable[room_index], time)==true) {				
+			if ((*admin).addMovie((*admin).infoTable[y], (*admin).roomTable[room_index], time) == true) {
 				gotoxy(x, (*admin).infoCount + 1 + y_min);
 				(*admin).printTimetable(room_index);
 				gotoxy(x, 33);
@@ -1120,7 +1122,7 @@ int UI::deleteMovie(Admin* admin, int room_index) {
 
 	short sTime;
 	//영화관의 상영 영화 리스트 출력
-	(*admin).roomTable[room_index]->printTimeTable();
+	(*admin).printTimetable(room_index);
 	printBorder();
 
 	//영화 선택 후, 삭제
@@ -1132,19 +1134,19 @@ int UI::deleteMovie(Admin* admin, int room_index) {
 	}
 	cin >> sTime;
 	/* sTime 값 예외처리 */
-		int check = (*admin).roomTable[room_index]->deleteMoviePlay(sTime);
-		if (check == 0) {
-			gotoxy(58, 32);
-			cout << "올바르지 않은 입력시간입니다. \n";
-			Sleep(3000);
-			return DELETEMOVIE;
-		}
-		else {
-			gotoxy(66, 32);
-			cout << "정상 삭제되었습니다.\n";
-			Sleep(3000);
-			return DELETEMOVIE;
-		}
+	int check = (*admin).deleteMoviePlayfromRoom(room_index, sTime);
+	if (check == 0) {
+		gotoxy(58, 32);
+		cout << "올바르지 않은 입력시간입니다. \n";
+		Sleep(3000);
+		return DELETEMOVIE;
+	}
+	else {
+		gotoxy(66, 32);
+		cout << "정상 삭제되었습니다.\n";
+		Sleep(3000);
+		return DELETEMOVIE;
+	}
 }
 
 void UI::gotoxy(short x, short y) {
