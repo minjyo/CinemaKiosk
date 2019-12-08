@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <iomanip>
+#include <fstream>
 
 #define SIZE_COLUMN 8
 #define SIZE_ROW 8
@@ -35,6 +36,7 @@
 #define MANROOM 24
 #define ADDMOVIE 25
 #define DELETEMOVIE 26
+#define STATISTICS 27
 
 using namespace std;
 
@@ -45,6 +47,7 @@ public:
 	string pd;
 	unsigned short runningTime;
 	int price;
+	int count;
 
 	void printInfo(); //영화정보 출력 함수
 	MovieInfo(string title, string pd, unsigned short runningTime, int price); // 생성자
@@ -124,6 +127,7 @@ public:
 	~Admin();
 	short infoCount = 0;
 	short roomCount = 0;
+	unsigned int total = 0;
 
 	/* 영화관 정보, 영화 정보 가지고 있는 배열 */
 	MovieInfo* infoTable[MOVIE_INFO_ARR_SIZE];
@@ -131,6 +135,7 @@ public:
 
 	Ticket* ticketHead;
 	Ticket* ticketTail;
+	void showStatistic();				//총액 출력
 
 	/* 화면 출력 관련 함수 */
 	void printInfoTable(void);			//영화 리스트 출력 화면 (for문)
@@ -166,13 +171,13 @@ public:
 	/* 영화 선택 */
 	int chooseMovie(Admin admin, int* index);													//영화 예매 선택 시 영화 리스트 출력하는 화면
 	int chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** movie);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
-	int chooseTime(Admin admin, int room_index, int* movie_index, MovieInfo* movie, MoviePlay** play);		// 상영하는 영화 리스트에서 특정 영화 선택
-	int chooseSeat(Admin admin, int room_index, int movid_index, MovieInfo * movie, MoviePlay* play, Ticket** newTicket);	// 좌석 선택
+	int chooseTime(Admin admin, int room_index, int* yy, MovieInfo* movie, MoviePlay** play);		// 상영하는 영화 리스트에서 특정 영화 선택
+	int chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket);	// 좌석 선택
 
 	/* 티켓 생성, 확인 */
-	int checkTicket(Admin* admin);						//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
+	int checkTicket(Admin* admin, int movie_index);						//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 	int checkInfo(Ticket* newTicket);					//예매정보 확인
-	int checkMoney(Admin* admin, Ticket* newTicket);	// 결제
+	int checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie);	// 결제
 
 	/* 관리자 홈 화면 */
 	int adminHome(void);
@@ -186,6 +191,7 @@ public:
 	int manRoom(int* room_index);						//영화관 관리 메인 화면
 	int addMovie(Admin* admin, int room_index);			//영화관 관리 - 상영 영화 추가
 	int deleteMovie(Admin* admin, int room_index);		//영화관 관리 - 상영 영화 삭제
+	int showStatistics(Admin* admin);
 
 	void gotoxy(short x, short y);
 	void printBorder(void);

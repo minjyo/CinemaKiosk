@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-	//system("mode con cols=96 lines=37");
+	system("mode con cols=96 lines=37");
 	Admin admin;
 	char mode = USER;
 	char* input = (char*)malloc(1);
@@ -20,6 +20,7 @@ int main()
 
 	int room_index = 0;
 	int movie_index = 0;
+	int y = 0;
 	MovieInfo* movie = NULL;
 	MoviePlay* play = NULL;
 	Ticket* ticket = NULL;
@@ -40,20 +41,20 @@ int main()
 		case CHOOSEROOM:	//영화관 선택
 			mode = ui.chooseRoom(admin, &room_index, movie_index, &movie);
 			break;
-		case CHOOSETIME:	//시간 선택 근영수정 제대로 안들어가는거 수정
-			mode = ui.chooseTime(admin, room_index, &movie_index, movie, &play);
+		case CHOOSETIME:	//시간 선택
+			mode = ui.chooseTime(admin, room_index, &y, movie, &play);
 			break;
 		case CHOOSESEAT:	//좌석 선택
-			mode = ui.chooseSeat(admin, room_index, movie_index, movie, play, &ticket);
+			mode = ui.chooseSeat(admin, play, &ticket);
 			break;
 		case CHECKINFO:		//영화 정보 확인
 			mode = ui.checkInfo(ticket);
 			break;
 		case CHECKMONEY:	//결제 화면
-			mode = ui.checkMoney(&admin, ticket);
+			mode = ui.checkMoney(&admin, ticket, movie);
 			break;
 		case CHECKTICKET:	//티켓 확인
-			mode = ui.checkTicket(&admin);
+			mode = ui.checkTicket(&admin, movie_index);
 			break;
 		case ADMIN: //관리자 홈
 			mode = ui.adminHome();
@@ -75,6 +76,9 @@ int main()
 			break;
 		case DELETEMOVIE: //영화관에 영화 삭제
 			mode = ui.deleteMovie(&admin, room_index);
+			break;
+		case STATISTICS:
+			mode = ui.showStatistics(&admin);
 			break;
 		default:
 			break;

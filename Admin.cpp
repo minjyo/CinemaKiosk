@@ -59,6 +59,20 @@ Admin::Admin() {
 	roomTable[4]->addMovieToRoom(infoTable[4], 2330);
 }
 
+
+void Admin::showStatistic() {
+	cout << "영화 누적 통계" << endl << endl;
+	cout.setf(ios::left);
+	Ticket* temp = ticketHead;
+	total = 0;
+
+	for (int i = 0; i < infoCount; i++) {
+		cout << "■    " << setw(20) << infoTable[i]->title << " : 총 관객 수 " << infoTable[i]->count << " / 총 수입: " << infoTable[i]->count * infoTable[i]->price << endl;
+		total += infoTable[i]->count * infoTable[i]->price;
+	}
+	cout << endl << "■    " << setw(20) << "최종 수입 : " << total << endl;
+}
+
 //전체 영화 리스트 출력
 void Admin::printInfoTable(void) {
 
