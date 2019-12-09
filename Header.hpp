@@ -133,13 +133,13 @@ public:
 
 	Ticket* ticketHead;
 	Ticket* ticketTail;
-	void showStatistic();				//총액 출력
 
 	/* 화면 출력 관련 함수 */
 	void printInfoTable(void);			//영화 리스트 출력 화면 (for문)
 	void printTimetable(short index);	//영화관 선택 시 시작시간 순으로 상영영화 출력(상영 영화 추가 제거 화면)
 	void printAllMovies(string name);	//해당 영화를 선택했을 때 그 영화의 모든 관에서의 상영 정보 출력
-	int printMoviefromRoom(unsigned short roomNumber, MovieInfo* minfo);
+	int printMoviefromRoom(unsigned short roomNumber, MovieInfo* minfo);	//roomNumber관의 minfo 영화만 시간표 출력
+	void showStatistic();				//총액 출력
 
 	/* 영화 정보 관련 함수 (추가, 삭제) */
 	bool createMovieInfo();				//영화 정보 만들기
@@ -147,9 +147,8 @@ public:
 
 	/* 영화관 관련 함수 (영화관&좌석 상태 관리, 상영 영화 추가, 삭제) */
 	bool addMovie(MovieInfo* info, MovieRoom* room, short selectTime);		//영화관 내 상영영화 Linked List에 시간 검사 후 생성하기 (movie room의 canaddmovie + addmovie 호출)
-	void deleteMoviePlay(unsigned short roomNumber, short startTime);		//시작시간 정보로 해당 영화관 내 상영영화 삭제하기
-	MoviePlay* findMoviePlayfromRoom(unsigned short roomNumber, MovieInfo* minfo, int index);
-	int deleteMoviePlayfromRoom(unsigned short roomNumber, unsigned short startTime);
+	MoviePlay* findMoviePlayfromRoom(unsigned short roomNumber, MovieInfo* minfo, int index);	// room안에서 minfo의 index번째 영화 리턴
+	int deleteMoviePlayfromRoom(unsigned short roomNumber, unsigned short startTime);			//시작시간 정보로 해당 영화관 내 상영영화 삭제하기
 
 	/* 유저 관련 함수 */
 	Ticket* findTicket(int tNumber);		//유저 테이블에서 티켓번호로 User* 찾기
@@ -169,12 +168,12 @@ public:
 	/* 영화 선택 */
 	int chooseMovie(Admin admin, int* index);													//영화 예매 선택 시 영화 리스트 출력하는 화면
 	int chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** movie);			//영화 선택 시 상영하는 영화 리스트 출력하는 화면
-	int chooseTime(Admin admin, int room_index, int* yy, MovieInfo* movie, MoviePlay** play);		// 상영하는 영화 리스트에서 특정 영화 선택
-	int chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket);	// 좌석 선택
+	int chooseTime(Admin admin, int room_index, int* yy, MovieInfo* movie, MoviePlay** play);	// 상영하는 영화 리스트에서 특정 영화 선택
+	int chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket);							// 좌석 선택
 
 	/* 티켓 생성, 확인 */
 	int checkTicket(Admin* admin, int movie_index);						//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
-	int checkInfo(Ticket* newTicket);					//예매정보 확인
+	int checkInfo(Ticket* newTicket);									//예매정보 확인
 	int checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie);	// 결제
 
 	/* 관리자 홈 화면 */
