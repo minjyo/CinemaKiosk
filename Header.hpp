@@ -42,7 +42,6 @@ using namespace std;
 
 /* 영화정보 객체 */
 class MovieInfo {
-public:
 	string title;
 	string pd;
 	unsigned short runningTime;
