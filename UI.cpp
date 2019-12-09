@@ -517,9 +517,7 @@ int UI::checkInfo(Ticket* newTicket) {
 }
 
 int UI::checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie) {
-	MovieInfo* minfo; short numberOfHead;
 	//금액
-	int i;
 	int insertMoney = 0; //입력 금액
 	int total; //총 금액
 	int money = 0;	//입력 된 금액

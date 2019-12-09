@@ -219,7 +219,6 @@ void Admin::printTicket(int tNumber) {
 }
 
 //예매 번호로 티켓 삭제 (예매취소)
-
 void Admin::deleteTicket(Ticket* select) {
 	/* 좌석 상태 반영 */
 	for (short i = 0; i < select->number; i++) {
@@ -279,11 +278,6 @@ void Admin::deleteMovieInfo(short index)
 	infoTable[infoCount] = 0x00;
 	infoCount--;
 }
-
-void Admin::deleteMoviePlay(unsigned short roomNumber, short startTime) {
-	roomTable[roomNumber]->deleteMoviePlay(startTime);
-}
-
 
 void Admin::gotoxy(short x, short y)
 {
