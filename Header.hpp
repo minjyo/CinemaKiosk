@@ -94,7 +94,7 @@ public:
 	int canAddMovie(MovieInfo* info, unsigned short select);		// 영화관에 영화 추가 가능하면 추가할 곳의 앞 영화 인덱스, 불가능하면 -1 리턴
 	bool addMovieToRoom(MovieInfo* info, unsigned short select);	// canAddMovie 값을 받아서 영화관에 영화 추가
 	void deleteMovieInfo(MovieInfo* info);							// 해당 관 안에서 상영중인 영화중 일치하는 영화 모두 삭제
-	int deleteMoviePlay(short startTime);							// 해당 관 안에서 상영중인 특정영화 하나 삭제
+	MoviePlay* deleteMoviePlay(short startTime);							// 해당 관 안에서 상영중인 특정영화 하나 삭제
 
 	MoviePlay* findMoviePlay(MovieInfo* minfo, int index);			// 영화관에서 몇번째 상영중인 특정 영화 객체 리턴 
 };
@@ -103,6 +103,7 @@ public:
 class Ticket
 {
 public:
+	short room;							//관 번호
 	short number;						//인원 수
 	short* seatNumber;					//좌석 번호
 	MoviePlay* playInfo;				//상영 영화 정보
@@ -154,6 +155,8 @@ public:
 	Ticket* findTicket(int tNumber);		//유저 테이블에서 티켓번호로 User* 찾기
 	void printTicket(int tNumber);			//예매 번호로 티켓 정보 출력 (예매확인 창)
 	void deleteTicket(Ticket* select);		//예매 번호로 티켓 삭제 (예매취소)
+	void deleteTicketByInfo(MovieInfo* info);
+	void deleteTicketByPlay(MoviePlay* play);
 
 	void gotoxy(short x, short y);
 };

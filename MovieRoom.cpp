@@ -169,7 +169,7 @@ void MovieRoom::deleteMovieInfo(MovieInfo* mov) {
 }
 
 // 해당 관 안에서 상영중인 특정영화 하나 삭제
-int MovieRoom::deleteMoviePlay(short starttime) {
+MoviePlay* MovieRoom::deleteMoviePlay(short starttime) {
 
 	MoviePlay* start = head;
 	MoviePlay* temp = start->nextPlay;
@@ -179,8 +179,10 @@ int MovieRoom::deleteMoviePlay(short starttime) {
 	while (temp != NULL) {
 		if (temp->startTime == starttime) {
 			start->nextPlay = temp->nextPlay;
-			temp ->~MoviePlay();
-			deleteCount++;
+			//temp ->~MoviePlay();
+			this->movieCount--;
+			return temp;
+			//deleteCount++;
 			temp = start->nextPlay;
 		}
 		else {
@@ -188,8 +190,8 @@ int MovieRoom::deleteMoviePlay(short starttime) {
 			temp = start->nextPlay;
 		}
 	}
-	this->movieCount--;
-	return deleteCount;
+	
+	return NULL;
 }
 
 // 영화관에서 몇번째 상영중인 특정 영화 객체 리턴
