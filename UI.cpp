@@ -687,6 +687,7 @@ int UI::checkTicket(Admin* admin, int movie_index) {
 		}
 	}
 }
+
 //관리자 홈 화면
 int UI::adminHome(void) {
 	system("cls");
