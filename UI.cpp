@@ -1,5 +1,4 @@
-﻿
-#include "Header.hpp"
+﻿#include "Header.hpp"
 
 /* 사용자 홈 화면 */
 int UI::userHome(void) {
@@ -22,7 +21,7 @@ int UI::userHome(void) {
 	cout << "■                                                                                            ■" << endl;
 	cout << "■               ┌──────────────────────────────────────────────────────────┐                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
-	cout << "■               │                   ☞ 영화 선택                           │                 ■" << endl;
+	cout << "■               │                   ☞ 영화 예매                           │                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
 	cout << "■               │                   ☞ 티켓 정보 확인                      │                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
@@ -635,7 +634,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie) {
 	return USER;
 }
 
-int UI::checkTicket(Admin* admin, int movie_index) {
+int UI::checkTicket(Admin* admin) {
 	int tNumber;
 	Ticket* ticket = NULL;
 	system("cls");
@@ -676,7 +675,8 @@ int UI::checkTicket(Admin* admin, int movie_index) {
 			if (key == 121) {
 				cout << endl << endl;
 				(*admin).deleteTicket(ticket);
-				(*admin).infoTable[movie_index]->count -= ticket->number;
+				//(*admin).infoTable[movie_index]->count -= ticket->number;
+				ticket->playInfo->info->count-= ticket->number;
 				Sleep(3000);
 				return USER;
 			}
@@ -687,6 +687,7 @@ int UI::checkTicket(Admin* admin, int movie_index) {
 		}
 	}
 }
+
 //관리자 홈 화면
 int UI::adminHome(void) {
 	system("cls");
@@ -1175,7 +1176,7 @@ int UI::showStatistics(Admin* admin) {
 			return ADMIN;
 		}
 	}
-	
+
 }
 
 void UI::gotoxy(short x, short y) {
