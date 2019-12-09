@@ -1,5 +1,4 @@
-﻿
-#include "Header.hpp"
+﻿#include "Header.hpp"
 
 /* 사용자 홈 화면 */
 int UI::userHome(void) {
@@ -678,7 +677,8 @@ int UI::checkTicket(Admin* admin, int movie_index) {
 			if (key == 121) {
 				cout << endl << endl;
 				(*admin).deleteTicket(ticket);
-				(*admin).infoTable[movie_index]->count -= ticket->number;
+				//(*admin).infoTable[movie_index]->count -= ticket->number;
+				ticket->playInfo->info->count-= ticket->number;
 				Sleep(3000);
 				return USER;
 			}
@@ -1177,7 +1177,7 @@ int UI::showStatistics(Admin* admin) {
 			return ADMIN;
 		}
 	}
-	
+
 }
 
 void UI::gotoxy(short x, short y) {
