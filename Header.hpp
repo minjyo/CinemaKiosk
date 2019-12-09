@@ -90,13 +90,11 @@ public:
 	void printTimeTable();					// 영화관의 영화 타임 테이블 출력
 	int printMovieInfo(MovieInfo* info);	// 해당 관 안에서 특정 영화만 출력
 
-	unsigned short getEndTime(unsigned short startTime, unsigned short runningTime); // 시작시간, 러닝타임으로 종료시간 리턴
-
 	/* 영화관에 영화 추가, 제거 */
 	int canAddMovie(MovieInfo* info, unsigned short select);		// 영화관에 영화 추가 가능하면 추가할 곳의 앞 영화 인덱스, 불가능하면 -1 리턴
 	bool addMovieToRoom(MovieInfo* info, unsigned short select);	// canAddMovie 값을 받아서 영화관에 영화 추가
 	void deleteMovieInfo(MovieInfo* info);							// 해당 관 안에서 상영중인 영화중 일치하는 영화 모두 삭제
-	int deleteMoviePlay(short starttime);							// 해당 관 안에서 상영중인 특정영화 하나 삭제
+	int deleteMoviePlay(short startTime);							// 해당 관 안에서 상영중인 특정영화 하나 삭제
 
 	MoviePlay* findMoviePlay(MovieInfo * minfo, int index);			// 영화관에서 몇번째 상영중인 특정 영화 객체 리턴 
 };
@@ -111,11 +109,11 @@ public:
 	int ticketNumber;					//예매번호
 	Ticket* nextTicket;					//다음 티켓 주소
 
-	void printTicket();					//예매한 티켓 정보 출력
-
 	/*티켓 생성자, 소멸자*/
 	Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* nTicket);
 	~Ticket();
+
+	void printTicket();					//예매한 티켓 정보 출력
 };
 
 /* 관리자 객체 */

@@ -87,19 +87,6 @@ int MovieRoom::printMovieInfo(MovieInfo* mov) {
 	return Count;
 }
 
-// 시작시간, 러닝타임으로 종료시간 리턴
-unsigned short MovieRoom::getEndTime(unsigned short startTime, unsigned short runningTime) {
-	unsigned short endTime = 0;
-	if (((startTime % 100) + (runningTime % 100)) > 60) {
-		/* 60분 빼고 1시간 더하니까 40을 더함 */
-		endTime = startTime + runningTime + 40;
-	}
-	else {
-		endTime = startTime + runningTime;
-	}
-	return endTime;
-}
-
 // 영화관에 영화 추가 가능하면 추가할 곳의 앞 영화 인덱스, 불가능하면 -1 리턴
 int MovieRoom::canAddMovie(MovieInfo* info, unsigned short select) {
 	MoviePlay* temp = head->nextPlay;
@@ -107,7 +94,14 @@ int MovieRoom::canAddMovie(MovieInfo* info, unsigned short select) {
 	unsigned short endTime = 0;
 	//시간을 입력시 주의사항은 분 단위가 아닌 시와 분을 둘다 써줄것.
 	//Ex) 90분 영화면 1시간 30분이므로 130 이라고 써줄것.
-	endTime = getEndTime(select, runningTime);
+	if (((select % 100) + (runningTime % 100)) > 60) {
+		/* 60분 빼고 1시간 더하니까 40을 더함 */
+		endTime = select + runningTime + 40;
+	}
+	else {
+		endTime = select + runningTime;
+	}
+
 	int select_index = 1;
 	if (this->movieCount == 0 || head->nextPlay->startTime > endTime) {
 		return 0;
@@ -144,7 +138,6 @@ bool MovieRoom::addMovieToRoom(MovieInfo* info, unsigned short select) {
 			search_index++;
 		}
 		MoviePlay* insertMovie = new MoviePlay(select, info, temp->nextPlay);
-		insertMovie->endTime = getEndTime(select, info->runningTime);
 		insertMovie->nextPlay = temp->nextPlay;
 		temp->nextPlay = insertMovie;
 		this->movieCount++;
