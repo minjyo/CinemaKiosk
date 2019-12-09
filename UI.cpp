@@ -634,7 +634,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie) {
 	return USER;
 }
 
-int UI::checkTicket(Admin* admin, int movie_index) {
+int UI::checkTicket(Admin* admin) {
 	int tNumber;
 	Ticket* ticket = NULL;
 	system("cls");

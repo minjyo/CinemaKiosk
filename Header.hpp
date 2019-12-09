@@ -172,7 +172,7 @@ public:
 	int chooseSeat(Admin admin, MoviePlay* play, Ticket** newTicket);							// 좌석 선택
 
 	/* 티켓 생성, 확인 */
-	int checkTicket(Admin* admin, int movie_index);						//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
+	int checkTicket(Admin* admin);						//영화 예매 후 티켓 정보 확인(check == false) & 예매 정보 확인(check == true)
 	int checkInfo(Ticket* newTicket);									//예매정보 확인
 	int checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie);	// 결제
 

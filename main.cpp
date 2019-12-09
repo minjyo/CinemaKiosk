@@ -54,7 +54,7 @@ int main()
 			mode = ui.checkMoney(&admin, ticket, movie);
 			break;
 		case CHECKTICKET:	//티켓 확인
-			mode = ui.checkTicket(&admin, movie_index);
+			mode = ui.checkTicket(&admin);
 			break;
 		case ADMIN: //관리자 홈
 			mode = ui.adminHome();
