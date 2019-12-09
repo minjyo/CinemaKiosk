@@ -153,7 +153,6 @@ int UI::chooseMovie(Admin admin, int* movie_index) {
 //영화 선택 시 상영하는 영화 리스트 출력하고, 영화관과 시간을 선택해, 예매할 영화를 선택하는 화면
 int UI::chooseRoom(Admin admin, int* room_index, int movie_index, MovieInfo** movie) {
 	*movie = admin.infoTable[movie_index];
-	int y_min;
 
 	//x = 4; y_min = 16; y = y_min;
 
@@ -505,7 +504,9 @@ int UI::checkInfo(Ticket* newTicket) {
 		}
 		/* n -> USER */
 		else if (key == 110) {
+			newTicket->playInfo->info->count += newTicket->number;
 			newTicket->~Ticket();
+
 			return USER;
 		}
 		/* backspace -> 뒤로가기 */
@@ -517,9 +518,6 @@ int UI::checkInfo(Ticket* newTicket) {
 }
 
 int UI::checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie) {
-	MovieInfo* minfo; short numberOfHead;
-	//금액
-	int i;
 	int insertMoney = 0; //입력 금액
 	int total; //총 금액
 	int money = 0;	//입력 된 금액
@@ -551,6 +549,7 @@ int UI::checkMoney(Admin* admin, Ticket* newTicket, MovieInfo* movie) {
 				if (insertMoney == -1) {
 					gotoxy(32, 27);
 					cout << "예매가 취소되었습니다." << endl << endl;
+					newTicket->playInfo->info->count += newTicket->number;
 					newTicket->~Ticket();
 					Sleep(2000);
 					return USER;
@@ -678,7 +677,8 @@ int UI::checkTicket(Admin* admin, int movie_index) {
 			if (key == 121) {
 				cout << endl << endl;
 				(*admin).deleteTicket(ticket);
-				(*admin).infoTable[movie_index]->count -= ticket->number;
+				cout << "■                             예매번호 : " << ticket->ticketNumber << endl << endl;
+				cout << "■                             해당 예매가 정상 취소 되었습니다." << endl;
 				Sleep(3000);
 				return USER;
 			}

@@ -264,7 +264,7 @@ void Admin::deleteTicket(Ticket* select) {
 void Admin::deleteMovieInfo(short index)
 {
 	short i;
-
+	deleteTicketByInfo(infoTable[index]);
 	//모든 영화관에서 영화정보로 영화 삭제
 	for (i = 0; i < MOVIE_ROOM_ARR_SIZE; i++)
 	{
@@ -295,6 +295,43 @@ Admin::~Admin() {
 
 }
 
+void Admin::deleteTicketByInfo(MovieInfo* info) {
+	Ticket* temp = ticketHead;
+	Ticket* temp2 = NULL;
+
+	while(1) {
+		if (temp == NULL) {
+			return;
+		}
+		if (temp->playInfo->info == info) {
+			temp2 = temp->nextTicket;
+			deleteTicket(temp);
+			temp = temp2;
+		}
+		else {
+			temp = temp->nextTicket;
+		}
+	}
+}
+void Admin::deleteTicketByPlay(MoviePlay* play) {
+	Ticket* temp = ticketHead;
+	Ticket* temp2 = NULL;
+
+	while (1) {
+		if (temp == NULL) {
+			return;
+		}
+		if (temp->playInfo == play) {
+			temp2 = temp->nextTicket;
+			deleteTicket(temp);
+			temp = temp2;
+		}
+		else {
+			temp = temp->nextTicket;
+		}
+	}
+}
+
 int Admin::printMoviefromRoom(unsigned short roomNumber, MovieInfo* minfo) {
 	int n = roomTable[roomNumber]->printMovieInfo(minfo);
 	return n;
@@ -306,6 +343,14 @@ MoviePlay* Admin::findMoviePlayfromRoom(unsigned short roomNumber, MovieInfo* mi
 }
 
 int Admin::deleteMoviePlayfromRoom(unsigned short roomNumber, unsigned short startTime) {
-	return roomTable[roomNumber]->deleteMoviePlay(startTime);
+	MoviePlay* temp = roomTable[roomNumber]->deleteMoviePlay(startTime);
+	if (temp == NULL) {
+		return 0;
+	}
+	else {
+		deleteTicketByPlay(temp);
+		temp->~MoviePlay();
+		return 1;
+	}
 }
 
