@@ -42,6 +42,7 @@ using namespace std;
 
 /* 영화정보 객체 */
 class MovieInfo {
+public:
 	string title;
 	string pd;
 	unsigned short runningTime;
@@ -95,7 +96,7 @@ public:
 	void deleteMovieInfo(MovieInfo* info);							// 해당 관 안에서 상영중인 영화중 일치하는 영화 모두 삭제
 	int deleteMoviePlay(short startTime);							// 해당 관 안에서 상영중인 특정영화 하나 삭제
 
-	MoviePlay* findMoviePlay(MovieInfo * minfo, int index);			// 영화관에서 몇번째 상영중인 특정 영화 객체 리턴 
+	MoviePlay* findMoviePlay(MovieInfo* minfo, int index);			// 영화관에서 몇번째 상영중인 특정 영화 객체 리턴 
 };
 
 /* 예매 정보 객체 */

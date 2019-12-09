@@ -31,17 +31,17 @@ void MoviePlay::printSeat() {
 	printf("                        #          │       screen      │            #\n");
 	printf("                        #          └───────────────────┘            #\n");
 	cout << "                        #           ";
-	for (i = 1; i < SIZE_COLUMN/2 + 1; i++) {
+	for (i = 1; i < SIZE_COLUMN / 2 + 1; i++) {
 		printf("%2d", i);
 	}
 	cout << "    ";
-	for (i = SIZE_COLUMN/2 + 1; i < SIZE_COLUMN + 1; i++) {
+	for (i = SIZE_COLUMN / 2 + 1; i < SIZE_COLUMN + 1; i++) {
 		printf("%2d", i);
 	}
 	cout << "            #\n                        #         ";
 	for (i = 0; i < SIZE_ROW; i++) {
 		printf(" %c ", 65 + i);
-		for (j = 0; j < SIZE_COLUMN/2 ; j++) {
+		for (j = 0; j < SIZE_COLUMN / 2; j++) {
 			if (seat[i][j] == true)
 				cout << "▩";
 			else

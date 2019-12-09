@@ -308,4 +308,3 @@ MoviePlay* Admin::findMoviePlayfromRoom(unsigned short roomNumber, MovieInfo* mi
 int Admin::deleteMoviePlayfromRoom(unsigned short roomNumber, unsigned short startTime) {
 	return roomTable[roomNumber]->deleteMoviePlay(startTime);
 }
-
