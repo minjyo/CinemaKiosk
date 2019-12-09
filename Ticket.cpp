@@ -8,7 +8,7 @@ Ticket::Ticket(short n, int tNumber, short* sNumber, MoviePlay* pInfo, Ticket* n
 	nextTicket = nTicket;
 }
 
-/* 소멸자, 취소된 예매번호 출력 */
+/* 소멸자, info count 감소 */
 Ticket::~Ticket() {
 	playInfo->info->count -= number;
 }

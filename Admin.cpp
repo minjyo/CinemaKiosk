@@ -219,7 +219,6 @@ void Admin::printTicket(int tNumber) {
 }
 
 //예매 번호로 티켓 삭제 (예매취소)
-
 void Admin::deleteTicket(Ticket* select) {
 	/* 좌석 상태 반영 */
 	for (short i = 0; i < select->number; i++) {
@@ -280,11 +279,6 @@ void Admin::deleteMovieInfo(short index)
 	infoCount--;
 }
 
-void Admin::deleteMoviePlay(unsigned short roomNumber, short startTime) {
-	roomTable[roomNumber]->deleteMoviePlay(startTime);
-}
-
-
 void Admin::gotoxy(short x, short y)
 {
 	COORD Pos = { x - 1, y - 1 };
@@ -343,6 +337,7 @@ MoviePlay* Admin::findMoviePlayfromRoom(unsigned short roomNumber, MovieInfo* mi
 }
 
 int Admin::deleteMoviePlayfromRoom(unsigned short roomNumber, unsigned short startTime) {
+
 	MoviePlay* temp = roomTable[roomNumber]->deleteMoviePlay(startTime);
 	if (temp == NULL) {
 		return 0;
@@ -353,4 +348,5 @@ int Admin::deleteMoviePlayfromRoom(unsigned short roomNumber, unsigned short sta
 		return 1;
 	}
 }
+
 
