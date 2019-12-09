@@ -86,5 +86,4 @@ int main()
 	}
 	cout << "프로그램이 종료되었습니다." << endl;
 	return 0;
-
 }

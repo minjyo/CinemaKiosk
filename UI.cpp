@@ -21,7 +21,7 @@ int UI::userHome(void) {
 	cout << "■                                                                                            ■" << endl;
 	cout << "■               ┌──────────────────────────────────────────────────────────┐                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
-	cout << "■               │                   ☞ 영화 선택                           │                 ■" << endl;
+	cout << "■               │                   ☞ 영화 예매                           │                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
 	cout << "■               │                   ☞ 티켓 정보 확인                      │                 ■" << endl;
 	cout << "■               │                                                          │                 ■" << endl;
